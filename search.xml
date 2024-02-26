@@ -1,0 +1,708 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search>
+  <entry>
+    <title>树状数组</title>
+    <url>/2023/09/28/BIT/</url>
+    <content><![CDATA[<h2 id="树状数组的引入">树状数组的引入</h2>
+<h3 id="普通数组">普通数组</h3>
+<p>我们要实现两种操作：<strong>单点修改</strong>和<strong>区间求和</strong>。对于普通数组而言，<strong>单点修改</strong>的时间复杂度是
+<span
+class="math inline">\(O(1)\)</span>，但<strong>区间求和</strong>的时间复杂度是
+<span class="math inline">\(O(n)\)</span>。</p>
+<p><img
+src="https://pic1.zhimg.com/v2-5652a46124eaa79fafae0558253e6a80_b.jpg" /></p>
+<p>当然，我们也可以用<strong>前缀和</strong>的方法维护这个数组，这样的话<strong>区间求和</strong>的时间复杂度就降到了
+<span
+class="math inline">\(O(1)\)</span>，但是<strong>单点修改</strong>会影响后面所有的元素，时间复杂度是
+<span class="math inline">\(O(n)\)</span>。</p>
+<p><img
+src="https://pic3.zhimg.com/v2-83809502459ae695ec219d6974315292_b.jpg" /></p>
+<p>程序最后跑多长时间，是由最慢的一环决定的，因此现在我们希望找到这样一种折中的方法：无论单点修改还是区间查询，它都能不那么慢地完成。</p>
+<p>注意到对 <span class="math inline">\([a,b]\)</span>
+进行区间查询只需查询 <span class="math inline">\([1,b]\)</span> 和 <span
+class="math inline">\([1,a)\)</span>
+然后相减即可（前缀和就是这样进行区间查询的），所以我们可以把区间查询问题转化为求前
+<span class="math inline">\(n\)</span> 项和的问题。</p>
+<p>关于数组的维护，有个很自然的想法：可以用一个数组 <span
+class="math inline">\(C\)</span>
+维护若干个小区间，单点修改时，<strong>只更新包含这一元素的区间</strong>；求前
+<span class="math inline">\(n\)</span>
+项和时，<strong>通过将区间进行组合，得到从 <span
+class="math inline">\(1\)</span> 到 <span
+class="math inline">\(n\)</span>
+的区间，然后对所有用到的区间求和</strong>。实际上，设原数组是 <span
+class="math inline">\(A\)</span>，如果 <span
+class="math inline">\(C_i\)</span> 维护的区间是 <span
+class="math inline">\([A_i,
+A_i]\)</span>，此结构就相当于普通数组（还浪费了一倍内存）；如果 <span
+class="math inline">\(C_i\)</span> 维护的区间就是 <span
+class="math inline">\([1,A_i]\)</span>，此结构就相当于前缀和。</p>
+<h3 id="树状数组">树状数组</h3>
+<p>现在我们试图寻找一种结构，一方面，单点修改时需要更新的区间不会太多；另一方面，区间查询时需要用来组合的区间也不会太多。</p>
+<p>树状数组就是这样一种结构，它巧妙地利用了<strong>二进制</strong>（实际上，树状数组的英文名
+BIT，直译过来就是<strong>二进制下标树</strong>）。例如
+11，转化为二进制数就是 <span
+class="math inline">\((1011)_2\)</span>，如果我们要求前 11
+项和，可以分别查询 <span class="math inline">\(\big(\left(0000\right)_2
+,\left(1000\right)_2\big]\)</span>、<span class="math inline">\(\big(
+\left(1000\right)_2 , \left(1010\right)_2 \big]\)</span> 以及 <span
+class="math inline">\(\big( \left(1010\right)_2 , \left(1011\right)_2
+\big]\)</span>
+的和再相加。这三个区间怎么来的呢？其实就是<strong>不断地去掉二进制数最右边的一个
+1</strong> 的过程（如下图）。</p>
+<p><img
+src="https://pic4.zhimg.com/v2-a53a897f22763ef04a728f8263f06547_b.jpg" /></p>
+<p>我们定义，二进制数最右边的一个 1，连带着它之后的 0 为 <span
+class="math inline">\(\operatorname{lowbit}(x)\)</span>（稍后再来看如何实现）。那么我们用
+<span class="math inline">\(C_i\)</span> 维护区间 <span
+class="math inline">\(\left(A_i-\operatorname{lowbit}\left(A_i\right),A_i\right]\)</span>，这样显然查询前
+<span class="math inline">\(n\)</span> 项和时需要合并的区间数是少于
+<span class="math inline">\(\log_2{n}\)</span>
+的。树状数组的结构大概像下面这样：</p>
+<p><img
+src="https://pic1.zhimg.com/v2-fbaeb49fdbad31a211fe37f068ca8bb0_b.jpg" /></p>
+<p>那么如何更新呢，大家会发现更新就是一个“<strong>爬树</strong>”的过程。一路往上更新，直到
+<span class="math inline">\(MAXN\)</span>（树状数组的容量）。</p>
+<p><img
+src="https://pic3.zhimg.com/v2-df001651925903a86ab640482b78c2d6_b.jpg" /></p>
+<p>我们举个例子来看看这树是怎么爬的。 现有二进制数 <span
+class="math inline">\(\left(100110\right)_2\)</span>，包含它的最小区间当然是
+<span class="math inline">\(\big( \left(100100\right)_2 ,
+\left(100110\right)_2 \big]\)</span>。然后，它也肯定位于区间 <span
+class="math inline">\(\big( \left(100000\right)_2 ,
+\left(101000\right)_2 \big]\)</span> 内。然后是 <span
+class="math inline">\(\big( \left(100000\right)_2, \left(110000\right)_2
+\big]\)</span>，再然后是 <span class="math inline">\(\big( 0 ,
+\left(1000000\right)_2 \big] \dots\)</span></p>
+<p><img
+src="https://pic3.zhimg.com/v2-8ce9df6ada69084d3ccd0df5ecc45b5e_b.jpg" /></p>
+<p>如上图，每一步都把<strong>从右边起一系列连续的 1 变为 0，再把这一系列
+1 的前一位 0 变为
+1</strong>。这看起来像是一个<strong>进位</strong>的过程对吧？实际上，每一次加的正是
+<span
+class="math inline">\(\operatorname{lowbit}\left(x\right)\)</span>。（神奇吧？）这样，我们更新的区间数不会超过
+<span class="math inline">\(\log_2{MAXN}\)</span>。一个能以 <span
+class="math inline">\(O(\log{n})\)</span>
+时间复杂度进行单点修改和区间查询的数据结构就诞生了。</p>
+<h2 id="树状数组的实现">树状数组的实现</h2>
+<p>前面已经讲得很详细了，代码实现倒是一件简单的事了。不过我们需要先解决一个问题：lowbit
+怎么算？如果一位一位验证的话，会形成额外的时间开销。然而，我们有这样神奇的一个公式：</p>
+<p><span
+class="math display">\[\operatorname{lowbit}(x)=(x)\&amp;(-x)\]</span></p>
+<p>为什么可以这样？我们需要知道，计算机里有符号数一般是以<strong>补码</strong>的形式存储的。<span
+class="math inline">\(-x\)</span> 相当于 <span
+class="math inline">\(x\)</span> <strong>按位取反再加
+1</strong>，会把结尾处原来 <span
+class="math inline">\(1000\dots\)</span> 的形式，变成 <span
+class="math inline">\(0111\dots\)</span>，再变成 <span
+class="math inline">\(1000\dots\)</span>；而前面每一位都与原来相反。这时我们再把它和
+<span class="math inline">\(x\)</span> 按位与，得到的结果便是 <span
+class="math inline">\(\operatorname{lowbit}(x)\)</span>。下面的图中举了两个例子：</p>
+<p><img
+src="https://pic3.zhimg.com/v2-fd4b485006b55bfd45c13f4348e1e1ee_b.jpg" /></p>
+<p>现在我们可以愉快地实现树状数组了：</p>
+<details class="note primary"><summary><p>单点修改</p>
+</summary>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">modify</span><span class="params">(<span class="type">int</span> k, <span class="type">int</span> x)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = k; i &lt;= n; i += <span class="built_in">lowbit</span>(i)) T[i] += x;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+</details>
+<details class="note primary"><summary><p>求前 <span class="math inline">\(n\)</span> 项和</p>
+</summary>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">query</span><span class="params">(<span class="type">int</span> k)</span> </span>&#123;</span><br><span class="line">    <span class="type">int</span> ans = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = k; i; i -= <span class="built_in">lowbit</span>(i)) ans += T[i];</span><br><span class="line">    <span class="keyword">return</span> ans;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+</details>
+<p>对于区间查询，我们只需用 <code>query(b)</code> 减去
+<code>query(a - 1)</code> 即可。</p>
+<p>初始化的时候，我们只需要 modify 每个点的初始值即可。</p>
+<h2 id="树状数组的局限性">树状数组的局限性</h2>
+<p>一个高级数据结构，必然有它的局限性。我们回顾一下树状数组的查询，它是通过前缀和来实现区间查询的。如果无法通过前缀和求“差”的方式来求出区间和，那么树状数组是难以求出区间和的。比如
+<span class="math inline">\(\&amp;\)</span>、<span
+class="math inline">\(|\)</span> 和 <span
+class="math inline">\(\min\)</span>。其次，树状数组其实是通过结合律来维护区间信息的，所以树状数组只能维护具有结合律的对象。最后来说说树状数组能维护的例子，比较常见的有：<span
+class="math inline">\(\bigoplus\)</span>，<span
+class="math inline">\(+\)</span>，<span
+class="math inline">\(\times\)</span>。</p>
+<p>树状数组还没有没有局限性？相比起线段树，树状数组只能解决<strong>单点修改，区间查询</strong>或者<strong>区间修改，单点查询</strong>的问题，它对于解决<strong>区间修改，区间查询</strong>的问题显得软弱无力。</p>
+<h2 id="树状数组的优势">树状数组的优势</h2>
+<p>首先，树状数组十分好写，无论是修改还是查询，实现起来的代码仅仅两三行。其次，树状数组的常数很小，一是因为它的代码简洁，二是因为它仅仅用
+<span class="math inline">\(O(n)\)</span>
+的空间复杂度就实现了对信息的存储，与之相比线段树至少需要 <span
+class="math inline">\(O(2n)\)</span>
+的空间复杂度。这多一倍的信息存储量也使得线段树能真正意义上实现<strong>区间查询</strong>操作。</p>
+]]></content>
+      <tags>
+        <tag>数据结构</tag>
+        <tag>C++</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Calculus</title>
+    <url>/2023/12/13/Calculus/</url>
+    <content><![CDATA[<p><span class="math inline">\(\int kdx = kx + C\)</span></p>
+<p><span class="math inline">\(\int x^{\mu}dx = \frac{x^{\mu + 1}}{\mu +
+1} + C\)</span></p>
+<p><span class="math inline">\(\int\frac{dx}{x} = \ln\left\vert
+x\right\vert + C\)</span></p>
+<p><span class="math inline">\(\int\frac{dx}{1 + x^2} = \arctan x +
+C\)</span></p>
+<p><span class="math inline">\(\int\frac{dx}{\sqrt{1 - x^2}} = \arcsin x
++ C\)</span></p>
+<p><span class="math inline">\(\int\cos xdx = \sin x + C\)</span></p>
+<p><span class="math inline">\(\int\sin xdx = -\cos x + C\)</span></p>
+<p><span class="math inline">\(\int\sec^2 xdx = \tan x + C\)</span></p>
+<p><span class="math inline">\(\int\csc^2 xdx = -\cot x + C\)</span></p>
+<p><span class="math inline">\(\int\sec x\tan xdx = \sec x +
+C\)</span></p>
+<p><span class="math inline">\(\int\csc x\cot xdx = -\csc x +
+C\)</span></p>
+<p><span class="math inline">\(\int e^xdx = e^x + C\)</span></p>
+<p><span class="math inline">\(\int a^xdx = \frac{a^x}{\ln a} +
+C\)</span></p>
+<p><span class="math inline">\(\int\frac{dx}{a^2 + x^2} =
+\frac{1}{a}\arctan{\frac{x}{a}} + C\)</span></p>
+<p><span class="math inline">\(\int\frac{dx}{\sqrt{a^2 - x^2}} =
+\arcsin{\frac{x}{a}} + C\)</span></p>
+<p><span class="math inline">\(\int\frac{dx}{a^2 - x^2} =
+\frac{1}{2a}\ln\left\vert\frac{a + x}{a - x}\right\vert + C\)</span></p>
+<p><span class="math inline">\(\int\tan xdx = -\ln\left\vert \cos
+x\right\vert + C\)</span></p>
+<p><span class="math inline">\(\int\cot xdx = \ln\left\vert\sin
+x\right\vert + C\)</span></p>
+<p><span class="math inline">\(\int\sec xdx = \ln\left\vert\sec x + \tan
+x\right\vert + C\)</span></p>
+<p><span class="math inline">\(\int\csc xdx = \ln\left\vert\csc x - \cot
+x\right\vert + C\)</span></p>
+<p><span class="math inline">\(\int\frac{dx}{\sqrt{x^2 + a^2}} = \ln(x +
+\sqrt{x^2 + a^2}) + C\)</span></p>
+<p><span class="math inline">\(\int\frac{dx}{\sqrt{x^2 - a^2}} =
+\ln\left\vert x + \sqrt{x^2 - a^2}\right\vert + C\)</span></p>
+]]></content>
+      <tags>
+        <tag>Math</tag>
+        <tag>Calculus</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Hello World</title>
+    <url>/2023/09/28/Hello/</url>
+    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very
+first post. Check <a href="https://hexo.io/docs/">documentation</a> for
+more info. If you get any problems when using Hexo, you can find the
+answer in <a
+href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or
+you can ask me on <a
+href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
+<h2 id="quick-start">Quick Start</h2>
+<h3 id="create-a-new-post">Create a new post</h3>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
+<p>More info: <a
+href="https://hexo.io/docs/writing.html">Writing</a></p>
+<h3 id="run-server">Run server</h3>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
+<h3 id="generate-static-files">Generate static files</h3>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+<p>More info: <a
+href="https://hexo.io/docs/generating.html">Generating</a></p>
+<h3 id="deploy-to-remote-sites">Deploy to remote sites</h3>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+<p>More info: <a
+href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+]]></content>
+  </entry>
+  <entry>
+    <title>Limitation</title>
+    <url>/2024/02/26/Limitation/</url>
+    <content><![CDATA[<h1 id="数列的极限">数列的极限</h1>
+<h2 id="定义">定义</h2>
+<p>设 <span class="math inline">\(\{x_n\}\)</span>
+为一数列，如果存在常数 <span
+class="math inline">\(a\)</span>，是对于任意给定的正数 <span
+class="math inline">\(\epsilon\)</span>（不论它多么小），总存在正整数
+<span class="math inline">\(N\)</span>，使得当 <span
+class="math inline">\(n &gt; N\)</span>时，不等式 <span
+class="math display">\[
+\left\vert x_n - a \right\vert &lt; \varepsilon
+\]</span> 都成立，那么就称常数 <span class="math inline">\(a\)</span>
+是<strong>数列</strong> <span class="math inline">\(\{x_n\}\)</span>
+的<strong>极限</strong>，或者称数列 <span
+class="math inline">\(\{x_n\}\)</span> <strong>收敛于</strong> <span
+class="math inline">\(a\)</span>，记为 <span class="math display">\[
+\lim\limits_{n \to \infty }x_n = a
+\]</span> 或 <span class="math display">\[
+x_n \to a \quad (n \to \infty)
+\]</span> 如果不存在这样的常数 <span
+class="math inline">\(a\)</span>，就说数列 <span
+class="math inline">\(\{x_n\}\)</span> 没有极限，或者说数列 <span
+class="math inline">\(\{x_n\}\)</span>
+是<strong>发散</strong>的，习惯上也说 <span
+class="math inline">\(\lim\limits_{n \to \infty}x_n\)</span>
+不存在。</p>
+<p>数列极限 <span class="math inline">\(\lim\limits_{n\to\infty}x_n =
+a\)</span> 的定义可表达为 <span class="math display">\[
+\lim\limits_{n \to \infty}x_n = a \Leftrightarrow \forall \varepsilon
+&gt; 0, \,
+\exists \,正整数\,N，当\,n &gt; N\,时，有\,\left\vert x_n - a\right\vert
+&lt; \varepsilon
+\]</span></p>
+<h2 id="性质">性质</h2>
+<p><strong>定理 <span
+class="math inline">\(1\)</span>（极限的唯一性）<span
+class="math inline">\(\quad\)</span></strong> 如果数列 <span
+class="math inline">\(\{x_n\}\)</span> 收敛，那么它的极限唯一。</p>
+<p><strong>定理 <span
+class="math inline">\(2\)</span>（收敛数列的有界性）<span
+class="math inline">\(\quad\)</span></strong> 如果数列 <span
+class="math inline">\(\{x_n\}\)</span> 收敛，那么数列 <span
+class="math inline">\(\{x_n\}\)</span> 一定有界。</p>
+<p><strong>定理 <span
+class="math inline">\(3\)</span>（收敛数列的保号性）<span
+class="math inline">\(\quad\)</span></strong> 如果 <span
+class="math inline">\(\lim\limits_{n \to \infty}x_n = a\)</span>，且
+<span class="math inline">\(a &gt; 0\)</span>（或 <span
+class="math inline">\(a &lt; 0\)</span>），那么存在正整数 <span
+class="math inline">\(N\)</span>，当 <span class="math inline">\(n &gt;
+N\)</span> 时，都有 <span class="math inline">\(x_n &gt; 0\)</span>（或
+<span class="math inline">\(x_n &lt; 0\)</span>）。</p>
+<p><strong>推论<span class="math inline">\(\quad\)</span></strong>
+如果数列 <span class="math inline">\(\{x_n\}\)</span> 从某项起有 <span
+class="math inline">\(x_n \ge 0\)</span>（或 <span
+class="math inline">\(x_n \le 0\)</span>），且 <span
+class="math inline">\(\lim\limits_{n\to\infty} x_n = a\)</span>，那么
+<span class="math inline">\(a \ge 0\)</span>（或 <span
+class="math inline">\(a \le 0\)</span>）。</p>
+<p><strong>定理 <span
+class="math inline">\(4\)</span>（收敛数列与其子数列间的关系）<span
+class="math inline">\(\quad\)</span></strong> 如果数列 <span
+class="math inline">\(\{x_n\}\)</span> 收敛于 <span
+class="math inline">\(a\)</span>，那么它的任一子数列也收敛，且极限也是
+<span class="math inline">\(a\)</span>。</p>
+<h1 id="函数的极限">函数的极限</h1>
+<h2 id="定义-1">定义</h2>
+<p><strong>定义 <span class="math inline">\(1\quad\)</span></strong>
+设函数 <span class="math inline">\(f(x)\)</span> 在点 <span
+class="math inline">\(x_0\)</span> 的某一去心邻域内有定义。如果存在常数
+<span class="math inline">\(A\)</span>，对于任一给定的正数 <span
+class="math inline">\(\varepsilon\)</span>（不论它多么小），总存在正数
+<span class="math inline">\(\delta\)</span>，使得当 <span
+class="math inline">\(x\)</span> 满足不等式 <span
+class="math inline">\(0 &lt; \left\vert x - x_0 \right\vert &lt;
+\delta\)</span> 时，对应的函数值 <span
+class="math inline">\(f(x)\)</span> 都满足不等式 <span
+class="math display">\[
+\left\vert f(x) &lt; A \right\vert &lt; \varepsilon
+\]</span> 那么常数 <span class="math inline">\(A\)</span>
+就叫做<strong>函数 <span class="math inline">\(f(x)\)</span> 当 <span
+class="math inline">\(x\to x_0\)</span> 时的极限</strong>，记作 <span
+class="math display">\[
+\lim\limits_{x\to x_0}f(x) = A\ 或\ f(x) \to A\ (\ 当\ x \to x_0\ )
+\]</span> 定义 <span class="math inline">\(1\)</span> 可以简单的表述为
+<span class="math display">\[
+\lim\limits_{x\to x_0}f(x) = A \Leftrightarrow \forall \varepsilon &gt;
+0, \exists \delta &gt; 0, 当 0 &lt; \left\vert x - x_0 \right\vert &lt;
+\delta 时, 有 \left\vert f(x) - A \right\vert &lt; \varepsilon
+\]</span> 在 <span class="math inline">\(\lim\limits_{x\to x_0}f(x) =
+A\)</span> 的定义中，把 <span class="math inline">\(0 &lt; \left\vert x
+- x_0 \right\vert &lt; \delta\)</span> 改为 <span
+class="math inline">\(x_0 - \delta &lt; x &lt; x_0\)</span>，那么 <span
+class="math inline">\(A\)</span> 就叫做函数 <span
+class="math inline">\(f(x)\)</span> 当 <span class="math inline">\(x \to
+x_0\)</span> 时的<strong>左极限</strong>，记作 <span
+class="math display">\[
+\lim\limits_{x \to x^-_0}f(x) = A \quad 或 \quad f(x_0^-) = A
+\]</span> 类似的，把 <span class="math inline">\(0 &lt; \left\vert x -
+x_0\right\vert &lt; \delta\)</span> 改为 <span class="math inline">\(x_0
+&lt; x &lt; x_0 + \delta\)</span>，那么 <span
+class="math inline">\(A\)</span> 就叫做函数 <span
+class="math inline">\(f(x)\)</span> 当 <span class="math inline">\(x \to
+x_0\)</span> 时的<strong>右极限</strong>，记作 <span
+class="math display">\[
+\lim\limits_{x \to x^+_0}f(x) = A \quad 或 \quad f(x_0^+) = A
+\]</span> 函数 <span class="math inline">\(f(x)\)</span> 当 <span
+class="math inline">\(x \to x_0\)</span>
+时极限存在的充分必要条件是左极限及右极限各自存在并且相等，即 <span
+class="math display">\[
+f(x_0^-) = f(x_0^+)
+\]</span> <strong>定义 <span
+class="math inline">\(2\quad\)</span></strong> 设函数 <span
+class="math inline">\(f(x)\)</span> 当 <span
+class="math inline">\(\left\vert x\right\vert\)</span>
+大于某一正数时有定义。如果存在常数 <span
+class="math inline">\(A\)</span>，对于任意给定的正数 <span
+class="math inline">\(\varepsilon\)</span>，总存在正数 <span
+class="math inline">\(X\)</span>，使得当 <span
+class="math inline">\(x\)</span> 满足不等式 <span
+class="math inline">\(\left\vert x\right\vert &gt; X\)</span>
+时，对应的函数值 <span class="math inline">\(f(x)\)</span> 都满足不等式
+<span class="math display">\[
+\left\vert f(x) - A \right\vert &lt; \varepsilon
+\]</span> 那么常数 <span class="math inline">\(A\)</span>
+就叫做<strong>函数 <span class="math inline">\(f(x)\)</span> 当 <span
+class="math inline">\(x \to \infty\)</span> 时的极限</strong>，记作
+<span class="math display">\[
+\lim\limits_{x \to \infty} = A \quad 或 \quad f(x) \to A (当 x\to
+\infty)
+\]</span> 定义 <span class="math inline">\(2\)</span> 可简单地表达为
+<span class="math display">\[
+\lim\limits_{x \to \infty} f(x) = A \Leftrightarrow \forall \varepsilon
+&gt; 0, \exists X &gt; 0, 当 \left\vert x \right\vert &gt; X时，有
+\left\vert f(x) - A \right\vert &lt; \varepsilon
+\]</span></p>
+<h2 id="性质-1">性质</h2>
+<p><strong>定理 <span
+class="math inline">\(1\)</span>（函数极限的唯一性）<span
+class="math inline">\(\quad\)</span></strong> 如果 <span
+class="math inline">\(\lim\limits_{x \to x_0} f(x)\)</span>
+存在，那么这极限唯一。</p>
+<p><strong>定理 <span
+class="math inline">\(2\)</span>（函数极限的局部有界性）<span
+class="math inline">\(\quad\)</span></strong> 如果 <span
+class="math inline">\(\lim\limits_{x \to x_0}f(x) =
+A\)</span>，那么存在常数 <span class="math inline">\(M&gt;0\)</span> 和
+<span class="math inline">\(\delta &gt; 0\)</span>，使得当 <span
+class="math inline">\(0 &lt; \left\vert x - x_0 \right\vert &lt;
+\delta\)</span> 时，有 <span class="math inline">\(\left\vert f(x)
+\right\vert \le M\)</span>。</p>
+<p><strong>定理 <span
+class="math inline">\(3\)</span>（函数极限的局部保号性）<span
+class="math inline">\(\quad\)</span></strong> 如果 <span
+class="math inline">\(\lim\limits_{x \to x_0}f(x) = A\)</span>，且 <span
+class="math inline">\(A &gt; 0\)</span>（或 <span
+class="math inline">\(A &lt; 0\)</span>，那么存在常数 <span
+class="math inline">\(\delta &gt; 0\)</span>，使得当 <span
+class="math inline">\(0 &lt; \left\vert x - x_0 \right\vert &lt;
+\delta\)</span> 时，有 <span class="math inline">\(f(x) &gt;
+0\)</span>（或 <span class="math inline">\(f(x) &lt; 0\)</span>）。</p>
+<p><strong>定理 <span
+class="math inline">\(3^\prime\quad\)</span></strong> 如果 <span
+class="math inline">\(\lim\limits_{x \to x_0}f(x) = A(A \ne
+0)\)</span>，那么就存在着 <span class="math inline">\(x_0\)</span>
+的某一去心邻域 <span
+class="math inline">\(\mathring{U}(x_0)\)</span>，当 <span
+class="math inline">\(x \in \mathring{U}(x_0)\)</span> 时，就有 <span
+class="math inline">\(\left\vert f(x) \right\vert &gt; \frac{\left\vert
+A\right\vert}{2}\)</span>。</p>
+<p><strong>推论<span class="math inline">\(\quad\)</span></strong>
+如果在 <span class="math inline">\(x_0\)</span> 的某去心邻域内 <span
+class="math inline">\(f(x) \ge 0\)</span>（或 <span
+class="math inline">\(f(x) \le 0\)</span>），而且 <span
+class="math inline">\(\lim\limits_{x\to x_0}f(x) = A\)</span>，那么
+<span class="math inline">\(A \ge 0\)</span>（或 <span
+class="math inline">\(A \le 0\)</span>）。</p>
+<p><strong>定理 <span
+class="math inline">\(4\)</span>（函数极限与数列极限的关系）<span
+class="math inline">\(\quad\)</span></strong> 如果极限 <span
+class="math inline">\(\lim\limits_{x \to x_0}f(x)\)</span> 存在，<span
+class="math inline">\(\{x_n\}\)</span> 为函数 <span
+class="math inline">\(f(x)\)</span> 的定义域内任一收敛于 <span
+class="math inline">\(x_0\)</span> 的数列，且满足：<span
+class="math inline">\(x_n \ne x_0\)</span>（<span
+class="math inline">\(n \in N_+\)</span>），那么相应的函数值数列 <span
+class="math inline">\(\{f(x_n)\}\)</span> 必收敛，且 <span
+class="math inline">\(\lim\limits_{n \to \infty}f(x_n) = \lim\limits_{x
+\to x_0}f(x)\)</span>。</p>
+<h1 id="无穷小">无穷小</h1>
+<h2 id="定义-2">定义</h2>
+<p>如果函数 <span class="math inline">\(f(x)\)</span> 当 <span
+class="math inline">\(x \to x_0\)</span>（或 <span
+class="math inline">\(x \to \infty\)</span>）时的极限为零，那么称函数
+<span class="math inline">\(f(x)\)</span> 为当 <span
+class="math inline">\(x \to x_0\)</span>（或 <span
+class="math inline">\(x \to \infty\)</span>）时的无穷小。 ## 性质
+在自变量的同一变化过程 <span class="math inline">\(x \to
+x_0\)</span>（或 <span class="math inline">\(x \to
+\infty\)</span>）中，函数 <span class="math inline">\(f(x)\)</span>
+具有极限 <span class="math inline">\(A\)</span> 的充分必要条件时 <span
+class="math inline">\(f(x) = A + \alpha\)</span>，其中 <span
+class="math inline">\(\alpha\)</span> 是无穷小。 ## 比较 如果 <span
+class="math inline">\(\lim\frac{\beta}{\alpha} = 0\)</span>，那么就说
+<span class="math inline">\(\beta\)</span> 是比 <span
+class="math inline">\(\alpha\)</span>
+<strong>高阶的无穷小</strong>，记作 <span class="math inline">\(\beta =
+o(\alpha)\)</span></p>
+<p>如果 <span class="math inline">\(\lim\frac{\beta}{\alpha} =
+\infty\)</span>，那么就说 <span class="math inline">\(\beta\)</span>
+是比 <span class="math inline">\(\alpha\)</span>
+<strong>低阶的无穷小</strong></p>
+<p>如果 <span class="math inline">\(\lim\frac{\beta}{\alpha} = c \ne
+0\)</span>，那么就说 <span class="math inline">\(\beta\)</span> 与 <span
+class="math inline">\(\alpha\)</span>
+是<strong>同阶的无穷小</strong></p>
+<p>如果 <span class="math inline">\(\lim\frac{\beta}{\alpha^k} = c \ne
+0, k &gt; 0\)</span>，那么就说 <span
+class="math inline">\(\beta\)</span> 是关于 <span
+class="math inline">\(\alpha\)</span> 的 <strong><span
+class="math inline">\(k\)</span> 阶的无穷小</strong></p>
+<p>如果 <span class="math inline">\(\lim\frac{\beta}{\alpha} =
+1\)</span>，那么就说 <span class="math inline">\(\beta\)</span> 与 <span
+class="math inline">\(\alpha\)</span>
+是<strong>等价无穷小</strong>，记作 <span class="math inline">\(\alpha
+\sim \beta\)</span></p>
+<p><strong>定理 <span class="math inline">\(1\quad\)</span></strong>
+<span class="math inline">\(\beta\)</span> 与 <span
+class="math inline">\(\alpha\)</span> 是等价无穷小的充分必要条件为 <span
+class="math display">\[
+\beta = \alpha + o(\alpha)
+\]</span></p>
+<p><strong>定理 <span class="math inline">\(2\quad\)</span></strong> 设
+<span class="math inline">\(\alpha \sim \tilde\alpha\)</span>，<span
+class="math inline">\(\beta \sim \tilde\beta\)</span>，且 <span
+class="math inline">\(\lim\limits\frac{\tilde\beta}{\tilde\alpha}\)</span>
+存在，则 <span class="math display">\[
+\lim\limits\frac{\beta}{\alpha} =
+\lim\limits\frac{\tilde\beta}{\tilde\alpha}
+\]</span> # 无穷大 ## 定义 设函数 <span
+class="math inline">\(f(x)\)</span> 在 <span
+class="math inline">\(x_0\)</span> 的某一去心邻域内有定义（或 <span
+class="math inline">\(\left\vert x \right\vert\)</span>
+大于某一正数时有定义）。如果对于任意给定的正数 <span
+class="math inline">\(M\)</span>（不论它有多大），总存在正数 <span
+class="math inline">\(\delta\)</span>（或正数 <span
+class="math inline">\(X\)</span>），只要 <span
+class="math inline">\(x\)</span> 适合不等式 <span
+class="math inline">\(0 &lt; \left\vert x - x_0 \right\vert &lt;
+\delta\)</span>（或 <span class="math inline">\(\left\vert x \right\vert
+&gt; X\)</span>），对应的函数值 <span
+class="math inline">\(f(x)\)</span> 总满足不等式 <span
+class="math display">\[
+\left\vert f(x) \right\vert &gt; M
+\]</span> 那么称函数 <span class="math inline">\(f(x)\)</span> 是当
+<span class="math inline">\(x \to x_0\)</span>（或 <span
+class="math inline">\(x \to \infty\)</span>）时的无穷大。</p>
+<h2 id="性质-2">性质</h2>
+<p>在自变量的同一变化过程中，如果 <span
+class="math inline">\(f(x)\)</span> 为无穷大，那么 <span
+class="math inline">\(\frac{1}{f(x)}\)</span> 为无穷小；反之，如果 <span
+class="math inline">\(f(x)\)</span> 为无穷小，且 <span
+class="math inline">\(f(x) \ne 0\)</span>，那么 <span
+class="math inline">\(\frac{1}{f(x)}\)</span> 为无穷大。</p>
+<h1 id="极限运算法则">极限运算法则</h1>
+<p><strong>定理 <span class="math inline">\(1\quad\)</span></strong>
+有限个无穷小的和是无穷小</p>
+<p><strong>定理 <span class="math inline">\(2\quad\)</span></strong>
+有界函数与无穷小的乘积是无穷小</p>
+<p><strong>推论 <span class="math inline">\(1\quad\)</span></strong>
+常数与无穷小的乘积是无穷小</p>
+<p><strong>推论 <span class="math inline">\(2\quad\)</span></strong>
+有限个无穷小的乘积是无穷小</p>
+<p><strong>定理 <span class="math inline">\(3\quad\)</span></strong>
+如果 <span class="math inline">\(\lim f(x)=A, \lim g(x) =
+B\)</span>，那么</p>
+<ol type="1">
+<li><span class="math inline">\(\lim\left[f(x) \pm g(x) \right] = \lim
+f(x) \pm \lim g(x) = A \pm B\)</span></li>
+<li><span class="math inline">\(\lim\left[f(x) \cdot g(x) \right] = \lim
+f(x) \cdot \lim g(x) = A \cdot B\)</span></li>
+<li>若又有 <span class="math inline">\(B \ne 0\)</span>，则</li>
+</ol>
+<p><span class="math display">\[
+\lim \frac{f(x)}{g(x)} = \frac{\lim f(x)}{\lim g(x)} = \frac{A}{B}
+\]</span></p>
+<p><strong>定理 <span class="math inline">\(4\quad\)</span></strong>
+设有数列 <span class="math inline">\(\{x_n\}\)</span> 和 <span
+class="math inline">\(\{y_n\}\)</span>。如果 <span
+class="math display">\[
+\lim\limits_{n\to\infty}x_n = A,\quad \lim\limits_{n\to\infty}y_n = B
+\]</span> 那么 1. <span
+class="math inline">\(\lim\limits_{n\to\infty}(x_n\pm y_n) = A \pm
+B\)</span> 2. <span class="math inline">\(\lim\limits_{n\to\infty}(x_n
+\cdot y_n) = A \cdot B\)</span> 3. 当 <span class="math inline">\(y_n
+\ne 0\)</span>（<span class="math inline">\(n = 1, 2,
+\cdots\)</span>）且 <span class="math inline">\(B \ne 0\)</span>
+时，<span class="math inline">\(\lim\limits_{n\to\infty}\frac{x_n}{y_n}
+= \frac{A}{B}\)</span></p>
+<p><strong>定理 <span class="math inline">\(5\quad\)</span></strong>
+如果 <span class="math inline">\(\varphi(x) \ge \psi(x)\)</span>，而
+<span class="math inline">\(\lim\limits \varphi(x) = A\)</span>，<span
+class="math inline">\(\lim\limits \psi(x) = B\)</span>，那么 <span
+class="math inline">\(A \ge B\)</span>。</p>
+<p><strong>定理 <span
+class="math inline">\(6\)</span>（复合函数的极限运算法则）<span
+class="math inline">\(\quad\)</span></strong> 设函数 <span
+class="math inline">\(y = f\left[g(x)\right]\)</span> 是由函数 <span
+class="math inline">\(u = g(x)\)</span> 与函数 <span
+class="math inline">\(y = f(u)\)</span> 复合而成，<span
+class="math inline">\(f\left[g(x)\right]\)</span> 在点 <span
+class="math inline">\(x_0\)</span> 的某去心邻域内有定义，若 <span
+class="math inline">\(\lim\limits_{x\to x_0}g(x) = u_0\)</span>，<span
+class="math inline">\(\lim\limits_{u \to u_0}f(u) = A\)</span>，且存在
+<span class="math inline">\(\delta_0 &gt; 0\)</span>，当 <span
+class="math inline">\(x \in \mathring{U}(x_0, \delta_0)\)</span> 时，有
+<span class="math inline">\(g(x) \ne u_0\)</span>，则 <span
+class="math display">\[
+\lim\limits_{x \to x_0}f\left[g(x)\right] = \lim\limits_{u\to u_0}f(u) =
+A
+\]</span></p>
+<h1 id="极限存在准则">极限存在准则</h1>
+<p><strong>准则 <span
+class="math inline">\(\mathrm{I}\quad\)</span></strong> 如果数列 <span
+class="math inline">\(\{x_n\}\)</span>，<span
+class="math inline">\(\{y_n\}\)</span> 及 <span
+class="math inline">\(\{z_n\}\)</span> 满足下列条件： 1. 从某项起，即
+<span class="math inline">\(\exists n_0 \in \N_+\)</span>，当 <span
+class="math inline">\(n &gt; n_0\)</span> 时，有 <span
+class="math display">\[
+y_n \le x_n \le z_n
+\]</span> 2. <span class="math inline">\(\lim\limits_{n \to \infty}y_n =
+a, \lim\limits_{n\to\infty}z_n = a\)</span></p>
+<p>那么数列 <span class="math inline">\(\{x_n\}\)</span> 的极限存在，且
+<span class="math inline">\(\lim\limits_{n\to\infty}x_n = a\)</span></p>
+<p><strong>准则 <span
+class="math inline">\(\mathrm{I}^\prime\quad\)</span></strong> 如果 1.
+当 <span class="math inline">\(x \in \mathring{U}(x_0, r)\)</span>（或
+<span class="math inline">\(\left\vert x \right\vert &gt;
+M\)</span>）时，</p>
+<p><span class="math display">\[
+g(x) \le f(x) \le h(x)
+\]</span></p>
+<ol start="2" type="1">
+<li><span class="math inline">\(\lim\limits_{x\to x_0 \atop (x \to
+\infty)}g(x) = A, \lim\limits_{x\to x_0 \atop (x\to\infty)}h(x) =
+A\)</span></li>
+</ol>
+<p>那么 <span class="math inline">\(\lim\limits_{x\to x_0 \atop (x\to
+\infty)}f(x)\)</span> 存在，且等于 <span
+class="math inline">\(A\)</span>。</p>
+<p>准则 <span class="math inline">\(\mathrm{I}\)</span> 及准则 <span
+class="math inline">\(\mathrm{I}^\prime\)</span>
+称为<strong>夹逼准则</strong>。</p>
+<p><strong>准则 <span
+class="math inline">\(\mathrm{II}\quad\)</span></strong>
+单调有界数列必有极限。</p>
+]]></content>
+      <tags>
+        <tag>Math</tag>
+        <tag>Calculus</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>STL</title>
+    <url>/2023/10/05/STL/</url>
+    <content><![CDATA[<h2 id="栈">栈</h2>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;stack&gt;</span></span></span><br><span class="line">stack &lt;<span class="type">int</span>&gt; S;</span><br><span class="line">S.<span class="built_in">top</span>();</span><br><span class="line">S.<span class="built_in">pop</span>();</span><br><span class="line">S.<span class="built_in">push</span>();</span><br><span class="line">S.<span class="built_in">size</span>();</span><br><span class="line">S.<span class="built_in">empty</span>();</span><br></pre></td></tr></table></figure>
+<h2 id="手写栈">手写栈</h2>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span> S[maxn],h;</span><br><span class="line">S[++h] = x; <span class="comment">// push</span></span><br><span class="line">h--;        <span class="comment">// pop</span></span><br></pre></td></tr></table></figure>
+<h2 id="队列">队列</h2>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;queue&gt;</span></span></span><br><span class="line">queue &lt;<span class="type">int</span>&gt; Q;</span><br><span class="line">Q.<span class="built_in">front</span>();</span><br><span class="line">Q.<span class="built_in">pop</span>();</span><br><span class="line">Q.<span class="built_in">push</span>();</span><br><span class="line">Q.<span class="built_in">size</span>();</span><br><span class="line">Q.<span class="built_in">empty</span>();</span><br></pre></td></tr></table></figure>
+<h2 id="手写队列">手写队列</h2>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span> Q[maxn],h,t;</span><br><span class="line">Q[++h] = x;  <span class="comment">// push</span></span><br><span class="line">t++;         <span class="comment">// pop</span></span><br></pre></td></tr></table></figure>
+<h2 id="双端队列">双端队列</h2>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;deque&gt;</span></span></span><br><span class="line">deque&lt;<span class="type">int</span>&gt; Dq;</span><br><span class="line">Dq.</span><br></pre></td></tr></table></figure>
+<h2 id="优先队列">优先队列</h2>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;queue&gt;</span></span></span><br><span class="line">priority_queue &lt;<span class="type">int</span>&gt; Pq;</span><br><span class="line">Pq.<span class="built_in">top</span>();</span><br><span class="line">Pq.<span class="built_in">pop</span>();</span><br><span class="line">Pq.<span class="built_in">push</span>();</span><br><span class="line">Pq.<span class="built_in">size</span>();</span><br><span class="line">Pq.<span class="built_in">empty</span>();</span><br></pre></td></tr></table></figure>
+<h2 id="小根堆">小根堆</h2>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line">priority_queue &lt;<span class="type">int</span>,vector&lt;<span class="type">int</span>&gt;,greater&lt;<span class="type">int</span>&gt; &gt; Pq;</span><br></pre></td></tr></table></figure>
+<h2 id="向量">向量</h2>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;vector&gt;</span></span></span><br><span class="line">vector&lt;<span class="type">int</span>&gt; V;</span><br><span class="line">V.<span class="built_in">push_back</span>();</span><br><span class="line">V.<span class="built_in">pop_back</span>();</span><br><span class="line">V.<span class="built_in">size</span>();</span><br><span class="line">V[i];</span><br><span class="line">V.<span class="built_in">clear</span>();</span><br><span class="line"><span class="built_in">sort</span>(V.<span class="built_in">begin</span>(), V.<span class="built_in">end</span>());</span><br></pre></td></tr></table></figure>
+<h2 id="列表">列表</h2>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;list&gt;</span></span></span><br><span class="line">list&lt;<span class="type">int</span>&gt; L;</span><br><span class="line">L.<span class="built_in">clear</span>();</span><br><span class="line">L.<span class="built_in">push_back</span>(x);</span><br><span class="line">L.<span class="built_in">push_front</span>(x);</span><br><span class="line">L.<span class="built_in">pop_back</span>();</span><br><span class="line">L.<span class="built_in">pop_front</span>();</span><br><span class="line">iter = L.<span class="built_in">erase</span>(iter); <span class="comment">//删除 iter 处的元素，并且返回下一元素的迭代器</span></span><br><span class="line">iter = L.<span class="built_in">insert</span>(iter, x); <span class="comment">//在 iter 处插入 x，并且返回 x 的迭代器</span></span><br></pre></td></tr></table></figure>
+<h2 id="映射">映射</h2>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;map&gt;</span></span></span><br><span class="line">map&lt;string, <span class="type">int</span>&gt; M;</span><br><span class="line">M[<span class="string">&quot;ATP&quot;</span>] = <span class="number">5</span>;</span><br><span class="line"><span class="keyword">if</span> (M.<span class="built_in">count</span>(<span class="string">&quot;...&quot;</span>) ...;</span><br><span class="line">M.<span class="built_in">erase</span>(<span class="string">&quot;...&quot;</span>);</span><br><span class="line">M.<span class="built_in">clear</span>();</span><br><span class="line">M.<span class="built_in">empty</span>();</span><br><span class="line">M.<span class="built_in">size</span>();</span><br></pre></td></tr></table></figure>
+<h2 id="集合">集合</h2>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;set&gt;</span></span></span><br><span class="line">set&lt;<span class="type">int</span>&gt; S;</span><br><span class="line">S.<span class="built_in">insert</span>();</span><br><span class="line">S.<span class="built_in">erase</span>();</span><br><span class="line">S.<span class="built_in">size</span>();</span><br><span class="line">S.<span class="built_in">empty</span>();</span><br><span class="line">set&lt;<span class="type">int</span>&gt;::iterator i;</span><br><span class="line">i = S.<span class="built_in">upper_bound</span>(x);      <span class="comment">//查询大于等于 x 中最小的数</span></span><br><span class="line">i = S.<span class="built_in">upper_bound</span>(x); i--; <span class="comment">//查询小于 x 中最大的数</span></span><br><span class="line">i = S.<span class="built_in">lower_bound</span>(x);      <span class="comment">//查询大于 x 中最小的数</span></span><br><span class="line">i = S.<span class="built_in">lower_bound</span>(x); i--; <span class="comment">//查询小于等于 x 中最大的数</span></span><br><span class="line">i = S.<span class="built_in">find</span>(x); <span class="keyword">if</span> (i != S.<span class="built_in">end</span>()) ...;</span><br><span class="line"><span class="keyword">for</span>(i = S.<span class="built_in">begin</span>(); i != S.<span class="built_in">end</span>(); i++);</span><br></pre></td></tr></table></figure>
+<h2 id="字符串">字符串</h2>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;string&gt;</span></span></span><br><span class="line">string S;</span><br><span class="line">S.<span class="built_in">length</span>(); <span class="comment">//字符串的长度，等价于 S.size()</span></span><br><span class="line">S.<span class="built_in">insert</span>(index, count, ch); <span class="comment">//在第 index 处插入 count 个字符 ch</span></span><br><span class="line">S.<span class="built_in">erase</span>(pos, n); <span class="comment">//删除从第 pos 开始的 n 个字符</span></span><br><span class="line">S.<span class="built_in">substr</span>(pos, len); <span class="comment">//获取从下标 pos 开始的长度为 len 的子字符串</span></span><br><span class="line">S.<span class="built_in">replace</span>(pos, len, str); <span class="comment">//替换从下标 pos 开始的长度为 len 的子字符串为 str</span></span><br><span class="line">pos = S.<span class="built_in">find</span>(str, pos); <span class="comment">//从下标 pos 查找 S 中是否有子字符串 str，有则返回 str 的第一个下标，没有则返回 string::pos</span></span><br></pre></td></tr></table></figure>
+]]></content>
+      <tags>
+        <tag>数据结构</tag>
+        <tag>C++</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>STM32</title>
+    <url>/2023/11/25/STM32/</url>
+    <content><![CDATA[<h2 id="gpio">GPIO</h2>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">HAL_GPIO_WritePin</span><span class="params">(GPIO_TypeDef *GPIOx, <span class="type">uint16_t</span> GPIO_Pin, GPIO_PinState PinState)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="function">GPIO_PinState <span class="title">HAL_GPIO_ReadPin</span><span class="params">(GPIO_TypeDef *GPIOx, <span class="type">uint16_t</span> GPIO_Pin)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">HAL_GPIO_TogglePin</span><span class="params">(GPIO_TypeDef *GPIOx, <span class="type">uint16_t</span> GPIO_Pin)</span></span>;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h2 id="lcd">LCD</h2>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">LCD_Init</span><span class="params">(<span class="type">void</span>)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">LCD_SetTextColor</span><span class="params">(vu16 Color)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">LCD_SetBackColor</span><span class="params">(vu16 Color)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">LCD_Clear</span><span class="params">(u16 Color)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">LCD_DisplayStringLine</span><span class="params">(u8 Line, u8 *ptr)</span></span>;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h2 id="tim">TIM</h2>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="function">HAL_StatusTypeDef <span class="title">HAL_TIM_Base_Start_IT</span><span class="params">(TIM_HandleTypeDef *htim)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">HAL_TIM_PeriodElapsedCallback</span><span class="params">(TIM_HandleTypeDef *htim)</span></span>;</span><br></pre></td></tr></table></figure>
+<h2 id="uart">UART</h2>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="function">HAL_StatusTypeDef <span class="title">HAL_UART_Transmit</span><span class="params">(UART_HandleTypeDef *huart, <span class="type">uint8_t</span> *pData, <span class="type">uint16_t</span> Size, <span class="type">uint32_t</span> Timeout)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="function">HAL_StatusTypeDef <span class="title">HAL_UART_Transmit_IT</span><span class="params">(UART_HandleTypeDef *huart, <span class="type">uint8_t</span> *pData, <span class="type">uint16_t</span> Size)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">HAL_UART_TxCpltCallback</span><span class="params">(UART_HandleTypeDef *huart)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="function">HAL_StatusTypeDef <span class="title">HAL_UART_Receive</span><span class="params">(UART_HandleTypeDef *huart, <span class="type">uint8_t</span> *pData, <span class="type">uint16_t</span> Size, <span class="type">uint32_t</span> Timeout)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="function">HAL_StatusTypeDef <span class="title">HAL_UART_Receive_IT</span><span class="params">(UART_HandleTypeDef *huart, <span class="type">uint8_t</span> *pData, <span class="type">uint16_t</span> Size)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">HAL_UART_RxCpltCallback</span><span class="params">(UART_HandleTypeDef *huart)</span></span>;</span><br></pre></td></tr></table></figure>
+<h2 id="adc">ADC</h2>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="function">HAL_StatusTypeDef <span class="title">HAL_ADC_Start</span><span class="params">(ADC_HandleTypeDef *hadc)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">uint32_t</span> <span class="title">HAL_ADC_GetValue</span><span class="params">(ADC_HandleTypeDef *hadc)</span></span>;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+]]></content>
+      <tags>
+        <tag>STM32</tag>
+        <tag>单片机</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Ubuntu</title>
+    <url>/2023/03/21/Ubuntu/</url>
+    <content><![CDATA[<h3 id="前言">前言</h3>
+<p>由于软件安装教程具有时效性，故只放置官网链接。</p>
+<h3 id="更新系统时间">更新系统时间</h3>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cp</span> /usr/share/zoneinfo/Asia/Shanghai /etc/localtime</span><br></pre></td></tr></table></figure>
+<h3 id="修改主机名">修改主机名</h3>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">vim /etc/hostname</span><br><span class="line">vim /etc/hosts</span><br></pre></td></tr></table></figure>
+<h3 id="修改root密码">修改root密码</h3>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">passwd</span><br></pre></td></tr></table></figure>
+<h3 id="修改静态-ip">修改静态 IP</h3>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">nmtui <span class="comment">#注意设置DNS</span></span><br></pre></td></tr></table></figure>
+<h3 id="挂载-ntfs-硬盘">挂载 NTFS 硬盘</h3>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">mount -t ntfs-3g /dev/sda3 /mnt/pssd</span><br></pre></td></tr></table></figure>
+<h3 id="开机自动挂载ntfs硬盘">开机自动挂载NTFS硬盘</h3>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">vim /etc/fstab</span><br><span class="line">/dev/sda3 /mnt ntfs-3g defaults 0 0</span><br></pre></td></tr></table></figure>
+<h3 id="系统监控软件">系统监控软件</h3>
+<ul>
+<li><h4 id="s-tui">s-tui</h4></li>
+</ul>
+<details class="note "><summary><p>Code</p>
+</summary>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">apt install python3-pip python3-dev -y</span><br><span class="line">pip3 install s-tui</span><br></pre></td></tr></table></figure>
+
+</details>
+<h3 id="ddns">DDNS</h3>
+<ul>
+<li><h4 id="ddns-go"><a
+href="https://github.com/jeessy2/ddns-go">ddns-go</a></h4></li>
+</ul>
+<h3 id="私有云">私有云</h3>
+<ul>
+<li><h4 id="nextcloud"><a
+href="https://github.com/jeessy2/ddns-go">Nextcloud</a></h4></li>
+</ul>
+<h3 id="免费-ssl-证书">免费 SSL 证书</h3>
+<ul>
+<li><h4 id="acme.sh"><a
+href="https://github.com/acmesh-official/acme.sh">acme.sh</a></h4></li>
+</ul>
+<p>安装MC服务器 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">#先下载服务器版安装包 https://mcversions.net/</span><br><span class="line">apt install openjdk-17-jre -y</span><br><span class="line">mkdir /etc/minecraft</span><br><span class="line">cd /etc/minecraft</span><br><span class="line">java -Xms2G -Xmx4G -jar server.jar nogui</span><br><span class="line"></span><br><span class="line">vim eula.txt</span><br><span class="line">eula=true</span><br><span class="line"></span><br><span class="line">vim /lib/systemd/system/minecraft.service</span><br><span class="line">[Unit]</span><br><span class="line">Description=Minecraft Server</span><br><span class="line">Wants=network.target</span><br><span class="line">After=network.target</span><br><span class="line"></span><br><span class="line">[Service]</span><br><span class="line">Type=simple</span><br><span class="line">WorkingDirectory=/etc/minecraft/</span><br><span class="line">ExecStart=/usr/bin/java -Xms2G -Xmx4G -jar /etc/minecraft/server.jar nogui</span><br><span class="line">RestartSec=30</span><br><span class="line">Restart=on-failure</span><br><span class="line">KillMode=process</span><br><span class="line">KillSignal=SIGINT</span><br><span class="line">SuccessExitStatus=130</span><br><span class="line">StandardInput=null</span><br><span class="line"></span><br><span class="line">[Install]</span><br><span class="line">WantedBy=default.target</span><br><span class="line"></span><br><span class="line">systemctl enable minecraft</span><br><span class="line">systemctl start minecraft</span><br><span class="line">#记得在路由器上转发25565端口</span><br></pre></td></tr></table></figure></p>
+<h3 id="下载器">下载器</h3>
+<ul>
+<li><h4 id="aria2"><a
+href="https://github.com/P3TERX/aria2.sh">Aria2</a></h4></li>
+<li><h4 id="ariang"><a
+href="http://ariang.mayswind.net/zh_Hans/">AriaNg</a></h4></li>
+</ul>
+<h3 id="媒体服务器">媒体服务器</h3>
+<ul>
+<li><h4 id="plex"><a href="https://www.plex.tv/">Plex</a></h4></li>
+<li><h4 id="jellyfin"><a
+href="https://jellyfin.org/">Jellyfin</a></h4></li>
+</ul>
+<h3 id="网页版-ssh">网页版 SSH</h3>
+<ul>
+<li><h4 id="sshwifty"><a
+href="https://github.com/nirui/sshwifty">Sshwifty</a></h4></li>
+</ul>
+<h3 id="博客">博客</h3>
+<ul>
+<li><h4 id="hexo"><a
+href="https://hexo.io/zh-cn/index.html">Hexo</a></h4></li>
+<li><h4 id="next"><a
+href="https://theme-next.js.org/">NexT</a></h4></li>
+</ul>
+<h3 id="科学上网">科学上网</h3>
+<ul>
+<li><h4 id="v2raya"><a href="https://v2raya.org/">v2rayA</a></h4></li>
+</ul>
+]]></content>
+      <tags>
+        <tag>Linux</tag>
+        <tag>Ubuntu</tag>
+        <tag>Sever</tag>
+      </tags>
+  </entry>
+</search>
