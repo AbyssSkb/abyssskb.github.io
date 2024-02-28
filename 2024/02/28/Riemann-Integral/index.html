@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","darkmode":true,"version":"8.18.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":null},"fold":{"enable":true,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="在实分析中，由黎曼创立的黎曼积分（英语：Riemann integral）首次对函数在给定区间上的积分给出了一个精确定义。黎曼积分在技术上的某些不足之处可由后来的黎曼－斯蒂尔杰斯积分和勒贝格积分得到修补。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="黎曼积分">
+<meta property="og:url" content="http://example.com/2024/02/28/Riemann-Integral/index.html">
+<meta property="og:site_name" content="Abyss&#39;s Blog">
+<meta property="og:description" content="在实分析中，由黎曼创立的黎曼积分（英语：Riemann integral）首次对函数在给定区间上的积分给出了一个精确定义。黎曼积分在技术上的某些不足之处可由后来的黎曼－斯蒂尔杰斯积分和勒贝格积分得到修补。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2024-02-28T12:03:27.000Z">
+<meta property="article:modified_time" content="2024-02-28T14:39:22.550Z">
+<meta property="article:author" content="Abyss Skb">
+<meta property="article:tag" content="Math">
+<meta property="article:tag" content="Calculus">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://example.com/2024/02/28/Riemann-Integral/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/2024/02/28/Riemann-Integral/","path":"2024/02/28/Riemann-Integral/","title":"黎曼积分"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>黎曼积分 | Abyss's Blog</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Abyss's Blog</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%BB%8E%E6%9B%BC%E7%A7%AF%E5%88%86"><span class="nav-number">1.</span> <span class="nav-text">黎曼积分</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9A%E4%B9%89"><span class="nav-number">1.1.</span> <span class="nav-text">定义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%A7%E8%B4%A8"><span class="nav-number">1.2.</span> <span class="nav-text">性质</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E8%88%AC%E6%84%8F%E4%B9%89"><span class="nav-number">1.3.</span> <span class="nav-text">一般意义</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BA%8C%E9%87%8D%E7%A7%AF%E5%88%86"><span class="nav-number">2.</span> <span class="nav-text">二重积分</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9A%E4%B9%89-1"><span class="nav-number">2.1.</span> <span class="nav-text">定义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%89%A9%E7%90%86%E6%84%8F%E4%B9%89"><span class="nav-number">2.2.</span> <span class="nav-text">物理意义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%87%A0%E4%BD%95%E6%84%8F%E4%B9%89"><span class="nav-number">2.3.</span> <span class="nav-text">几何意义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AE%A1%E7%AE%97%E5%85%AC%E5%BC%8F"><span class="nav-number">2.4.</span> <span class="nav-text">计算公式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%A7%AF%E5%88%86%E6%8D%A2%E5%BA%8F"><span class="nav-number">2.5.</span> <span class="nav-text">积分换序</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%89%E9%87%8D%E7%A7%AF%E5%88%86"><span class="nav-number">3.</span> <span class="nav-text">三重积分</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9A%E4%B9%89-2"><span class="nav-number">3.1.</span> <span class="nav-text">定义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%89%A9%E7%90%86%E6%84%8F%E4%B9%89-1"><span class="nav-number">3.2.</span> <span class="nav-text">物理意义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AE%A1%E7%AE%97%E6%96%B9%E6%B3%95"><span class="nav-number">3.3.</span> <span class="nav-text">计算方法</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%AC%AC%E4%B8%80%E5%9E%8B%E6%9B%B2%E7%BA%BF%E7%A7%AF%E5%88%86"><span class="nav-number">4.</span> <span class="nav-text">第一型曲线积分</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9A%E4%B9%89-3"><span class="nav-number">4.1.</span> <span class="nav-text">定义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%89%A9%E7%90%86%E6%84%8F%E4%B9%89-2"><span class="nav-number">4.2.</span> <span class="nav-text">物理意义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%87%A0%E4%BD%95%E6%84%8F%E4%B9%89-1"><span class="nav-number">4.3.</span> <span class="nav-text">几何意义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AE%A1%E7%AE%97%E6%96%B9%E6%B3%95-1"><span class="nav-number">4.4.</span> <span class="nav-text">计算方法</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%AC%AC%E4%B8%80%E5%9E%8B%E6%9B%B2%E9%9D%A2%E7%A7%AF%E5%88%86"><span class="nav-number">5.</span> <span class="nav-text">第一型曲面积分</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9A%E4%B9%89-4"><span class="nav-number">5.1.</span> <span class="nav-text">定义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%89%A9%E7%90%86%E6%84%8F%E4%B9%89-3"><span class="nav-number">5.2.</span> <span class="nav-text">物理意义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AE%A1%E7%AE%97%E6%96%B9%E6%B3%95-2"><span class="nav-number">5.3.</span> <span class="nav-text">计算方法</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Abyss Skb</p>
+  <div class="site-description" itemprop="description">Everything is possiblility!!!</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">8</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/02/28/Riemann-Integral/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Abyss Skb">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Abyss's Blog">
+      <meta itemprop="description" content="Everything is possiblility!!!">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="黎曼积分 | Abyss's Blog">
+      <meta itemprop="description" content="在实分析中，由黎曼创立的黎曼积分（英语：Riemann integral）首次对函数在给定区间上的积分给出了一个精确定义。黎曼积分在技术上的某些不足之处可由后来的黎曼－斯蒂尔杰斯积分和勒贝格积分得到修补。">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          黎曼积分
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2024-02-28 20:03:27 / 修改时间：22:39:22" itemprop="dateCreated datePublished" datetime="2024-02-28T20:03:27+08:00">2024-02-28</time>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+            <div class="post-description">在实分析中，由黎曼创立的黎曼积分（英语：Riemann integral）首次对函数在给定区间上的积分给出了一个精确定义。黎曼积分在技术上的某些不足之处可由后来的黎曼－斯蒂尔杰斯积分和勒贝格积分得到修补。</div>
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h1 id="黎曼积分">黎曼积分</h1>
+<h2 id="定义">定义</h2>
+<p>设 <span class="math inline">\(\Omega\)</span>
+为有限的几何体（一段曲线，一段曲面，一块有限空间体），<span
+class="math inline">\(u = f(P)\)</span> 是定义在 <span
+class="math inline">\(\Omega\)</span> 上的点函数，将 <span
+class="math inline">\(\Omega\)</span> 任意分成 <span
+class="math inline">\(n\)</span> 个小的几何体，<span
+class="math inline">\(\Delta\Omega_1,\Delta\Omega_2,\cdots,\Delta\Omega_n\)</span>，并用此记号表示其几何量，称
+<span class="math inline">\(\sup\limits_{P_1, P_2 \in
+\Delta\Omega_i}\left\{\left\vert P_1P_2 \right\vert\right\} =
+d_i\)</span> 为 <span class="math inline">\(\Delta\Omega_i\)</span>
+的直径，<span class="math inline">\(\lambda =
+\max\limits_{i=1,2,\cdots,n}\{d_i\}\)</span>，然后在每个小的几何形体
+<span class="math inline">\(\Delta\Omega_i\)</span> 上做乘积 <span
+class="math inline">\(f(P_i)\Delta\Omega_i, P_i \in
+\Delta\Omega_i\)</span>，并将它们加起来，得 <span
+class="math inline">\(\sum_{i=1}^n
+f(P_i)\Delta\Omega_i\)</span>。如果不论 <span
+class="math inline">\(\Omega\)</span> 如何分，<span
+class="math inline">\(P_i \in \Delta\Omega_i\)</span> 如何取，下述极限
+<span class="math inline">\(\lim\limits_{\lambda \to 0} \sum_{i=1}^n
+f(P_i)\Delta\Omega_i\)</span> 均存在且相等，则称 <span
+class="math inline">\(f(P)\)</span> 在 <span
+class="math inline">\(\Omega\)</span> 上可积，其极限值为 <span
+class="math inline">\(f(P)\)</span> 在 <span
+class="math inline">\(\Omega\)</span> 上黎曼积分。一般记号，<span
+class="math inline">\(\lim\limits_{\lambda\to 0} \sum_{i=1}^n
+f(P_i)\Delta\Omega_i \triangleq \int\limits_\Omega
+f(P)d\Omega\)</span></p>
+<h2 id="性质">性质</h2>
+<ol type="1">
+<li><span class="math inline">\(\int\limits_\Omega f(P)d\Omega =
+\int\limits_\Omega f(P)dV\)</span>，积分与变量无关</li>
+<li><span class="math inline">\(\int\limits_\Omega d\Omega =
+\Omega\)</span></li>
+<li><span class="math inline">\(\int\limits_\Omega \left[\alpha f(P) \pm
+\beta g(P)\right]d\Omega = \alpha \int\limits_\Omega f(P)d\Omega \pm
+\beta\int\limits_\Omega g(P)d\Omega\)</span></li>
+<li>若 <span class="math inline">\(\Omega = \Omega_1 +
+\Omega_2\)</span>，则 <span class="math inline">\(\int\limits_\Omega
+f(P) d\Omega = \int\limits_{\Omega_1} f(P) d\Omega +
+\int\limits_{\Omega_2} f(P)d\Omega\)</span></li>
+<li>若 <span class="math inline">\(f(P) \ge g(P), P \in
+\Omega\)</span>，则 <span class="math inline">\(\int\limits_\Omega f(P)
+d\Omega \ge \int\limits_\Omega g(P)d\Omega\)</span></li>
+<li>若 <span class="math inline">\(P \in \Omega\)</span>，则 <span
+class="math inline">\(\left\vert \int\limits_\Omega f(P)d\Omega
+\right\vert \le \int\limits_\Omega \left\vert f(P) \right\vert
+d\Omega\)</span></li>
+<li>若 <span class="math inline">\(m \le f(P) \le M, P \in
+\Omega\)</span>，则 <span class="math inline">\(m\Omega \le
+\int\limits_\Omega f(P)d\Omega \le M\Omega\)</span></li>
+<li>设 <span class="math inline">\(f(P)\)</span> 是有界闭区域 <span
+class="math inline">\(\Omega\)</span> 上连续函数，则 <span
+class="math inline">\(\int\limits_\Omega f(P)d\Omega = f(P^*)\Omega, P^*
+\in \Omega\)</span></li>
+<li>若 <span class="math inline">\(\Omega\)</span> 关于 <span
+class="math inline">\(x=0(y=0,z=0)\)</span> 对称，且 <span
+class="math inline">\(f(P)\)</span> 是关于 <span
+class="math inline">\(x(y,z)\)</span> 的奇函数，则 <span
+class="math inline">\(\int\limits_\Omega f(P)d\Omega = 0\)</span></li>
+</ol>
+<h2 id="一般意义">一般意义</h2>
+<p>表示以 <span class="math inline">\(f(P)\)</span> 为密度函数的几何体
+<span class="math inline">\(\Omega\)</span> 的质量代数和。</p>
+<h1 id="二重积分">二重积分</h1>
+<h2 id="定义-1">定义</h2>
+<p>若 <span class="math inline">\(D\)</span> 是坐标面（不妨设为）<span
+class="math inline">\(oxy\)</span> 平面上的一个有界闭区域，在坐标系下
+<span class="math inline">\(f(P)\)</span> 就是一个二元函数 <span
+class="math inline">\(f(x,y)\)</span>，称它在 <span
+class="math inline">\(D\)</span> 上的黎曼积分为 <span
+class="math inline">\(f(x,y)\)</span> 在 <span
+class="math inline">\(D\)</span> 上的<strong>二重积分</strong>，记为
+<span class="math display">\[
+\iint\limits_D f(x,y)d\sigma = \iint\limits_D f(x,y)dxdy
+\]</span></p>
+<h2 id="物理意义">物理意义</h2>
+<p>表示以 <span class="math inline">\(f(x,y)\)</span>
+为面密度的有限平面区域质量的代数和。</p>
+<h2 id="几何意义">几何意义</h2>
+<p>表示以 <span class="math inline">\(D\)</span> 为底，以 <span
+class="math inline">\(z=f(x,y)\)</span> 为顶的曲顶柱体体积的代数和。</p>
+<h2 id="计算公式">计算公式</h2>
+<ul>
+<li><p><span class="math inline">\(Y-\)</span> 型：<span
+class="math inline">\(\begin{cases}  a \le y \le b \\  \varphi(y) \le x
+\le \psi(y) \end{cases}\)</span> <span class="math display">\[
+\iint\limits_D f(x,y)dxdy = \int_a^b dy
+\int_{\varphi(y)}^{\psi(y)}f(x,y)dx
+\]</span></p></li>
+<li><p><span class="math inline">\(X-\)</span> 型：<span
+class="math inline">\(\begin{cases}  a \le x \le b \\  \varphi(x) \le y
+\le \psi(x) \end{cases}\)</span> <span class="math display">\[
+\iint\limits_D f(x,y)dxdy = \int_a^b dx
+\int_{\varphi(x)}^{\psi(x)}f(x,y)dy
+\]</span></p></li>
+<li><p>极坐标系：<span class="math inline">\(\begin{cases}  \alpha \le
+\theta \le \beta \\  \varphi(\theta) \le r \le \psi(\theta)
+\end{cases}\)</span> <span class="math display">\[
+\iint\limits_D f(x,y)dxdy = \int_\alpha^\beta d\theta
+\int_{\varphi(\theta)}^{\psi(\theta)}f(r\cos\theta, r\sin\theta)rdr
+\]</span></p></li>
+</ul>
+<h2 id="积分换序">积分换序</h2>
+<p>如果 <span class="math inline">\(X-\)</span> 型走不通，不妨用 <span
+class="math inline">\(Y-\)</span> 型试试。</p>
+<h1 id="三重积分">三重积分</h1>
+<h2 id="定义-2">定义</h2>
+<p>若 <span class="math inline">\(\Omega\)</span> 是一有限空间体，<span
+class="math inline">\(f(P)\)</span> 是 <span
+class="math inline">\(\Omega\)</span> 上的点函数，在坐标系下 <span
+class="math inline">\(f(P)\)</span> 就是一个三元函数 <span
+class="math inline">\(f(x,y,z)\)</span>，它在 <span
+class="math inline">\(\Omega\)</span> 上的黎曼积分称之为 <span
+class="math inline">\(f(x,y,z)\)</span> 在 <span
+class="math inline">\(\Omega\)</span>
+上的<strong>三重积分</strong>，记为 <span class="math display">\[
+\iiint\limits_\Omega f(x,y,z)d\Omega = \iiint\limits_\Omega
+f(x,y,z)dxdydz
+\]</span></p>
+<h2 id="物理意义-1">物理意义</h2>
+<p>表示以 <span class="math inline">\(f(x,y,z)\)</span>
+为体密度的有限空间体 <span class="math inline">\(\Omega\)</span>
+质量的代数和。</p>
+<h2 id="计算方法">计算方法</h2>
+<ul>
+<li><p>柱形域：<span class="math inline">\(\begin{cases}  \varphi(x,y)
+\le z \le \psi(x,y) \\  (x,y) \in D_{xy} \end{cases}\)</span> <span
+class="math display">\[
+\iiint\limits_\Omega f(x,y,z) dxdydz = \iint\limits_{D_{xy}}dxdy
+\int_{\phi(x,y)}^{\psi(x,y)}f(x,y,z)dz
+\]</span></p></li>
+<li><p>片型域：<span class="math inline">\(\begin{cases}  a \le z \le b
+\\  (x,y) \in D_z \end{cases}\)</span> <span class="math display">\[
+\iiint_\Omega f(x,y,z)dxdydz = \int_a^b dz\iint\limits_{D_z}f(x,y,z)dxdy
+\]</span></p></li>
+<li><p>球坐标系：<span class="math inline">\(\begin{cases}  a \le \theta
+\le b \\  c \le \phi \le d \\  g(\theta, \phi) \le \rho \le h(\theta,
+\phi) \end{cases}\)</span> <span class="math display">\[
+\iiint\limits_\Omega f(x,y,z)dxdydz = \int_a^b d\theta \int_c^d d\phi
+\int_{g(\theta, \phi)}^{h(\theta, \phi)} f(\rho\sin\phi\cos\theta,
+\rho\sin\phi\sin\theta, \rho\cos\phi)\rho^2\sin\phi d\rho
+\]</span></p></li>
+</ul>
+<h1 id="第一型曲线积分">第一型曲线积分</h1>
+<h2 id="定义-3">定义</h2>
+<p>若 <span class="math inline">\(C\)</span>
+是空间（或平面）一有限曲线段，<span class="math inline">\(f(P)\)</span>
+是 <span class="math inline">\(C\)</span>
+上点函数，在引进坐标系下，<span class="math inline">\(f(P) =
+f(x,y,z)(f(x,y))\)</span>，称 <span class="math inline">\(f(P)\)</span>
+在 <span class="math inline">\(C\)</span> 上黎曼积分叫 <span
+class="math inline">\(f\)</span> 在 <span
+class="math inline">\(C\)</span>
+上的<strong>第一型曲线积分</strong>，记为 <span class="math display">\[
+\int\limits_C f(x,y,z) ds \left(或\int\limits_C f(x,y)ds\right)
+\]</span></p>
+<h2 id="物理意义-2">物理意义</h2>
+<p>表示以 <span class="math inline">\(f(x,y,z)\)</span> 或 <span
+class="math inline">\(f(x,y)\)</span> 为线密度的曲线 <span
+class="math inline">\(C\)</span> 的质量的代数和。</p>
+<h2 id="几何意义-1">几何意义</h2>
+<p>表示以 <span class="math inline">\(C\)</span> 为准线，母线平行于
+<span class="math inline">\(oz\)</span> 轴的柱面介于 <span
+class="math inline">\(oxy\)</span> 平面与 <span
+class="math inline">\(z=f(x,y)\)</span> 之间面积的代数和。</p>
+<h2 id="计算方法-1">计算方法</h2>
+<p>将曲线 <span class="math inline">\(C\)</span>
+用参数方程来表示，然后代入积分公式转化成一元积分。</p>
+<h1 id="第一型曲面积分">第一型曲面积分</h1>
+<h2 id="定义-4">定义</h2>
+<p>若 <span class="math inline">\(S\)</span> 是空间上一有限曲面，<span
+class="math inline">\(f(P)\)</span> 是 <span
+class="math inline">\(S\)</span> 上的点函数，在引进坐标系下，<span
+class="math inline">\(f(P) = f(x,y,z)\)</span>，<span
+class="math inline">\(f(P)\)</span> 在 <span
+class="math inline">\(S\)</span> 上黎曼积分叫 <span
+class="math inline">\(f(P)\)</span> 在 <span
+class="math inline">\(S\)</span>
+上的<strong>第一型曲面积分</strong>，记为 <span class="math display">\[
+\iint\limits_S f(x,y,z) dS
+\]</span></p>
+<h2 id="物理意义-3">物理意义</h2>
+<p>表示以 <span class="math inline">\(f(x,y,z)\)</span> 为面密度的曲面
+<span class="math inline">\(S\)</span> 的质量的代数和。</p>
+<h2 id="计算方法-2">计算方法</h2>
+<p>转化为二重积分 <span class="math display">\[
+\iint\limits_S f(x,y,z)dS = \iint\limits_D f(x,y,g(x,y))
+\sqrt{g_x^{\prime\ 2} + g_y^{\prime\ 2} + 1} dxdy
+\]</span></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Math/" rel="tag"># Math</a>
+              <a href="/tags/Calculus/" rel="tag"># Calculus</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2024/02/26/Limitation/" rel="prev" title="Limitation">
+                  <i class="fa fa-angle-left"></i> Limitation
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    
+  
+  <div class="comments giscus-container">
+  </div>
+  
+  
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Abyss Skb</span>
+  </div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+<script class="next-config" data-name="giscus" type="application/json">{"enable":true,"repo":"AbyssSkb/blog","repo_id":"R_kgDOKZrJmg","category":"General","category_id":"DIC_kwDOKZrJms4CZt7I","mapping":"title","reactions_enabled":1,"emit_metadata":1,"theme":"preferred-color-scheme","lang":"zh-CN","crossorigin":"anonymous","input_position":"bottom","loading":"lazy"}</script>
+
+<script>
+document.addEventListener('page:loaded', () => {
+  if (!CONFIG.page.comments) return;
+
+  NexT.utils.loadComments('.giscus-container')
+    .then(() => NexT.utils.getScript('https://giscus.app/client.js', {
+      attributes: {
+        async                   : true,
+        crossOrigin             : 'anonymous',
+        'data-repo'             : CONFIG.giscus.repo,
+        'data-repo-id'          : CONFIG.giscus.repo_id,
+        'data-category'         : CONFIG.giscus.category,
+        'data-category-id'      : CONFIG.giscus.category_id,
+        'data-mapping'          : CONFIG.giscus.mapping,
+        'data-reactions-enabled': CONFIG.giscus.reactions_enabled,
+        'data-emit-metadata'    : CONFIG.giscus.emit_metadata,
+        'data-theme'            : CONFIG.giscus.theme,
+        'data-lang'             : CONFIG.giscus.lang,
+        'data-input-position'   : CONFIG.giscus.input_position,
+        'data-loading'          : CONFIG.giscus.loading
+      },
+      parentNode: document.querySelector('.giscus-container')
+    }));
+});
+</script>
+
+</body>
+</html>
