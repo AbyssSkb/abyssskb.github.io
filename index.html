@@ -149,13 +149,13 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">8</span>
+          <span class="site-state-item-count">10</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-count">10</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -172,6 +172,250 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/03/01/Power-Series/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Abyss Skb">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Abyss's Blog">
+      <meta itemprop="description" content="Everything is possiblility!!!">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Abyss's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2024/03/01/Power-Series/" class="post-title-link" itemprop="url">Power Series</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2024-03-01 22:13:59 / 修改时间：22:14:31" itemprop="dateCreated datePublished" datetime="2024-03-01T22:13:59+08:00">2024-03-01</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="函数项级数">函数项级数</h1>
+<h2 id="定义">定义</h2>
+<p>设 <span class="math inline">\(f_n(x)\)</span> 是定义在 <span
+class="math inline">\(D\)</span> 上的一串函数（<span
+class="math inline">\(n = 1, 2, 3,
+\cdots\)</span>），也称之为函数序列，用 "+" 号将其一次连接起来，<span
+class="math inline">\(f_1(x) + f_2(x) + \cdots + f_n(x) + \cdots
+\triangleq \sum\limits_{n=1}^\infty f_n(x)\)</span> 称之为 <span
+class="math inline">\(D\)</span> 上的<strong>函数项级数</strong>。<span
+class="math inline">\(S_n = f_1(x) + f_2(x) + \cdots + f_n(x)\)</span>
+称为<strong>部分和</strong>。<span class="math inline">\(r_n(x) =
+f_{n+1}(x) + f_{n+2}(x) + \cdots\)</span>
+为函数项级数的<strong>余项</strong>。</p>
+<p>对 <span class="math inline">\(x_0 \in D\)</span>，若 <span
+class="math inline">\(\sum\limits_{n=1}^\infty f_n(x_0)\)</span>
+收敛，则称 <span class="math inline">\(x_0\)</span> 为 <span
+class="math inline">\(\sum\limits_{n=1}^\infty f_n(x)\)</span>
+的<strong>收敛点</strong>，收敛点的全体组成的集合称为 <span
+class="math inline">\(\sum\limits_{n=1}^\infty f_n(x)\)</span>
+的<strong>收敛域</strong>，记 <span class="math inline">\(S(x) =
+\lim\limits_{n\to\infty} S_n(x)\)</span>，称 <span
+class="math inline">\(S(x)\)</span>
+为函数项级数的<strong>和函数</strong>。</p>
+<h2 id="性质">性质</h2>
+<h3 id="定理1quad-函数项级数和函数的连续性"><strong>定理1</strong><span
+class="math inline">\(\quad\)</span> 函数项级数和函数的连续性</h3>
+<p>设 <span class="math inline">\(\sum\limits_{n=1}^\infty
+u_n(x)\)</span> 在 <span class="math inline">\([a, b]\)</span>
+上一致收敛，且级数每一项 <span class="math inline">\(u_n(x)\)</span> 在
+<span class="math inline">\([a, b]\)</span> 上都连续，则和函数 <span
+class="math inline">\(S(x)\)</span> 在 <span class="math inline">\([a,
+b]\)</span> 上连续。</p>
+<h3 id="定理2quad-函数项级数逐项积分性"><strong>定理2</strong><span
+class="math inline">\(\quad\)</span> 函数项级数逐项积分性</h3>
+<h3 id="定理3quad-函数项级数逐项微分性"><strong>定理3</strong><span
+class="math inline">\(\quad\)</span> 函数项级数逐项微分性</h3>
+<h1 id="幂级数">幂级数</h1>
+<h2 id="定义-1">定义</h2>
+<p>称 <span class="math inline">\(\sum\limits_{n=0}^\infty a_n x^n = a_0
++ a_1 x + \cdots + a_n x^n + \cdots\)</span>
+为标准的<strong>幂级数</strong>，这里 <span
+class="math inline">\(a_n\)</span>，<span class="math inline">\(n = 0,
+1, 2, \cdots\)</span> 称之为幂级数的系数。</p>
+<p>称 <span class="math inline">\(\sum\limits_{n=0}^\infty a_n (x-x_0)^n
+= a_0 + a_1(x-x_0) + \cdots + a_n(x-x_0)^n + \cdots\)</span>
+为<strong>一般型幂级数</strong>。</p>
+<p>称 <span class="math inline">\(\sum\limits_{n=0}^\infty a_n
+\phi^n(x)\)</span> 为<strong>广义幂级数</strong>。</p>
+<p>对于 <span class="math inline">\(\sum\limits_{n=0}^\infty a_n
+x^n\)</span>，当 <span class="math inline">\(x=0\)</span>
+时，级数<strong>收敛</strong>，若除 <span
+class="math inline">\(0\)</span>
+以外没有收敛点称为级数<strong>发散</strong>。</p>
+<p>任何一个标准的幂级数 <span
+class="math inline">\(\sum\limits_{n=0}^\infty a_n
+x^n\)</span>，都存在唯一一个 <span
+class="math inline">\(R\)</span>，<span class="math inline">\((R \ge 0
+或 R = +\infty)\)</span> 使 <span
+class="math inline">\(\sum\limits_{n=0}^\infty a_n x^n\)</span> 在 <span
+class="math inline">\((-R, R)\)</span> 内绝对收敛，在 <span
+class="math inline">\((-\infty, -R)\)</span> 和 <span
+class="math inline">\((R, +\infty)\)</span> 上发散，则称 <span
+class="math inline">\(R\)</span> 为 <span
+class="math inline">\(\sum\limits_{n=0}^\infty a_n x^n\)</span>
+的<strong>收敛半径</strong>，<span class="math inline">\((-R,
+R)\)</span> 称之为 <span class="math inline">\(\sum\limits_{n=0}^\infty
+a_n x^n\)</span> 的<strong>收敛区间</strong>。</p>
+<p><span class="math inline">\(\sum\limits_{n=0}^\infty a_n x^n\)</span>
+的<strong>收敛域</strong> <span class="math inline">\(=\)</span>
+收敛区间 <span class="math inline">\((-R, R) \cup \pm R\)</span>
+中收敛的点</p>
+<h2 id="性质-1">性质</h2>
+<p>设 <span class="math inline">\(\sum\limits_{n=0}^\infty a_n
+x^n\)</span> 在 <span class="math inline">\(x_0 \ne 0\)</span>
+点收敛，则 <span class="math inline">\(\sum\limits_{n=0}^\infty a_n
+x^n\)</span> 在 <span class="math inline">\(\vert x\vert &lt; \vert x_0
+\vert\)</span> 上绝对收敛。</p>
+<p><strong>推论</strong>：如果 <span
+class="math inline">\(\sum\limits_{n=0}^\infty a_n x^n\)</span> 在 <span
+class="math inline">\(x_0\)</span> 点发散，则 <span
+class="math inline">\(\sum\limits_{n=0}^\infty a_n x^n\)</span> 在 <span
+class="math inline">\(\vert x\vert &gt; \vert x_0\vert\)</span>
+上发散。</p>
+<p>设 <span class="math inline">\(\sum\limits_{n=0}^\infty a_n
+x^n\)</span> 满足 <span class="math inline">\(\lim\limits_{n\to\infty}
+\left\vert \frac{a_{n+1}}{a_n}\right\vert\)</span> （或 <span
+class="math inline">\(\lim\limits_{n\to\infty} \sqrt[n]{\vert
+a_n\vert}\)</span>）<span class="math inline">\(= \rho \ge
+0\)</span>（或 <span class="math inline">\(+\infty\)</span>），则 <span
+class="math inline">\(R = \frac{1}{\rho}\)</span> 是 <span
+class="math inline">\(\sum\limits_{n=0}^\infty a_n x^n\)</span>
+的收敛半径。</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/02/29/Series/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Abyss Skb">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Abyss's Blog">
+      <meta itemprop="description" content="Everything is possiblility!!!">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Abyss's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2024/02/29/Series/" class="post-title-link" itemprop="url">级数</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2024-02-29 12:08:56" itemprop="dateCreated datePublished" datetime="2024-02-29T12:08:56+08:00">2024-02-29</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-03-01 22:14:47" itemprop="dateModified" datetime="2024-03-01T22:14:47+08:00">2024-03-01</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>级数（英语：Series）是数学中一个有穷或无穷的序列之和，如果序列是有穷序列，其和称为有穷级数；反之，称为无穷级数（一般也简称为级数）。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2024/02/29/Series/">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -258,7 +502,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2024/02/26/Limitation/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/02/26/Limit/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -276,7 +520,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/2024/02/26/Limitation/" class="post-title-link" itemprop="url">Limitation</a>
+          <a href="/2024/02/26/Limit/" class="post-title-link" itemprop="url">极限</a>
         </h2>
 
         <div class="post-meta-container">
@@ -286,9 +530,15 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">发表于</span>
-      
 
-      <time title="创建时间：2024-02-26 15:39:26 / 修改时间：15:41:01" itemprop="dateCreated datePublished" datetime="2024-02-26T15:39:26+08:00">2024-02-26</time>
+      <time title="创建时间：2024-02-26 15:39:26" itemprop="dateCreated datePublished" datetime="2024-02-26T15:39:26+08:00">2024-02-26</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-03-01 19:25:11" itemprop="dateModified" datetime="2024-03-01T19:25:11+08:00">2024-03-01</time>
     </span>
 
   
@@ -301,363 +551,15 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h1 id="数列的极限">数列的极限</h1>
-<h2 id="定义">定义</h2>
-<p>设 <span class="math inline">\(\{x_n\}\)</span>
-为一数列，如果存在常数 <span
-class="math inline">\(a\)</span>，是对于任意给定的正数 <span
-class="math inline">\(\epsilon\)</span>（不论它多么小），总存在正整数
-<span class="math inline">\(N\)</span>，使得当 <span
-class="math inline">\(n &gt; N\)</span>时，不等式 <span
-class="math display">\[
-\left\vert x_n - a \right\vert &lt; \varepsilon
-\]</span> 都成立，那么就称常数 <span class="math inline">\(a\)</span>
-是<strong>数列</strong> <span class="math inline">\(\{x_n\}\)</span>
-的<strong>极限</strong>，或者称数列 <span
-class="math inline">\(\{x_n\}\)</span> <strong>收敛于</strong> <span
-class="math inline">\(a\)</span>，记为 <span class="math display">\[
-\lim\limits_{n \to \infty }x_n = a
-\]</span> 或 <span class="math display">\[
-x_n \to a \quad (n \to \infty)
-\]</span> 如果不存在这样的常数 <span
-class="math inline">\(a\)</span>，就说数列 <span
-class="math inline">\(\{x_n\}\)</span> 没有极限，或者说数列 <span
-class="math inline">\(\{x_n\}\)</span>
-是<strong>发散</strong>的，习惯上也说 <span
-class="math inline">\(\lim\limits_{n \to \infty}x_n\)</span>
-不存在。</p>
-<p>数列极限 <span class="math inline">\(\lim\limits_{n\to\infty}x_n =
-a\)</span> 的定义可表达为 <span class="math display">\[
-\lim\limits_{n \to \infty}x_n = a \Leftrightarrow \forall \varepsilon
-&gt; 0, \,
-\exists \,正整数\,N，当\,n &gt; N\,时，有\,\left\vert x_n - a\right\vert
-&lt; \varepsilon
-\]</span></p>
-<h2 id="性质">性质</h2>
-<p><strong>定理 <span
-class="math inline">\(1\)</span>（极限的唯一性）<span
-class="math inline">\(\quad\)</span></strong> 如果数列 <span
-class="math inline">\(\{x_n\}\)</span> 收敛，那么它的极限唯一。</p>
-<p><strong>定理 <span
-class="math inline">\(2\)</span>（收敛数列的有界性）<span
-class="math inline">\(\quad\)</span></strong> 如果数列 <span
-class="math inline">\(\{x_n\}\)</span> 收敛，那么数列 <span
-class="math inline">\(\{x_n\}\)</span> 一定有界。</p>
-<p><strong>定理 <span
-class="math inline">\(3\)</span>（收敛数列的保号性）<span
-class="math inline">\(\quad\)</span></strong> 如果 <span
-class="math inline">\(\lim\limits_{n \to \infty}x_n = a\)</span>，且
-<span class="math inline">\(a &gt; 0\)</span>（或 <span
-class="math inline">\(a &lt; 0\)</span>），那么存在正整数 <span
-class="math inline">\(N\)</span>，当 <span class="math inline">\(n &gt;
-N\)</span> 时，都有 <span class="math inline">\(x_n &gt; 0\)</span>（或
-<span class="math inline">\(x_n &lt; 0\)</span>）。</p>
-<p><strong>推论<span class="math inline">\(\quad\)</span></strong>
-如果数列 <span class="math inline">\(\{x_n\}\)</span> 从某项起有 <span
-class="math inline">\(x_n \ge 0\)</span>（或 <span
-class="math inline">\(x_n \le 0\)</span>），且 <span
-class="math inline">\(\lim\limits_{n\to\infty} x_n = a\)</span>，那么
-<span class="math inline">\(a \ge 0\)</span>（或 <span
-class="math inline">\(a \le 0\)</span>）。</p>
-<p><strong>定理 <span
-class="math inline">\(4\)</span>（收敛数列与其子数列间的关系）<span
-class="math inline">\(\quad\)</span></strong> 如果数列 <span
-class="math inline">\(\{x_n\}\)</span> 收敛于 <span
-class="math inline">\(a\)</span>，那么它的任一子数列也收敛，且极限也是
-<span class="math inline">\(a\)</span>。</p>
-<h1 id="函数的极限">函数的极限</h1>
-<h2 id="定义-1">定义</h2>
-<p><strong>定义 <span class="math inline">\(1\quad\)</span></strong>
-设函数 <span class="math inline">\(f(x)\)</span> 在点 <span
-class="math inline">\(x_0\)</span> 的某一去心邻域内有定义。如果存在常数
-<span class="math inline">\(A\)</span>，对于任一给定的正数 <span
-class="math inline">\(\varepsilon\)</span>（不论它多么小），总存在正数
-<span class="math inline">\(\delta\)</span>，使得当 <span
-class="math inline">\(x\)</span> 满足不等式 <span
-class="math inline">\(0 &lt; \left\vert x - x_0 \right\vert &lt;
-\delta\)</span> 时，对应的函数值 <span
-class="math inline">\(f(x)\)</span> 都满足不等式 <span
-class="math display">\[
-\left\vert f(x) &lt; A \right\vert &lt; \varepsilon
-\]</span> 那么常数 <span class="math inline">\(A\)</span>
-就叫做<strong>函数 <span class="math inline">\(f(x)\)</span> 当 <span
-class="math inline">\(x\to x_0\)</span> 时的极限</strong>，记作 <span
-class="math display">\[
-\lim\limits_{x\to x_0}f(x) = A\ 或\ f(x) \to A\ (\ 当\ x \to x_0\ )
-\]</span> 定义 <span class="math inline">\(1\)</span> 可以简单的表述为
-<span class="math display">\[
-\lim\limits_{x\to x_0}f(x) = A \Leftrightarrow \forall \varepsilon &gt;
-0, \exists \delta &gt; 0, 当 0 &lt; \left\vert x - x_0 \right\vert &lt;
-\delta 时, 有 \left\vert f(x) - A \right\vert &lt; \varepsilon
-\]</span> 在 <span class="math inline">\(\lim\limits_{x\to x_0}f(x) =
-A\)</span> 的定义中，把 <span class="math inline">\(0 &lt; \left\vert x
-- x_0 \right\vert &lt; \delta\)</span> 改为 <span
-class="math inline">\(x_0 - \delta &lt; x &lt; x_0\)</span>，那么 <span
-class="math inline">\(A\)</span> 就叫做函数 <span
-class="math inline">\(f(x)\)</span> 当 <span class="math inline">\(x \to
-x_0\)</span> 时的<strong>左极限</strong>，记作 <span
-class="math display">\[
-\lim\limits_{x \to x^-_0}f(x) = A \quad 或 \quad f(x_0^-) = A
-\]</span> 类似的，把 <span class="math inline">\(0 &lt; \left\vert x -
-x_0\right\vert &lt; \delta\)</span> 改为 <span class="math inline">\(x_0
-&lt; x &lt; x_0 + \delta\)</span>，那么 <span
-class="math inline">\(A\)</span> 就叫做函数 <span
-class="math inline">\(f(x)\)</span> 当 <span class="math inline">\(x \to
-x_0\)</span> 时的<strong>右极限</strong>，记作 <span
-class="math display">\[
-\lim\limits_{x \to x^+_0}f(x) = A \quad 或 \quad f(x_0^+) = A
-\]</span> 函数 <span class="math inline">\(f(x)\)</span> 当 <span
-class="math inline">\(x \to x_0\)</span>
-时极限存在的充分必要条件是左极限及右极限各自存在并且相等，即 <span
-class="math display">\[
-f(x_0^-) = f(x_0^+)
-\]</span> <strong>定义 <span
-class="math inline">\(2\quad\)</span></strong> 设函数 <span
-class="math inline">\(f(x)\)</span> 当 <span
-class="math inline">\(\left\vert x\right\vert\)</span>
-大于某一正数时有定义。如果存在常数 <span
-class="math inline">\(A\)</span>，对于任意给定的正数 <span
-class="math inline">\(\varepsilon\)</span>，总存在正数 <span
-class="math inline">\(X\)</span>，使得当 <span
-class="math inline">\(x\)</span> 满足不等式 <span
-class="math inline">\(\left\vert x\right\vert &gt; X\)</span>
-时，对应的函数值 <span class="math inline">\(f(x)\)</span> 都满足不等式
-<span class="math display">\[
-\left\vert f(x) - A \right\vert &lt; \varepsilon
-\]</span> 那么常数 <span class="math inline">\(A\)</span>
-就叫做<strong>函数 <span class="math inline">\(f(x)\)</span> 当 <span
-class="math inline">\(x \to \infty\)</span> 时的极限</strong>，记作
-<span class="math display">\[
-\lim\limits_{x \to \infty} = A \quad 或 \quad f(x) \to A (当 x\to
-\infty)
-\]</span> 定义 <span class="math inline">\(2\)</span> 可简单地表达为
-<span class="math display">\[
-\lim\limits_{x \to \infty} f(x) = A \Leftrightarrow \forall \varepsilon
-&gt; 0, \exists X &gt; 0, 当 \left\vert x \right\vert &gt; X时，有
-\left\vert f(x) - A \right\vert &lt; \varepsilon
-\]</span></p>
-<h2 id="性质-1">性质</h2>
-<p><strong>定理 <span
-class="math inline">\(1\)</span>（函数极限的唯一性）<span
-class="math inline">\(\quad\)</span></strong> 如果 <span
-class="math inline">\(\lim\limits_{x \to x_0} f(x)\)</span>
-存在，那么这极限唯一。</p>
-<p><strong>定理 <span
-class="math inline">\(2\)</span>（函数极限的局部有界性）<span
-class="math inline">\(\quad\)</span></strong> 如果 <span
-class="math inline">\(\lim\limits_{x \to x_0}f(x) =
-A\)</span>，那么存在常数 <span class="math inline">\(M&gt;0\)</span> 和
-<span class="math inline">\(\delta &gt; 0\)</span>，使得当 <span
-class="math inline">\(0 &lt; \left\vert x - x_0 \right\vert &lt;
-\delta\)</span> 时，有 <span class="math inline">\(\left\vert f(x)
-\right\vert \le M\)</span>。</p>
-<p><strong>定理 <span
-class="math inline">\(3\)</span>（函数极限的局部保号性）<span
-class="math inline">\(\quad\)</span></strong> 如果 <span
-class="math inline">\(\lim\limits_{x \to x_0}f(x) = A\)</span>，且 <span
-class="math inline">\(A &gt; 0\)</span>（或 <span
-class="math inline">\(A &lt; 0\)</span>，那么存在常数 <span
-class="math inline">\(\delta &gt; 0\)</span>，使得当 <span
-class="math inline">\(0 &lt; \left\vert x - x_0 \right\vert &lt;
-\delta\)</span> 时，有 <span class="math inline">\(f(x) &gt;
-0\)</span>（或 <span class="math inline">\(f(x) &lt; 0\)</span>）。</p>
-<p><strong>定理 <span
-class="math inline">\(3^\prime\quad\)</span></strong> 如果 <span
-class="math inline">\(\lim\limits_{x \to x_0}f(x) = A(A \ne
-0)\)</span>，那么就存在着 <span class="math inline">\(x_0\)</span>
-的某一去心邻域 <span
-class="math inline">\(\mathring{U}(x_0)\)</span>，当 <span
-class="math inline">\(x \in \mathring{U}(x_0)\)</span> 时，就有 <span
-class="math inline">\(\left\vert f(x) \right\vert &gt; \frac{\left\vert
-A\right\vert}{2}\)</span>。</p>
-<p><strong>推论<span class="math inline">\(\quad\)</span></strong>
-如果在 <span class="math inline">\(x_0\)</span> 的某去心邻域内 <span
-class="math inline">\(f(x) \ge 0\)</span>（或 <span
-class="math inline">\(f(x) \le 0\)</span>），而且 <span
-class="math inline">\(\lim\limits_{x\to x_0}f(x) = A\)</span>，那么
-<span class="math inline">\(A \ge 0\)</span>（或 <span
-class="math inline">\(A \le 0\)</span>）。</p>
-<p><strong>定理 <span
-class="math inline">\(4\)</span>（函数极限与数列极限的关系）<span
-class="math inline">\(\quad\)</span></strong> 如果极限 <span
-class="math inline">\(\lim\limits_{x \to x_0}f(x)\)</span> 存在，<span
-class="math inline">\(\{x_n\}\)</span> 为函数 <span
-class="math inline">\(f(x)\)</span> 的定义域内任一收敛于 <span
-class="math inline">\(x_0\)</span> 的数列，且满足：<span
-class="math inline">\(x_n \ne x_0\)</span>（<span
-class="math inline">\(n \in N_+\)</span>），那么相应的函数值数列 <span
-class="math inline">\(\{f(x_n)\}\)</span> 必收敛，且 <span
-class="math inline">\(\lim\limits_{n \to \infty}f(x_n) = \lim\limits_{x
-\to x_0}f(x)\)</span>。</p>
-<h1 id="无穷小">无穷小</h1>
-<h2 id="定义-2">定义</h2>
-<p>如果函数 <span class="math inline">\(f(x)\)</span> 当 <span
-class="math inline">\(x \to x_0\)</span>（或 <span
-class="math inline">\(x \to \infty\)</span>）时的极限为零，那么称函数
-<span class="math inline">\(f(x)\)</span> 为当 <span
-class="math inline">\(x \to x_0\)</span>（或 <span
-class="math inline">\(x \to \infty\)</span>）时的无穷小。 ## 性质
-在自变量的同一变化过程 <span class="math inline">\(x \to
-x_0\)</span>（或 <span class="math inline">\(x \to
-\infty\)</span>）中，函数 <span class="math inline">\(f(x)\)</span>
-具有极限 <span class="math inline">\(A\)</span> 的充分必要条件时 <span
-class="math inline">\(f(x) = A + \alpha\)</span>，其中 <span
-class="math inline">\(\alpha\)</span> 是无穷小。 ## 比较 如果 <span
-class="math inline">\(\lim\frac{\beta}{\alpha} = 0\)</span>，那么就说
-<span class="math inline">\(\beta\)</span> 是比 <span
-class="math inline">\(\alpha\)</span>
-<strong>高阶的无穷小</strong>，记作 <span class="math inline">\(\beta =
-o(\alpha)\)</span></p>
-<p>如果 <span class="math inline">\(\lim\frac{\beta}{\alpha} =
-\infty\)</span>，那么就说 <span class="math inline">\(\beta\)</span>
-是比 <span class="math inline">\(\alpha\)</span>
-<strong>低阶的无穷小</strong></p>
-<p>如果 <span class="math inline">\(\lim\frac{\beta}{\alpha} = c \ne
-0\)</span>，那么就说 <span class="math inline">\(\beta\)</span> 与 <span
-class="math inline">\(\alpha\)</span>
-是<strong>同阶的无穷小</strong></p>
-<p>如果 <span class="math inline">\(\lim\frac{\beta}{\alpha^k} = c \ne
-0, k &gt; 0\)</span>，那么就说 <span
-class="math inline">\(\beta\)</span> 是关于 <span
-class="math inline">\(\alpha\)</span> 的 <strong><span
-class="math inline">\(k\)</span> 阶的无穷小</strong></p>
-<p>如果 <span class="math inline">\(\lim\frac{\beta}{\alpha} =
-1\)</span>，那么就说 <span class="math inline">\(\beta\)</span> 与 <span
-class="math inline">\(\alpha\)</span>
-是<strong>等价无穷小</strong>，记作 <span class="math inline">\(\alpha
-\sim \beta\)</span></p>
-<p><strong>定理 <span class="math inline">\(1\quad\)</span></strong>
-<span class="math inline">\(\beta\)</span> 与 <span
-class="math inline">\(\alpha\)</span> 是等价无穷小的充分必要条件为 <span
-class="math display">\[
-\beta = \alpha + o(\alpha)
-\]</span></p>
-<p><strong>定理 <span class="math inline">\(2\quad\)</span></strong> 设
-<span class="math inline">\(\alpha \sim \tilde\alpha\)</span>，<span
-class="math inline">\(\beta \sim \tilde\beta\)</span>，且 <span
-class="math inline">\(\lim\limits\frac{\tilde\beta}{\tilde\alpha}\)</span>
-存在，则 <span class="math display">\[
-\lim\limits\frac{\beta}{\alpha} =
-\lim\limits\frac{\tilde\beta}{\tilde\alpha}
-\]</span> # 无穷大 ## 定义 设函数 <span
-class="math inline">\(f(x)\)</span> 在 <span
-class="math inline">\(x_0\)</span> 的某一去心邻域内有定义（或 <span
-class="math inline">\(\left\vert x \right\vert\)</span>
-大于某一正数时有定义）。如果对于任意给定的正数 <span
-class="math inline">\(M\)</span>（不论它有多大），总存在正数 <span
-class="math inline">\(\delta\)</span>（或正数 <span
-class="math inline">\(X\)</span>），只要 <span
-class="math inline">\(x\)</span> 适合不等式 <span
-class="math inline">\(0 &lt; \left\vert x - x_0 \right\vert &lt;
-\delta\)</span>（或 <span class="math inline">\(\left\vert x \right\vert
-&gt; X\)</span>），对应的函数值 <span
-class="math inline">\(f(x)\)</span> 总满足不等式 <span
-class="math display">\[
-\left\vert f(x) \right\vert &gt; M
-\]</span> 那么称函数 <span class="math inline">\(f(x)\)</span> 是当
-<span class="math inline">\(x \to x_0\)</span>（或 <span
-class="math inline">\(x \to \infty\)</span>）时的无穷大。</p>
-<h2 id="性质-2">性质</h2>
-<p>在自变量的同一变化过程中，如果 <span
-class="math inline">\(f(x)\)</span> 为无穷大，那么 <span
-class="math inline">\(\frac{1}{f(x)}\)</span> 为无穷小；反之，如果 <span
-class="math inline">\(f(x)\)</span> 为无穷小，且 <span
-class="math inline">\(f(x) \ne 0\)</span>，那么 <span
-class="math inline">\(\frac{1}{f(x)}\)</span> 为无穷大。</p>
-<h1 id="极限运算法则">极限运算法则</h1>
-<p><strong>定理 <span class="math inline">\(1\quad\)</span></strong>
-有限个无穷小的和是无穷小</p>
-<p><strong>定理 <span class="math inline">\(2\quad\)</span></strong>
-有界函数与无穷小的乘积是无穷小</p>
-<p><strong>推论 <span class="math inline">\(1\quad\)</span></strong>
-常数与无穷小的乘积是无穷小</p>
-<p><strong>推论 <span class="math inline">\(2\quad\)</span></strong>
-有限个无穷小的乘积是无穷小</p>
-<p><strong>定理 <span class="math inline">\(3\quad\)</span></strong>
-如果 <span class="math inline">\(\lim f(x)=A, \lim g(x) =
-B\)</span>，那么</p>
-<ol type="1">
-<li><span class="math inline">\(\lim\left[f(x) \pm g(x) \right] = \lim
-f(x) \pm \lim g(x) = A \pm B\)</span></li>
-<li><span class="math inline">\(\lim\left[f(x) \cdot g(x) \right] = \lim
-f(x) \cdot \lim g(x) = A \cdot B\)</span></li>
-<li>若又有 <span class="math inline">\(B \ne 0\)</span>，则</li>
-</ol>
-<p><span class="math display">\[
-\lim \frac{f(x)}{g(x)} = \frac{\lim f(x)}{\lim g(x)} = \frac{A}{B}
-\]</span></p>
-<p><strong>定理 <span class="math inline">\(4\quad\)</span></strong>
-设有数列 <span class="math inline">\(\{x_n\}\)</span> 和 <span
-class="math inline">\(\{y_n\}\)</span>。如果 <span
-class="math display">\[
-\lim\limits_{n\to\infty}x_n = A,\quad \lim\limits_{n\to\infty}y_n = B
-\]</span> 那么 1. <span
-class="math inline">\(\lim\limits_{n\to\infty}(x_n\pm y_n) = A \pm
-B\)</span> 2. <span class="math inline">\(\lim\limits_{n\to\infty}(x_n
-\cdot y_n) = A \cdot B\)</span> 3. 当 <span class="math inline">\(y_n
-\ne 0\)</span>（<span class="math inline">\(n = 1, 2,
-\cdots\)</span>）且 <span class="math inline">\(B \ne 0\)</span>
-时，<span class="math inline">\(\lim\limits_{n\to\infty}\frac{x_n}{y_n}
-= \frac{A}{B}\)</span></p>
-<p><strong>定理 <span class="math inline">\(5\quad\)</span></strong>
-如果 <span class="math inline">\(\varphi(x) \ge \psi(x)\)</span>，而
-<span class="math inline">\(\lim\limits \varphi(x) = A\)</span>，<span
-class="math inline">\(\lim\limits \psi(x) = B\)</span>，那么 <span
-class="math inline">\(A \ge B\)</span>。</p>
-<p><strong>定理 <span
-class="math inline">\(6\)</span>（复合函数的极限运算法则）<span
-class="math inline">\(\quad\)</span></strong> 设函数 <span
-class="math inline">\(y = f\left[g(x)\right]\)</span> 是由函数 <span
-class="math inline">\(u = g(x)\)</span> 与函数 <span
-class="math inline">\(y = f(u)\)</span> 复合而成，<span
-class="math inline">\(f\left[g(x)\right]\)</span> 在点 <span
-class="math inline">\(x_0\)</span> 的某去心邻域内有定义，若 <span
-class="math inline">\(\lim\limits_{x\to x_0}g(x) = u_0\)</span>，<span
-class="math inline">\(\lim\limits_{u \to u_0}f(u) = A\)</span>，且存在
-<span class="math inline">\(\delta_0 &gt; 0\)</span>，当 <span
-class="math inline">\(x \in \mathring{U}(x_0, \delta_0)\)</span> 时，有
-<span class="math inline">\(g(x) \ne u_0\)</span>，则 <span
-class="math display">\[
-\lim\limits_{x \to x_0}f\left[g(x)\right] = \lim\limits_{u\to u_0}f(u) =
-A
-\]</span></p>
-<h1 id="极限存在准则">极限存在准则</h1>
-<p><strong>准则 <span
-class="math inline">\(\mathrm{I}\quad\)</span></strong> 如果数列 <span
-class="math inline">\(\{x_n\}\)</span>，<span
-class="math inline">\(\{y_n\}\)</span> 及 <span
-class="math inline">\(\{z_n\}\)</span> 满足下列条件： 1. 从某项起，即
-<span class="math inline">\(\exists n_0 \in \N_+\)</span>，当 <span
-class="math inline">\(n &gt; n_0\)</span> 时，有 <span
-class="math display">\[
-y_n \le x_n \le z_n
-\]</span> 2. <span class="math inline">\(\lim\limits_{n \to \infty}y_n =
-a, \lim\limits_{n\to\infty}z_n = a\)</span></p>
-<p>那么数列 <span class="math inline">\(\{x_n\}\)</span> 的极限存在，且
-<span class="math inline">\(\lim\limits_{n\to\infty}x_n = a\)</span></p>
-<p><strong>准则 <span
-class="math inline">\(\mathrm{I}^\prime\quad\)</span></strong> 如果 1.
-当 <span class="math inline">\(x \in \mathring{U}(x_0, r)\)</span>（或
-<span class="math inline">\(\left\vert x \right\vert &gt;
-M\)</span>）时，</p>
-<p><span class="math display">\[
-g(x) \le f(x) \le h(x)
-\]</span></p>
-<ol start="2" type="1">
-<li><span class="math inline">\(\lim\limits_{x\to x_0 \atop (x \to
-\infty)}g(x) = A, \lim\limits_{x\to x_0 \atop (x\to\infty)}h(x) =
-A\)</span></li>
-</ol>
-<p>那么 <span class="math inline">\(\lim\limits_{x\to x_0 \atop (x\to
-\infty)}f(x)\)</span> 存在，且等于 <span
-class="math inline">\(A\)</span>。</p>
-<p>准则 <span class="math inline">\(\mathrm{I}\)</span> 及准则 <span
-class="math inline">\(\mathrm{I}^\prime\)</span>
-称为<strong>夹逼准则</strong>。</p>
-<p><strong>准则 <span
-class="math inline">\(\mathrm{II}\quad\)</span></strong>
-单调有界数列必有极限。</p>
-
+          <p>极限（英语：Limit）是数学分析或微积分的重要基础概念，连续和导数都是通过极限来作定义。极限分为描述一个序列的下标愈来越大时的趋势（序列极限），或是描述函数的自变量接趋近某个值时的函数值的趋势（函数极限）。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2024/02/26/Limit/">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -794,9 +696,15 @@ class="math inline">\(\mathrm{II}\quad\)</span></strong>
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">发表于</span>
-      
 
-      <time title="创建时间：2023-11-25 21:29:20 / 修改时间：22:15:18" itemprop="dateCreated datePublished" datetime="2023-11-25T21:29:20+08:00">2023-11-25</time>
+      <time title="创建时间：2023-11-25 21:29:20" itemprop="dateCreated datePublished" datetime="2023-11-25T21:29:20+08:00">2023-11-25</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-03-01 19:34:34" itemprop="dateModified" datetime="2024-03-01T19:34:34+08:00">2024-03-01</time>
     </span>
 
   
@@ -809,17 +717,15 @@ class="math inline">\(\mathrm{II}\quad\)</span></strong>
     
     
     <div class="post-body" itemprop="articleBody">
-          <h2 id="gpio">GPIO</h2>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">HAL_GPIO_WritePin</span><span class="params">(GPIO_TypeDef *GPIOx, <span class="type">uint16_t</span> GPIO_Pin, GPIO_PinState PinState)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="function">GPIO_PinState <span class="title">HAL_GPIO_ReadPin</span><span class="params">(GPIO_TypeDef *GPIOx, <span class="type">uint16_t</span> GPIO_Pin)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">HAL_GPIO_TogglePin</span><span class="params">(GPIO_TypeDef *GPIOx, <span class="type">uint16_t</span> GPIO_Pin)</span></span>;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<h2 id="lcd">LCD</h2>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">LCD_Init</span><span class="params">(<span class="type">void</span>)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">LCD_SetTextColor</span><span class="params">(vu16 Color)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">LCD_SetBackColor</span><span class="params">(vu16 Color)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">LCD_Clear</span><span class="params">(u16 Color)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">LCD_DisplayStringLine</span><span class="params">(u8 Line, u8 *ptr)</span></span>;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<h2 id="tim">TIM</h2>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">HAL_StatusTypeDef <span class="title">HAL_TIM_Base_Start_IT</span><span class="params">(TIM_HandleTypeDef *htim)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">HAL_TIM_PeriodElapsedCallback</span><span class="params">(TIM_HandleTypeDef *htim)</span></span>;</span><br></pre></td></tr></table></figure>
-<h2 id="uart">UART</h2>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">HAL_StatusTypeDef <span class="title">HAL_UART_Transmit</span><span class="params">(UART_HandleTypeDef *huart, <span class="type">uint8_t</span> *pData, <span class="type">uint16_t</span> Size, <span class="type">uint32_t</span> Timeout)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="function">HAL_StatusTypeDef <span class="title">HAL_UART_Transmit_IT</span><span class="params">(UART_HandleTypeDef *huart, <span class="type">uint8_t</span> *pData, <span class="type">uint16_t</span> Size)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">HAL_UART_TxCpltCallback</span><span class="params">(UART_HandleTypeDef *huart)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="function">HAL_StatusTypeDef <span class="title">HAL_UART_Receive</span><span class="params">(UART_HandleTypeDef *huart, <span class="type">uint8_t</span> *pData, <span class="type">uint16_t</span> Size, <span class="type">uint32_t</span> Timeout)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="function">HAL_StatusTypeDef <span class="title">HAL_UART_Receive_IT</span><span class="params">(UART_HandleTypeDef *huart, <span class="type">uint8_t</span> *pData, <span class="type">uint16_t</span> Size)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">HAL_UART_RxCpltCallback</span><span class="params">(UART_HandleTypeDef *huart)</span></span>;</span><br></pre></td></tr></table></figure>
-<h2 id="adc">ADC</h2>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">HAL_StatusTypeDef <span class="title">HAL_ADC_Start</span><span class="params">(ADC_HandleTypeDef *hadc)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">uint32_t</span> <span class="title">HAL_ADC_GetValue</span><span class="params">(ADC_HandleTypeDef *hadc)</span></span>;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
+          <p>常见 HAL 库函数整理</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2023/11/25/STM32/">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 

@@ -1,53 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>Calculus</title>
-    <url>/2023/12/13/Calculus/</url>
-    <content><![CDATA[<p><span class="math inline">\(\int kdx = kx + C\)</span></p>
-<p><span class="math inline">\(\int x^{\mu}dx = \frac{x^{\mu + 1}}{\mu +
-1} + C\)</span></p>
-<p><span class="math inline">\(\int\frac{dx}{x} = \ln\left\vert
-x\right\vert + C\)</span></p>
-<p><span class="math inline">\(\int\frac{dx}{1 + x^2} = \arctan x +
-C\)</span></p>
-<p><span class="math inline">\(\int\frac{dx}{\sqrt{1 - x^2}} = \arcsin x
-+ C\)</span></p>
-<p><span class="math inline">\(\int\cos xdx = \sin x + C\)</span></p>
-<p><span class="math inline">\(\int\sin xdx = -\cos x + C\)</span></p>
-<p><span class="math inline">\(\int\sec^2 xdx = \tan x + C\)</span></p>
-<p><span class="math inline">\(\int\csc^2 xdx = -\cot x + C\)</span></p>
-<p><span class="math inline">\(\int\sec x\tan xdx = \sec x +
-C\)</span></p>
-<p><span class="math inline">\(\int\csc x\cot xdx = -\csc x +
-C\)</span></p>
-<p><span class="math inline">\(\int e^xdx = e^x + C\)</span></p>
-<p><span class="math inline">\(\int a^xdx = \frac{a^x}{\ln a} +
-C\)</span></p>
-<p><span class="math inline">\(\int\frac{dx}{a^2 + x^2} =
-\frac{1}{a}\arctan{\frac{x}{a}} + C\)</span></p>
-<p><span class="math inline">\(\int\frac{dx}{\sqrt{a^2 - x^2}} =
-\arcsin{\frac{x}{a}} + C\)</span></p>
-<p><span class="math inline">\(\int\frac{dx}{a^2 - x^2} =
-\frac{1}{2a}\ln\left\vert\frac{a + x}{a - x}\right\vert + C\)</span></p>
-<p><span class="math inline">\(\int\tan xdx = -\ln\left\vert \cos
-x\right\vert + C\)</span></p>
-<p><span class="math inline">\(\int\cot xdx = \ln\left\vert\sin
-x\right\vert + C\)</span></p>
-<p><span class="math inline">\(\int\sec xdx = \ln\left\vert\sec x + \tan
-x\right\vert + C\)</span></p>
-<p><span class="math inline">\(\int\csc xdx = \ln\left\vert\csc x - \cot
-x\right\vert + C\)</span></p>
-<p><span class="math inline">\(\int\frac{dx}{\sqrt{x^2 + a^2}} = \ln(x +
-\sqrt{x^2 + a^2}) + C\)</span></p>
-<p><span class="math inline">\(\int\frac{dx}{\sqrt{x^2 - a^2}} =
-\ln\left\vert x + \sqrt{x^2 - a^2}\right\vert + C\)</span></p>
-]]></content>
-      <tags>
-        <tag>Math</tag>
-        <tag>Calculus</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>树状数组</title>
     <url>/2023/09/28/BIT/</url>
     <content><![CDATA[<h2 id="树状数组的引入">树状数组的引入</h2>
@@ -183,6 +136,53 @@ class="math inline">\(O(2n)\)</span>
       </tags>
   </entry>
   <entry>
+    <title>Calculus</title>
+    <url>/2023/12/13/Calculus/</url>
+    <content><![CDATA[<p><span class="math inline">\(\int kdx = kx + C\)</span></p>
+<p><span class="math inline">\(\int x^{\mu}dx = \frac{x^{\mu + 1}}{\mu +
+1} + C\)</span></p>
+<p><span class="math inline">\(\int\frac{dx}{x} = \ln\left\vert
+x\right\vert + C\)</span></p>
+<p><span class="math inline">\(\int\frac{dx}{1 + x^2} = \arctan x +
+C\)</span></p>
+<p><span class="math inline">\(\int\frac{dx}{\sqrt{1 - x^2}} = \arcsin x
++ C\)</span></p>
+<p><span class="math inline">\(\int\cos xdx = \sin x + C\)</span></p>
+<p><span class="math inline">\(\int\sin xdx = -\cos x + C\)</span></p>
+<p><span class="math inline">\(\int\sec^2 xdx = \tan x + C\)</span></p>
+<p><span class="math inline">\(\int\csc^2 xdx = -\cot x + C\)</span></p>
+<p><span class="math inline">\(\int\sec x\tan xdx = \sec x +
+C\)</span></p>
+<p><span class="math inline">\(\int\csc x\cot xdx = -\csc x +
+C\)</span></p>
+<p><span class="math inline">\(\int e^xdx = e^x + C\)</span></p>
+<p><span class="math inline">\(\int a^xdx = \frac{a^x}{\ln a} +
+C\)</span></p>
+<p><span class="math inline">\(\int\frac{dx}{a^2 + x^2} =
+\frac{1}{a}\arctan{\frac{x}{a}} + C\)</span></p>
+<p><span class="math inline">\(\int\frac{dx}{\sqrt{a^2 - x^2}} =
+\arcsin{\frac{x}{a}} + C\)</span></p>
+<p><span class="math inline">\(\int\frac{dx}{a^2 - x^2} =
+\frac{1}{2a}\ln\left\vert\frac{a + x}{a - x}\right\vert + C\)</span></p>
+<p><span class="math inline">\(\int\tan xdx = -\ln\left\vert \cos
+x\right\vert + C\)</span></p>
+<p><span class="math inline">\(\int\cot xdx = \ln\left\vert\sin
+x\right\vert + C\)</span></p>
+<p><span class="math inline">\(\int\sec xdx = \ln\left\vert\sec x + \tan
+x\right\vert + C\)</span></p>
+<p><span class="math inline">\(\int\csc xdx = \ln\left\vert\csc x - \cot
+x\right\vert + C\)</span></p>
+<p><span class="math inline">\(\int\frac{dx}{\sqrt{x^2 + a^2}} = \ln(x +
+\sqrt{x^2 + a^2}) + C\)</span></p>
+<p><span class="math inline">\(\int\frac{dx}{\sqrt{x^2 - a^2}} =
+\ln\left\vert x + \sqrt{x^2 - a^2}\right\vert + C\)</span></p>
+]]></content>
+      <tags>
+        <tag>Math</tag>
+        <tag>Calculus</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Hello World</title>
     <url>/2023/09/28/Hello/</url>
     <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very
@@ -211,8 +211,8 @@ href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
 ]]></content>
   </entry>
   <entry>
-    <title>Limitation</title>
-    <url>/2024/02/26/Limitation/</url>
+    <title>极限</title>
+    <url>/2024/02/26/Limit/</url>
     <content><![CDATA[<h1 id="数列的极限">数列的极限</h1>
 <h2 id="定义">定义</h2>
 <p>设 <span class="math inline">\(\{x_n\}\)</span>
@@ -576,6 +576,107 @@ class="math inline">\(\mathrm{II}\quad\)</span></strong>
       </tags>
   </entry>
   <entry>
+    <title>Power Series</title>
+    <url>/2024/03/01/Power-Series/</url>
+    <content><![CDATA[<h1 id="函数项级数">函数项级数</h1>
+<h2 id="定义">定义</h2>
+<p>设 <span class="math inline">\(f_n(x)\)</span> 是定义在 <span
+class="math inline">\(D\)</span> 上的一串函数（<span
+class="math inline">\(n = 1, 2, 3,
+\cdots\)</span>），也称之为函数序列，用 "+" 号将其一次连接起来，<span
+class="math inline">\(f_1(x) + f_2(x) + \cdots + f_n(x) + \cdots
+\triangleq \sum\limits_{n=1}^\infty f_n(x)\)</span> 称之为 <span
+class="math inline">\(D\)</span> 上的<strong>函数项级数</strong>。<span
+class="math inline">\(S_n = f_1(x) + f_2(x) + \cdots + f_n(x)\)</span>
+称为<strong>部分和</strong>。<span class="math inline">\(r_n(x) =
+f_{n+1}(x) + f_{n+2}(x) + \cdots\)</span>
+为函数项级数的<strong>余项</strong>。</p>
+<p>对 <span class="math inline">\(x_0 \in D\)</span>，若 <span
+class="math inline">\(\sum\limits_{n=1}^\infty f_n(x_0)\)</span>
+收敛，则称 <span class="math inline">\(x_0\)</span> 为 <span
+class="math inline">\(\sum\limits_{n=1}^\infty f_n(x)\)</span>
+的<strong>收敛点</strong>，收敛点的全体组成的集合称为 <span
+class="math inline">\(\sum\limits_{n=1}^\infty f_n(x)\)</span>
+的<strong>收敛域</strong>，记 <span class="math inline">\(S(x) =
+\lim\limits_{n\to\infty} S_n(x)\)</span>，称 <span
+class="math inline">\(S(x)\)</span>
+为函数项级数的<strong>和函数</strong>。</p>
+<h2 id="性质">性质</h2>
+<h3 id="定理1quad-函数项级数和函数的连续性"><strong>定理1</strong><span
+class="math inline">\(\quad\)</span> 函数项级数和函数的连续性</h3>
+<p>设 <span class="math inline">\(\sum\limits_{n=1}^\infty
+u_n(x)\)</span> 在 <span class="math inline">\([a, b]\)</span>
+上一致收敛，且级数每一项 <span class="math inline">\(u_n(x)\)</span> 在
+<span class="math inline">\([a, b]\)</span> 上都连续，则和函数 <span
+class="math inline">\(S(x)\)</span> 在 <span class="math inline">\([a,
+b]\)</span> 上连续。</p>
+<h3 id="定理2quad-函数项级数逐项积分性"><strong>定理2</strong><span
+class="math inline">\(\quad\)</span> 函数项级数逐项积分性</h3>
+<h3 id="定理3quad-函数项级数逐项微分性"><strong>定理3</strong><span
+class="math inline">\(\quad\)</span> 函数项级数逐项微分性</h3>
+<h1 id="幂级数">幂级数</h1>
+<h2 id="定义-1">定义</h2>
+<p>称 <span class="math inline">\(\sum\limits_{n=0}^\infty a_n x^n = a_0
++ a_1 x + \cdots + a_n x^n + \cdots\)</span>
+为标准的<strong>幂级数</strong>，这里 <span
+class="math inline">\(a_n\)</span>，<span class="math inline">\(n = 0,
+1, 2, \cdots\)</span> 称之为幂级数的系数。</p>
+<p>称 <span class="math inline">\(\sum\limits_{n=0}^\infty a_n (x-x_0)^n
+= a_0 + a_1(x-x_0) + \cdots + a_n(x-x_0)^n + \cdots\)</span>
+为<strong>一般型幂级数</strong>。</p>
+<p>称 <span class="math inline">\(\sum\limits_{n=0}^\infty a_n
+\phi^n(x)\)</span> 为<strong>广义幂级数</strong>。</p>
+<p>对于 <span class="math inline">\(\sum\limits_{n=0}^\infty a_n
+x^n\)</span>，当 <span class="math inline">\(x=0\)</span>
+时，级数<strong>收敛</strong>，若除 <span
+class="math inline">\(0\)</span>
+以外没有收敛点称为级数<strong>发散</strong>。</p>
+<p>任何一个标准的幂级数 <span
+class="math inline">\(\sum\limits_{n=0}^\infty a_n
+x^n\)</span>，都存在唯一一个 <span
+class="math inline">\(R\)</span>，<span class="math inline">\((R \ge 0
+或 R = +\infty)\)</span> 使 <span
+class="math inline">\(\sum\limits_{n=0}^\infty a_n x^n\)</span> 在 <span
+class="math inline">\((-R, R)\)</span> 内绝对收敛，在 <span
+class="math inline">\((-\infty, -R)\)</span> 和 <span
+class="math inline">\((R, +\infty)\)</span> 上发散，则称 <span
+class="math inline">\(R\)</span> 为 <span
+class="math inline">\(\sum\limits_{n=0}^\infty a_n x^n\)</span>
+的<strong>收敛半径</strong>，<span class="math inline">\((-R,
+R)\)</span> 称之为 <span class="math inline">\(\sum\limits_{n=0}^\infty
+a_n x^n\)</span> 的<strong>收敛区间</strong>。</p>
+<p><span class="math inline">\(\sum\limits_{n=0}^\infty a_n x^n\)</span>
+的<strong>收敛域</strong> <span class="math inline">\(=\)</span>
+收敛区间 <span class="math inline">\((-R, R) \cup \pm R\)</span>
+中收敛的点</p>
+<h2 id="性质-1">性质</h2>
+<p>设 <span class="math inline">\(\sum\limits_{n=0}^\infty a_n
+x^n\)</span> 在 <span class="math inline">\(x_0 \ne 0\)</span>
+点收敛，则 <span class="math inline">\(\sum\limits_{n=0}^\infty a_n
+x^n\)</span> 在 <span class="math inline">\(\vert x\vert &lt; \vert x_0
+\vert\)</span> 上绝对收敛。</p>
+<p><strong>推论</strong>：如果 <span
+class="math inline">\(\sum\limits_{n=0}^\infty a_n x^n\)</span> 在 <span
+class="math inline">\(x_0\)</span> 点发散，则 <span
+class="math inline">\(\sum\limits_{n=0}^\infty a_n x^n\)</span> 在 <span
+class="math inline">\(\vert x\vert &gt; \vert x_0\vert\)</span>
+上发散。</p>
+<p>设 <span class="math inline">\(\sum\limits_{n=0}^\infty a_n
+x^n\)</span> 满足 <span class="math inline">\(\lim\limits_{n\to\infty}
+\left\vert \frac{a_{n+1}}{a_n}\right\vert\)</span> （或 <span
+class="math inline">\(\lim\limits_{n\to\infty} \sqrt[n]{\vert
+a_n\vert}\)</span>）<span class="math inline">\(= \rho \ge
+0\)</span>（或 <span class="math inline">\(+\infty\)</span>），则 <span
+class="math inline">\(R = \frac{1}{\rho}\)</span> 是 <span
+class="math inline">\(\sum\limits_{n=0}^\infty a_n x^n\)</span>
+的收敛半径。</p>
+]]></content>
+      <tags>
+        <tag>Math</tag>
+        <tag>Series</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>黎曼积分</title>
     <url>/2024/02/28/Riemann-Integral/</url>
     <content><![CDATA[<h1 id="黎曼积分">黎曼积分</h1>
@@ -826,6 +927,98 @@ class="math inline">\(S\)</span>
       <tags>
         <tag>STM32</tag>
         <tag>单片机</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>级数</title>
+    <url>/2024/02/29/Series/</url>
+    <content><![CDATA[<h1 id="无穷级数">无穷级数</h1>
+<h2 id="定义">定义</h2>
+<p>设 <span class="math inline">\(\{a_n\}\)</span> 为一个无穷数列，用
+“+” 将 <span class="math inline">\(a_n\)</span>
+的项以此连起来，得到一个式子 <span class="math inline">\(a_1 + a_2 +
+\cdots + a_n +
+\cdots\)</span>，称此式子为<strong>（无穷数项）级数</strong>，简记为
+<span class="math inline">\(\sum\limits_{n=1}^\infty a_n\)</span></p>
+<p><span class="math inline">\(a_1\)</span> 称为第一项，<span
+class="math inline">\(a_n\)</span> 称为通项，<span
+class="math inline">\(S_n = a_1 + a_2 + \cdots + a_n\)</span>
+称为<strong>部分和</strong>。</p>
+<h2 id="敛散性">敛散性</h2>
+<p>设 <span class="math inline">\(\sum\limits_{n=1}^\infty a_n\)</span>
+为一级数，<span class="math inline">\(S_n = a_1 + a_2 + \cdots +
+a_n\)</span> 为其部分和，若 <span
+class="math inline">\(\lim\limits_{n\to\infty} S_n\)</span>
+存在，则称级数 <span class="math inline">\(\sum\limits_{n=1}^\infty
+a_n\)</span> <strong>收敛</strong>，此时 <span
+class="math inline">\(\lim\limits_{n\to\infty} S_n =
+\sum\limits_{n=1}^\infty a_n\)</span>。若 <span
+class="math inline">\(\lim\limits_{n\to\infty} S_n\)</span>
+不存在，则称级数 <span class="math inline">\(\sum\limits_{n=1}^\infty
+a_n\)</span> <strong>发散</strong>。</p>
+<h2 id="性质">性质</h2>
+<ol type="1">
+<li><span class="math inline">\(k \ne 0\)</span> 时，<span
+class="math inline">\(\sum\limits_{n=1}^\infty a_n\)</span> 与 <span
+class="math inline">\(\sum\limits_{n=1}^\infty ka_n\)</span>
+的敛散性一致，且收敛时 <span
+class="math inline">\(\sum\limits_{n=1}^\infty ka_n =
+k\sum\limits_{n=1}^\infty a_n\)</span>。</li>
+<li>若 <span class="math inline">\(\sum\limits_{n=1}^\infty a_n\)</span>
+与 <span class="math inline">\(\sum\limits_{n=1}^\infty b_n\)</span>
+都收敛，则 <span class="math inline">\(\sum\limits_{n=1}^\infty (a_n \pm
+b_n)\)</span> 也收敛，且 <span
+class="math inline">\(\sum\limits_{n=1}^\infty (a_n \pm b_n) =
+\sum\limits_{n=1}^\infty a_n \pm \sum\limits_{n=1}^\infty
+b_n\)</span>。</li>
+<li>一个级数去掉或添加有限项不改变级数的敛散性。</li>
+<li>收敛级数满足结合律。</li>
+<li>若 <span class="math inline">\(\sum\limits_{n=1}^\infty a_n\)</span>
+收敛，则 <span class="math inline">\(\lim\limits_{n\to\infty} a_n =
+0\)</span>。</li>
+</ol>
+<h2 id="两个重要级数">两个重要级数</h2>
+<ul>
+<li><h3 id="等比级数-sumlimits_n1infty-rn">等比级数 <span
+class="math inline">\(\sum\limits_{n=1}^\infty r^n\)</span></h3></li>
+</ul>
+<p>当 <span class="math inline">\(\vert r\vert &lt; 1\)</span>
+时收敛；</p>
+<p>当 <span class="math inline">\(\vert r \vert \ge 1\)</span>
+时发散。</p>
+<ul>
+<li><h3 id="p-级数-sumlimits_n1infty-frac1np">p-级数 <span
+class="math inline">\(\sum\limits_{n=1}^\infty
+\frac{1}{n^p}\)</span></h3></li>
+</ul>
+<p>当 <span class="math inline">\(0 &lt; p \le 1\)</span> 时发散；</p>
+<p>当 <span class="math inline">\(p&gt;1\)</span> 时收敛。</p>
+<h1 id="正项级数">正项级数</h1>
+<h2 id="定义-1">定义</h2>
+<p>称满足 <span class="math inline">\(a_n &gt; 0\)</span> 的无穷级数
+<span class="math inline">\(\sum\limits_{n=1}^\infty a_n\)</span>
+为<strong>正项级数</strong>。</p>
+<h2 id="敛散性判别法">敛散性判别法</h2>
+<ol type="1">
+<li>正项级数 <span
+class="math inline">\(\sum\limits_{n=1}^\infty\)</span> 收敛 <span
+class="math inline">\(\Leftrightarrow\)</span> 部分和有上界。</li>
+<li>比较判别法</li>
+</ol>
+<p>设 <span class="math inline">\(\sum\limits_{n=1}^\infty
+a_n\)</span>，<span class="math inline">\(\sum\limits_{n=1}^\infty
+b_n\)</span> 为两个正项级数，若从某项以后有 <span
+class="math inline">\(a_n \le b_n\)</span>，则</p>
+<p>当 <span class="math inline">\(\sum\limits_{n=1}^\infty b_n\)</span>
+收敛时，<span class="math inline">\(\sum\limits_{n=1}^\infty
+a_n\)</span> 收敛；</p>
+<p>当 <span class="math inline">\(\sum\limits_{n=1}^\infty a_n\)</span>
+发散时，<span class="math inline">\(\sum\limits_{n=1}^\infty
+b_n\)</span> 发散。</p>
+]]></content>
+      <tags>
+        <tag>Math</tag>
+        <tag>Series</tag>
       </tags>
   </entry>
   <entry>

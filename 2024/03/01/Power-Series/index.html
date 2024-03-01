@@ -20,29 +20,29 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","darkmode":true,"version":"8.18.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":null},"fold":{"enable":true,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
 
-    <meta name="description" content="常用积分表">
+    <meta name="description" content="函数项级数 定义 设 \(f_n(x)\) 是定义在 \(D\) 上的一串函数（\(n &#x3D; 1, 2, 3, \cdots\)），也称之为函数序列，用 &quot;+&quot; 号将其一次连接起来，\(f_1(x) + f_2(x) + \cdots + f_n(x) + \cdots \triangleq \sum\limits_{n&#x3D;1}^\infty f_n(x)\) 称之为 \(D\) 上的函数项级数。\(">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Calculus">
-<meta property="og:url" content="http://example.com/2023/12/13/Calculus/index.html">
+<meta property="og:title" content="Power Series">
+<meta property="og:url" content="http://example.com/2024/03/01/Power-Series/index.html">
 <meta property="og:site_name" content="Abyss&#39;s Blog">
-<meta property="og:description" content="常用积分表">
+<meta property="og:description" content="函数项级数 定义 设 \(f_n(x)\) 是定义在 \(D\) 上的一串函数（\(n &#x3D; 1, 2, 3, \cdots\)），也称之为函数序列，用 &quot;+&quot; 号将其一次连接起来，\(f_1(x) + f_2(x) + \cdots + f_n(x) + \cdots \triangleq \sum\limits_{n&#x3D;1}^\infty f_n(x)\) 称之为 \(D\) 上的函数项级数。\(">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2023-12-13T15:59:07.000Z">
-<meta property="article:modified_time" content="2023-12-13T16:37:13.283Z">
+<meta property="article:published_time" content="2024-03-01T14:13:59.000Z">
+<meta property="article:modified_time" content="2024-03-01T14:14:31.252Z">
 <meta property="article:author" content="Abyss Skb">
 <meta property="article:tag" content="Math">
-<meta property="article:tag" content="Calculus">
+<meta property="article:tag" content="Series">
 <meta name="twitter:card" content="summary">
 
 
-<link rel="canonical" href="http://example.com/2023/12/13/Calculus/">
+<link rel="canonical" href="http://example.com/2024/03/01/Power-Series/">
 
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/2023/12/13/Calculus/","path":"2023/12/13/Calculus/","title":"Calculus"}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/2024/03/01/Power-Series/","path":"2024/03/01/Power-Series/","title":"Power Series"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>Calculus | Abyss's Blog</title>
+<title>Power Series | Abyss's Blog</title>
   
 
 
@@ -128,7 +128,7 @@
   
   <aside class="sidebar">
 
-    <div class="sidebar-inner sidebar-overview-active">
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
       <ul class="sidebar-nav">
         <li class="sidebar-nav-toc">
           文章目录
@@ -141,6 +141,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%87%BD%E6%95%B0%E9%A1%B9%E7%BA%A7%E6%95%B0"><span class="nav-number">1.</span> <span class="nav-text">函数项级数</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9A%E4%B9%89"><span class="nav-number">1.1.</span> <span class="nav-text">定义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%A7%E8%B4%A8"><span class="nav-number">1.2.</span> <span class="nav-text">性质</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%9A%E7%90%861quad-%E5%87%BD%E6%95%B0%E9%A1%B9%E7%BA%A7%E6%95%B0%E5%92%8C%E5%87%BD%E6%95%B0%E7%9A%84%E8%BF%9E%E7%BB%AD%E6%80%A7"><span class="nav-number">1.2.1.</span> <span class="nav-text">定理1\(\quad\) 函数项级数和函数的连续性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%9A%E7%90%862quad-%E5%87%BD%E6%95%B0%E9%A1%B9%E7%BA%A7%E6%95%B0%E9%80%90%E9%A1%B9%E7%A7%AF%E5%88%86%E6%80%A7"><span class="nav-number">1.2.2.</span> <span class="nav-text">定理2\(\quad\) 函数项级数逐项积分性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%9A%E7%90%863quad-%E5%87%BD%E6%95%B0%E9%A1%B9%E7%BA%A7%E6%95%B0%E9%80%90%E9%A1%B9%E5%BE%AE%E5%88%86%E6%80%A7"><span class="nav-number">1.2.3.</span> <span class="nav-text">定理3\(\quad\) 函数项级数逐项微分性</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%B9%82%E7%BA%A7%E6%95%B0"><span class="nav-number">2.</span> <span class="nav-text">幂级数</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9A%E4%B9%89-1"><span class="nav-number">2.1.</span> <span class="nav-text">定义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%A7%E8%B4%A8-1"><span class="nav-number">2.2.</span> <span class="nav-text">性质</span></a></li></ol></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -186,7 +187,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2023/12/13/Calculus/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/03/01/Power-Series/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -199,12 +200,12 @@
     </span>
 
     <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="Calculus | Abyss's Blog">
-      <meta itemprop="description" content="常用积分表">
+      <meta itemprop="name" content="Power Series | Abyss's Blog">
+      <meta itemprop="description" content="">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          Calculus
+          Power Series
         </h1>
 
         <div class="post-meta-container">
@@ -214,15 +215,9 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">发表于</span>
+      
 
-      <time title="创建时间：2023-12-13 23:59:07" itemprop="dateCreated datePublished" datetime="2023-12-13T23:59:07+08:00">2023-12-13</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-12-14 00:37:13" itemprop="dateModified" datetime="2023-12-14T00:37:13+08:00">2023-12-14</time>
+      <time title="创建时间：2024-03-01 22:13:59 / 修改时间：22:14:31" itemprop="dateCreated datePublished" datetime="2024-03-01T22:13:59+08:00">2024-03-01</time>
     </span>
 
   
@@ -235,51 +230,104 @@
     </span>
 </div>
 
-            <div class="post-description">常用积分表</div>
         </div>
       </header>
 
     
     
     
-    <div class="post-body" itemprop="articleBody"><p><span class="math inline">\(\int kdx = kx + C\)</span></p>
-<p><span class="math inline">\(\int x^{\mu}dx = \frac{x^{\mu + 1}}{\mu +
-1} + C\)</span></p>
-<p><span class="math inline">\(\int\frac{dx}{x} = \ln\left\vert
-x\right\vert + C\)</span></p>
-<p><span class="math inline">\(\int\frac{dx}{1 + x^2} = \arctan x +
-C\)</span></p>
-<p><span class="math inline">\(\int\frac{dx}{\sqrt{1 - x^2}} = \arcsin x
-+ C\)</span></p>
-<p><span class="math inline">\(\int\cos xdx = \sin x + C\)</span></p>
-<p><span class="math inline">\(\int\sin xdx = -\cos x + C\)</span></p>
-<p><span class="math inline">\(\int\sec^2 xdx = \tan x + C\)</span></p>
-<p><span class="math inline">\(\int\csc^2 xdx = -\cot x + C\)</span></p>
-<p><span class="math inline">\(\int\sec x\tan xdx = \sec x +
-C\)</span></p>
-<p><span class="math inline">\(\int\csc x\cot xdx = -\csc x +
-C\)</span></p>
-<p><span class="math inline">\(\int e^xdx = e^x + C\)</span></p>
-<p><span class="math inline">\(\int a^xdx = \frac{a^x}{\ln a} +
-C\)</span></p>
-<p><span class="math inline">\(\int\frac{dx}{a^2 + x^2} =
-\frac{1}{a}\arctan{\frac{x}{a}} + C\)</span></p>
-<p><span class="math inline">\(\int\frac{dx}{\sqrt{a^2 - x^2}} =
-\arcsin{\frac{x}{a}} + C\)</span></p>
-<p><span class="math inline">\(\int\frac{dx}{a^2 - x^2} =
-\frac{1}{2a}\ln\left\vert\frac{a + x}{a - x}\right\vert + C\)</span></p>
-<p><span class="math inline">\(\int\tan xdx = -\ln\left\vert \cos
-x\right\vert + C\)</span></p>
-<p><span class="math inline">\(\int\cot xdx = \ln\left\vert\sin
-x\right\vert + C\)</span></p>
-<p><span class="math inline">\(\int\sec xdx = \ln\left\vert\sec x + \tan
-x\right\vert + C\)</span></p>
-<p><span class="math inline">\(\int\csc xdx = \ln\left\vert\csc x - \cot
-x\right\vert + C\)</span></p>
-<p><span class="math inline">\(\int\frac{dx}{\sqrt{x^2 + a^2}} = \ln(x +
-\sqrt{x^2 + a^2}) + C\)</span></p>
-<p><span class="math inline">\(\int\frac{dx}{\sqrt{x^2 - a^2}} =
-\ln\left\vert x + \sqrt{x^2 - a^2}\right\vert + C\)</span></p>
+    <div class="post-body" itemprop="articleBody"><h1 id="函数项级数">函数项级数</h1>
+<h2 id="定义">定义</h2>
+<p>设 <span class="math inline">\(f_n(x)\)</span> 是定义在 <span
+class="math inline">\(D\)</span> 上的一串函数（<span
+class="math inline">\(n = 1, 2, 3,
+\cdots\)</span>），也称之为函数序列，用 "+" 号将其一次连接起来，<span
+class="math inline">\(f_1(x) + f_2(x) + \cdots + f_n(x) + \cdots
+\triangleq \sum\limits_{n=1}^\infty f_n(x)\)</span> 称之为 <span
+class="math inline">\(D\)</span> 上的<strong>函数项级数</strong>。<span
+class="math inline">\(S_n = f_1(x) + f_2(x) + \cdots + f_n(x)\)</span>
+称为<strong>部分和</strong>。<span class="math inline">\(r_n(x) =
+f_{n+1}(x) + f_{n+2}(x) + \cdots\)</span>
+为函数项级数的<strong>余项</strong>。</p>
+<p>对 <span class="math inline">\(x_0 \in D\)</span>，若 <span
+class="math inline">\(\sum\limits_{n=1}^\infty f_n(x_0)\)</span>
+收敛，则称 <span class="math inline">\(x_0\)</span> 为 <span
+class="math inline">\(\sum\limits_{n=1}^\infty f_n(x)\)</span>
+的<strong>收敛点</strong>，收敛点的全体组成的集合称为 <span
+class="math inline">\(\sum\limits_{n=1}^\infty f_n(x)\)</span>
+的<strong>收敛域</strong>，记 <span class="math inline">\(S(x) =
+\lim\limits_{n\to\infty} S_n(x)\)</span>，称 <span
+class="math inline">\(S(x)\)</span>
+为函数项级数的<strong>和函数</strong>。</p>
+<h2 id="性质">性质</h2>
+<h3 id="定理1quad-函数项级数和函数的连续性"><strong>定理1</strong><span
+class="math inline">\(\quad\)</span> 函数项级数和函数的连续性</h3>
+<p>设 <span class="math inline">\(\sum\limits_{n=1}^\infty
+u_n(x)\)</span> 在 <span class="math inline">\([a, b]\)</span>
+上一致收敛，且级数每一项 <span class="math inline">\(u_n(x)\)</span> 在
+<span class="math inline">\([a, b]\)</span> 上都连续，则和函数 <span
+class="math inline">\(S(x)\)</span> 在 <span class="math inline">\([a,
+b]\)</span> 上连续。</p>
+<h3 id="定理2quad-函数项级数逐项积分性"><strong>定理2</strong><span
+class="math inline">\(\quad\)</span> 函数项级数逐项积分性</h3>
+<h3 id="定理3quad-函数项级数逐项微分性"><strong>定理3</strong><span
+class="math inline">\(\quad\)</span> 函数项级数逐项微分性</h3>
+<h1 id="幂级数">幂级数</h1>
+<h2 id="定义-1">定义</h2>
+<p>称 <span class="math inline">\(\sum\limits_{n=0}^\infty a_n x^n = a_0
++ a_1 x + \cdots + a_n x^n + \cdots\)</span>
+为标准的<strong>幂级数</strong>，这里 <span
+class="math inline">\(a_n\)</span>，<span class="math inline">\(n = 0,
+1, 2, \cdots\)</span> 称之为幂级数的系数。</p>
+<p>称 <span class="math inline">\(\sum\limits_{n=0}^\infty a_n (x-x_0)^n
+= a_0 + a_1(x-x_0) + \cdots + a_n(x-x_0)^n + \cdots\)</span>
+为<strong>一般型幂级数</strong>。</p>
+<p>称 <span class="math inline">\(\sum\limits_{n=0}^\infty a_n
+\phi^n(x)\)</span> 为<strong>广义幂级数</strong>。</p>
+<p>对于 <span class="math inline">\(\sum\limits_{n=0}^\infty a_n
+x^n\)</span>，当 <span class="math inline">\(x=0\)</span>
+时，级数<strong>收敛</strong>，若除 <span
+class="math inline">\(0\)</span>
+以外没有收敛点称为级数<strong>发散</strong>。</p>
+<p>任何一个标准的幂级数 <span
+class="math inline">\(\sum\limits_{n=0}^\infty a_n
+x^n\)</span>，都存在唯一一个 <span
+class="math inline">\(R\)</span>，<span class="math inline">\((R \ge 0
+或 R = +\infty)\)</span> 使 <span
+class="math inline">\(\sum\limits_{n=0}^\infty a_n x^n\)</span> 在 <span
+class="math inline">\((-R, R)\)</span> 内绝对收敛，在 <span
+class="math inline">\((-\infty, -R)\)</span> 和 <span
+class="math inline">\((R, +\infty)\)</span> 上发散，则称 <span
+class="math inline">\(R\)</span> 为 <span
+class="math inline">\(\sum\limits_{n=0}^\infty a_n x^n\)</span>
+的<strong>收敛半径</strong>，<span class="math inline">\((-R,
+R)\)</span> 称之为 <span class="math inline">\(\sum\limits_{n=0}^\infty
+a_n x^n\)</span> 的<strong>收敛区间</strong>。</p>
+<p><span class="math inline">\(\sum\limits_{n=0}^\infty a_n x^n\)</span>
+的<strong>收敛域</strong> <span class="math inline">\(=\)</span>
+收敛区间 <span class="math inline">\((-R, R) \cup \pm R\)</span>
+中收敛的点</p>
+<h2 id="性质-1">性质</h2>
+<p>设 <span class="math inline">\(\sum\limits_{n=0}^\infty a_n
+x^n\)</span> 在 <span class="math inline">\(x_0 \ne 0\)</span>
+点收敛，则 <span class="math inline">\(\sum\limits_{n=0}^\infty a_n
+x^n\)</span> 在 <span class="math inline">\(\vert x\vert &lt; \vert x_0
+\vert\)</span> 上绝对收敛。</p>
+<p><strong>推论</strong>：如果 <span
+class="math inline">\(\sum\limits_{n=0}^\infty a_n x^n\)</span> 在 <span
+class="math inline">\(x_0\)</span> 点发散，则 <span
+class="math inline">\(\sum\limits_{n=0}^\infty a_n x^n\)</span> 在 <span
+class="math inline">\(\vert x\vert &gt; \vert x_0\vert\)</span>
+上发散。</p>
+<p>设 <span class="math inline">\(\sum\limits_{n=0}^\infty a_n
+x^n\)</span> 满足 <span class="math inline">\(\lim\limits_{n\to\infty}
+\left\vert \frac{a_{n+1}}{a_n}\right\vert\)</span> （或 <span
+class="math inline">\(\lim\limits_{n\to\infty} \sqrt[n]{\vert
+a_n\vert}\)</span>）<span class="math inline">\(= \rho \ge
+0\)</span>（或 <span class="math inline">\(+\infty\)</span>），则 <span
+class="math inline">\(R = \frac{1}{\rho}\)</span> 是 <span
+class="math inline">\(\sum\limits_{n=0}^\infty a_n x^n\)</span>
+的收敛半径。</p>
 
     </div>
 
@@ -290,21 +338,18 @@ x\right\vert + C\)</span></p>
     <footer class="post-footer">
           <div class="post-tags">
               <a href="/tags/Math/" rel="tag"># Math</a>
-              <a href="/tags/Calculus/" rel="tag"># Calculus</a>
+              <a href="/tags/Series/" rel="tag"># Series</a>
           </div>
 
         
 
           <div class="post-nav">
             <div class="post-nav-item">
-                <a href="/2023/11/25/STM32/" rel="prev" title="STM32">
-                  <i class="fa fa-angle-left"></i> STM32
+                <a href="/2024/02/29/Series/" rel="prev" title="级数">
+                  <i class="fa fa-angle-left"></i> 级数
                 </a>
             </div>
             <div class="post-nav-item">
-                <a href="/2024/02/26/Limit/" rel="next" title="极限">
-                  极限 <i class="fa fa-angle-right"></i>
-                </a>
             </div>
           </div>
     </footer>
