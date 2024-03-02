@@ -766,19 +766,24 @@ class="math inline">\(z=f(x,y)\)</span> 为顶的曲顶柱体体积的代数和�
 <h2 id="计算公式">计算公式</h2>
 <ul>
 <li><p><span class="math inline">\(Y-\)</span> 型：<span
-class="math inline">\(\begin{cases}  a \le y \le b \\  \varphi(y) \le x
-\le \psi(y) \end{cases}\)</span> <span class="math display">\[
+class="math inline">\(\begin{cases}
+  a \le y \le b \\
+  \varphi(y) \le x \le \psi(y)
+\end{cases}\)</span> <span class="math display">\[
 \iint\limits_D f(x,y)dxdy = \int_a^b dy
 \int_{\varphi(y)}^{\psi(y)}f(x,y)dx
 \]</span></p></li>
 <li><p><span class="math inline">\(X-\)</span> 型：<span
-class="math inline">\(\begin{cases}  a \le x \le b \\  \varphi(x) \le y
-\le \psi(x) \end{cases}\)</span> <span class="math display">\[
+class="math inline">\(\begin{cases}
+  a \le x \le b \\
+  \varphi(x) \le y \le \psi(x)
+\end{cases}\)</span> <span class="math display">\[
 \iint\limits_D f(x,y)dxdy = \int_a^b dx
 \int_{\varphi(x)}^{\psi(x)}f(x,y)dy
 \]</span></p></li>
-<li><p>极坐标系：<span class="math inline">\(\begin{cases}  \alpha \le
-\theta \le \beta \\  \varphi(\theta) \le r \le \psi(\theta)
+<li><p>极坐标系：<span class="math inline">\(\begin{cases}
+  \alpha \le \theta \le \beta \\
+  \varphi(\theta) \le r \le \psi(\theta)
 \end{cases}\)</span> <span class="math display">\[
 \iint\limits_D f(x,y)dxdy = \int_\alpha^\beta d\theta
 \int_{\varphi(\theta)}^{\psi(\theta)}f(r\cos\theta, r\sin\theta)rdr
@@ -807,19 +812,24 @@ f(x,y,z)dxdydz
 质量的代数和。</p>
 <h2 id="计算方法">计算方法</h2>
 <ul>
-<li><p>柱形域：<span class="math inline">\(\begin{cases}  \varphi(x,y)
-\le z \le \psi(x,y) \\  (x,y) \in D_{xy} \end{cases}\)</span> <span
-class="math display">\[
+<li><p>柱形域：<span class="math inline">\(\begin{cases}
+  \varphi(x,y) \le z \le \psi(x,y) \\
+  (x,y) \in D_{xy}
+\end{cases}\)</span> <span class="math display">\[
 \iiint\limits_\Omega f(x,y,z) dxdydz = \iint\limits_{D_{xy}}dxdy
 \int_{\phi(x,y)}^{\psi(x,y)}f(x,y,z)dz
 \]</span></p></li>
-<li><p>片型域：<span class="math inline">\(\begin{cases}  a \le z \le b
-\\  (x,y) \in D_z \end{cases}\)</span> <span class="math display">\[
+<li><p>片型域：<span class="math inline">\(\begin{cases}
+  a \le z \le b \\
+  (x,y) \in D_z
+\end{cases}\)</span> <span class="math display">\[
 \iiint_\Omega f(x,y,z)dxdydz = \int_a^b dz\iint\limits_{D_z}f(x,y,z)dxdy
 \]</span></p></li>
-<li><p>球坐标系：<span class="math inline">\(\begin{cases}  a \le \theta
-\le b \\  c \le \phi \le d \\  g(\theta, \phi) \le \rho \le h(\theta,
-\phi) \end{cases}\)</span> <span class="math display">\[
+<li><p>球坐标系：<span class="math inline">\(\begin{cases}
+  a \le \theta \le b \\
+  c \le \phi \le d \\
+  g(\theta, \phi) \le \rho \le h(\theta, \phi)
+\end{cases}\)</span> <span class="math display">\[
 \iiint\limits_\Omega f(x,y,z)dxdydz = \int_a^b d\theta \int_c^d d\phi
 \int_{g(\theta, \phi)}^{h(\theta, \phi)} f(\rho\sin\phi\cos\theta,
 \rho\sin\phi\sin\theta, \rho\cos\phi)\rho^2\sin\phi d\rho
@@ -1097,6 +1107,217 @@ href="https://theme-next.js.org/">NexT</a></h4></li>
         <tag>Linux</tag>
         <tag>Ubuntu</tag>
         <tag>Sever</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>第二型积分</title>
+    <url>/2024/03/02/%E7%AC%AC%E4%BA%8C%E5%9E%8B%E7%A7%AF%E5%88%86/</url>
+    <content><![CDATA[<h1 id="第二型积分">第二型积分</h1>
+<h2 id="定义">定义</h2>
+<p>设 <span class="math inline">\(\Omega\)</span>
+为空间上一有向几何体，即在 <span class="math inline">\(\Omega\)</span>
+上每一点 <span class="math inline">\(P\)</span> 处都确定了一方向 <span
+class="math inline">\(\overrightarrow{e_P}\)</span>，<span
+class="math inline">\(P \in \Omega\)</span>，<span
+class="math inline">\(\overrightarrow{A}(P)\)</span> 为 <span
+class="math inline">\(\Omega\)</span> 上一向量值函数。首先，将 <span
+class="math inline">\(\Omega\)</span> 任意分成 <span
+class="math inline">\(n\)</span> 个有向几何体 <span
+class="math inline">\(\Delta\Omega_1, \Delta\Omega_2, \cdots,
+\Delta\Omega_n\)</span>；然后在每一个有向几何体上做内积 <span
+class="math inline">\(\overrightarrow{A}(P) \cdot
+\Delta\overrightarrow{\Omega_i}(i = 1, 2, \cdots, n), P_i \in
+\Delta\Omega_i\)</span>，<span
+class="math inline">\(\Delta\overrightarrow{\Omega_i}\)</span> 是以
+<span class="math inline">\(\Delta\Omega_i\)</span> 的几何量为模，以
+<span class="math inline">\(P_i\)</span>
+点的方向为方向的向量，再将上述内积加起来得 <span
+class="math inline">\(\sum\limits_{i=1}^n \overrightarrow{A}(P_i) \cdot
+\Delta\overrightarrow{\Omega_i}\)</span>。若无论 <span
+class="math inline">\(\Omega\)</span> 如何分，<span
+class="math inline">\(P_i \in \Delta \Omega_i\)</span>如何取，极限 <span
+class="math inline">\(\lim\limits_{\lambda\to 0}\sum\limits_{i=1}^n
+\overrightarrow{A}(P_i) \cdot \Delta
+\overrightarrow{\Omega_i}\)</span>，<span class="math inline">\(\lambda
+= \max\{d_i \vert i = 1,2,\cdots, n\}\)</span>，<span
+class="math inline">\(d_i\)</span> 是 <span class="math inline">\(\Delta
+\Omega_i\)</span> 的直径，都存在且相等，则称此极限值为 <span
+class="math inline">\(\overrightarrow{A}(P_i)\)</span> 在 <span
+class="math inline">\(\Omega\)</span> 上给定方向 <span
+class="math inline">\(\overrightarrow{e_P}\)</span>
+下的<strong>第二型积分</strong>，记为 <span class="math display">\[
+\lim\limits_{\lambda\to 0} \sum\limits_{i=1}^n \overrightarrow{A}(P_i)
+\cdot \Delta\overrightarrow{\Omega_i} \triangleq \int\limits_\Omega
+\overrightarrow{A} (P) d \overrightarrow{\Omega}
+\]</span></p>
+<h2 id="性质">性质</h2>
+<h1 id="第二型曲线积分">第二型曲线积分</h1>
+<h2 id="定义-1">定义</h2>
+<p>设 <span class="math inline">\(C\)</span>
+是空间一有向曲线，其方向为其切线给定方向，引入直角坐标，<span
+class="math inline">\(\overrightarrow{A}(P) =
+\{P(x,y,z),Q(x,y,z),R(x,y,z)\}\)</span> 是 <span
+class="math inline">\(C\)</span> 上连续函数，则 <span
+class="math display">\[
+d\Omega \cos\alpha_P = dx,\quad d\Omega\cos\beta_P = dy,\quad
+d\Omega\cos \gamma_P = dz
+\]</span> 称 <span class="math inline">\(\int\limits_C
+\overrightarrow{A}(P) d\overrightarrow{\Omega} = \int\limits_C Pdx + Qdy
++ Rdz\)</span> 为 <span
+class="math inline">\(\overrightarrow{A}(x,y,z)\)</span> 在 <span
+class="math inline">\(C\)</span>
+上给定方向的<strong>第二型曲线积分</strong>。</p>
+<h2 id="计算方法">计算方法</h2>
+<h3 id="参数法">参数法</h3>
+<p>设曲线 <span class="math inline">\(C\)</span> 为 <span
+class="math inline">\(\begin{cases}
+    x = x(t) \\
+    y = y(t) \\
+    z = z(t)
+\end{cases}\)</span> 始点 <span class="math inline">\(t=a\)</span>，终点
+<span class="math inline">\(t=b\)</span>，<span
+class="math inline">\(C\)</span> 为光滑曲线，则 <span
+class="math display">\[
+\begin{split}
+    \int\limits_C Pdx + Qdy + Rdz &amp; = \int_a^b Pdx(t) + Qdy(t) +
+Rdz(t) \\
+    &amp; =\int_a^b \left[P x&#39;(t) + Qy&#39;(t) + Rz&#39;(t)\right]dt
+\end{split}
+\]</span> ### 格林公式 设 <span class="math inline">\(D\)</span>
+为单连通区域，<span class="math inline">\(C\)</span> 为 <span
+class="math inline">\(D\)</span> 的边界闭曲线，其方向为正向。<span
+class="math inline">\(P(x,y), Q(x,y)\)</span> 是 <span
+class="math inline">\(C+D\)</span> 上具有连续一阶偏导的函数，则 <span
+class="math display">\[
+\oint\limits_C P(x,y)dx + Q(x,y)dy = \oiint\limits_D
+\left(\frac{\partial Q}{\partial x} - \frac{\partial P}{\partial
+y}\right) dxdy
+\]</span></p>
+<h4 id="推广">推广</h4>
+<p>设曲线 <span class="math inline">\(C\)</span> 是由 <span
+class="math inline">\(n+1\)</span> 条简单连续、逐段光滑闭曲线 <span
+class="math inline">\(C_0, C_1, \cdots, C_n\)</span> 组成，其中 <span
+class="math inline">\(C_1, \cdots, C_n\)</span> 互不相交，每条都在其余
+<span class="math inline">\(n-1\)</span> 条外部区域内，而它们全体又在
+<span class="math inline">\(C_0\)</span> 所围区域内部。<span
+class="math inline">\(C_0\)</span> 与 <span class="math inline">\(C_1,
+\cdots, C_n\)</span> 所界定区域为 <span
+class="math inline">\(D\)</span>，<span class="math inline">\(C\)</span>
+的方向对 <span class="math inline">\(D\)</span> 而言为左手域方向，而
+<span class="math inline">\(P(x,y), Q(x,y)\)</span> 又是 <span
+class="math inline">\(C+D\)</span> 上具有连续一阶偏导的函数，则 <span
+class="math display">\[
+\oint\limits_C P(x,y)dx + Q(x,y)dy = \iint\limits_D \left(\frac{\partial
+Q}{\partial x} - \frac{\partial P}{\partial y}\right) dxdy
+\]</span></p>
+<h2 id="平面曲线积分与路径无关">平面曲线积分与路径无关</h2>
+<p>设 <span class="math inline">\(D\)</span> 为单连通区域，<span
+class="math inline">\(P, Q\)</span> 为 <span
+class="math inline">\(D\)</span> 上具有连续一阶偏导的函数，在 <span
+class="math inline">\(D\)</span> 上下述四结论等价： 1. <span
+class="math inline">\(D\)</span> 上任意闭曲线 <span
+class="math inline">\(C\)</span>，有 <span
+class="math inline">\(\oint\limits_C Pdx + Qdy = 0\)</span> 2. <span
+class="math inline">\(D\)</span> 上第二型曲线积分 <span
+class="math inline">\(\int\limits_{AB} Pdx + Qdy\)</span> 与路径无关 3.
+<span class="math inline">\(Pdx + Qdy\)</span> 是全微分 4. <span
+class="math inline">\(\frac{\partial P}{\partial y} = \frac{\partial
+Q}{\partial x}\)</span></p>
+<h2 id="全微分方程">全微分方程</h2>
+<h3 id="定义-2">定义</h3>
+<p>如果一阶微分方程 <span class="math inline">\(Pdx + Qdy = 0\)</span>
+满足 <span class="math inline">\(\frac{\partial P}{\partial y} =
+\frac{\partial Q}{\partial
+x}\)</span>，则称此方程为<strong>全微分方程（恰当方程）</strong>。</p>
+<h3 id="解法">解法</h3>
+<p><span class="math display">\[
+\begin{split}
+    通解公式\ u(x,y) = &amp; \int_{(x_0, y_0)}^{(x,y)} Pdx + Qdy = C \\
+    &amp; \int_{x_0}^x P(x,y_0)dx + \int_{y_0}^y Q(x,y)dy = C
+\end{split}
+\]</span></p>
+<p><strong>更一般地</strong>，方程两端乘以一个因子 <span
+class="math inline">\(u(x,y)\)</span> 才可以变成全微分方程。 #
+第二型曲面积分 ## 定义 设 <span class="math inline">\(S\)</span>
+是空间一有向曲面，其方向 <span
+class="math inline">\(\overrightarrow{n_P}, P \in S\)</span> 为给定
+<span class="math inline">\(S\)</span> 上一法向，<span
+class="math inline">\(\overrightarrow{A}(P) =
+\{P(x,y,z),Q(x,y,z),R(x,y,z)\}\)</span> 是 <span
+class="math inline">\(S\)</span> 上连续函数，则 <span
+class="math display">\[
+d\Omega \cos\alpha_P = dydz,\quad d\Omega\cos\beta_P = dzdx,\quad
+d\Omega\cos \gamma_P = dxdy
+\]</span> 称 <span class="math inline">\(\int\limits_S
+\overrightarrow{A}(P) d\overrightarrow{\Omega} = \int\limits_S Pdydz +
+Qdzdx + Rdxdy\)</span> 为 <span
+class="math inline">\(\overrightarrow{A}(x,y,z)\)</span> 在 <span
+class="math inline">\(S\)</span>
+上给定一侧的<strong>第二型曲面积分</strong>。</p>
+<h2 id="计算方法-1">计算方法</h2>
+<h3 id="分面计算法">分面计算法</h3>
+<p><span class="math display">\[
+\iint\limits_S Rdxdy = \begin{cases}
+    \iint\limits_{D_{xy}} R(x, y, g(x,y)) dxdy &amp; S为上侧 \\
+    -\iint\limits_{D_{xy}} R(x,y, g(x,y)) dxdy &amp; S为下侧
+\end{cases}
+\]</span></p>
+<p><span class="math display">\[
+\iint\limits_S Pdydz = \begin{cases}
+    \iint\limits_{D_{yz}} P(g(y,z), y, z) dydz &amp; S为前侧 \\
+    -\iint\limits_{D_{yz}} R(g(y, z), y, z) dydz &amp; S为后侧
+\end{cases}
+\]</span></p>
+<p><span class="math display">\[
+\iint\limits_S Qdzdx = \begin{cases}
+    \iint\limits_{D_{xz}} Q(x, g(x, z), z) dxdy &amp; S为右侧 \\
+    -\iint\limits_{D_{xz}} Q(x, g(x, z), z) dxdy &amp; S为左侧
+\end{cases}
+\]</span></p>
+<h3 id="投影法">投影法</h3>
+<p><span class="math display">\[
+\begin{split}
+    \iint\limits_S Pdydz + Qdzdx + Rdxdy &amp; =\iint\limits_S
+\left[P\left(-\frac{\partial z}{\partial x}\right) +
+Q\left(-\frac{\partial z}{\partial y}\right) + R\right]dxdy \\
+    &amp; = \pm \iint\limits_D \left[P\left(-\frac{\partial z}{\partial
+x}\right) + Q\left(-\frac{\partial z}{\partial y}\right) + R\right]dxdy
+\end{split}
+\]</span></p>
+<h3 id="高斯公式">高斯公式</h3>
+<p>设空间二维单连通区域 <span class="math inline">\(\Omega\)</span>
+的边界 <span class="math inline">\(S\)</span>
+是光滑的，其方向为外法方向，函数 <span
+class="math inline">\(P(x,y,z)\)</span>，<span
+class="math inline">\(Q(x,y,z)\)</span>，<span
+class="math inline">\(R(x,y,z)\)</span> 在 <span
+class="math inline">\(\Omega\)</span> 上具有连续一阶偏导数，则有 <span
+class="math display">\[
+\oiint\limits_S Pdydz + Qdzdx + Rdxdy = \iiint\limits_\Omega
+\left(\frac{\partial P}{\partial x} + \frac{\partial Q}{\partial y} +
+\frac{\partial R}{\partial z}\right) d\Omega
+\]</span></p>
+<h4 id="推广-1">推广</h4>
+<p>设 <span class="math inline">\(S\)</span> 是由两个闭曲面 <span
+class="math inline">\(S_1, S_2\)</span> 组成，<span
+class="math inline">\(S_1\)</span> 的方向为外法方向，<span
+class="math inline">\(S_2\)</span> 的方向为内法方向，且 <span
+class="math inline">\(S_2\)</span> 在 <span
+class="math inline">\(S_1\)</span> 所围区域内部，介于 <span
+class="math inline">\(S_1, S_2\)</span> 之间区域为 <span
+class="math inline">\(\Omega\)</span>，函数 <span
+class="math inline">\(P(x,y,z), Q(x,y,z), R(x,y,z)\)</span> 在 <span
+class="math inline">\(\Omega\)</span> 与 <span
+class="math inline">\(S\)</span> 上具有连续一阶偏导数，则有 <span
+class="math display">\[
+\oiint\limits_S Pdydz + Qdzdx + Rdxdy = \iiint\limits_\Omega
+\left(\frac{\partial P}{\partial x} + \frac{\partial Q}{\partial y} +
+\frac{\partial R}{\partial z}\right) d\Omega
+\]</span></p>
+]]></content>
+      <tags>
+        <tag>Math</tag>
+        <tag>Calculus</tag>
       </tags>
   </entry>
 </search>

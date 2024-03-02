@@ -154,7 +154,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">10</span>
+          <span class="site-state-item-count">11</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -324,19 +324,24 @@ class="math inline">\(z=f(x,y)\)</span> 为顶的曲顶柱体体积的代数和�
 <h2 id="计算公式">计算公式</h2>
 <ul>
 <li><p><span class="math inline">\(Y-\)</span> 型：<span
-class="math inline">\(\begin{cases}  a \le y \le b \\  \varphi(y) \le x
-\le \psi(y) \end{cases}\)</span> <span class="math display">\[
+class="math inline">\(\begin{cases}
+  a \le y \le b \\
+  \varphi(y) \le x \le \psi(y)
+\end{cases}\)</span> <span class="math display">\[
 \iint\limits_D f(x,y)dxdy = \int_a^b dy
 \int_{\varphi(y)}^{\psi(y)}f(x,y)dx
 \]</span></p></li>
 <li><p><span class="math inline">\(X-\)</span> 型：<span
-class="math inline">\(\begin{cases}  a \le x \le b \\  \varphi(x) \le y
-\le \psi(x) \end{cases}\)</span> <span class="math display">\[
+class="math inline">\(\begin{cases}
+  a \le x \le b \\
+  \varphi(x) \le y \le \psi(x)
+\end{cases}\)</span> <span class="math display">\[
 \iint\limits_D f(x,y)dxdy = \int_a^b dx
 \int_{\varphi(x)}^{\psi(x)}f(x,y)dy
 \]</span></p></li>
-<li><p>极坐标系：<span class="math inline">\(\begin{cases}  \alpha \le
-\theta \le \beta \\  \varphi(\theta) \le r \le \psi(\theta)
+<li><p>极坐标系：<span class="math inline">\(\begin{cases}
+  \alpha \le \theta \le \beta \\
+  \varphi(\theta) \le r \le \psi(\theta)
 \end{cases}\)</span> <span class="math display">\[
 \iint\limits_D f(x,y)dxdy = \int_\alpha^\beta d\theta
 \int_{\varphi(\theta)}^{\psi(\theta)}f(r\cos\theta, r\sin\theta)rdr
@@ -365,19 +370,24 @@ f(x,y,z)dxdydz
 质量的代数和。</p>
 <h2 id="计算方法">计算方法</h2>
 <ul>
-<li><p>柱形域：<span class="math inline">\(\begin{cases}  \varphi(x,y)
-\le z \le \psi(x,y) \\  (x,y) \in D_{xy} \end{cases}\)</span> <span
-class="math display">\[
+<li><p>柱形域：<span class="math inline">\(\begin{cases}
+  \varphi(x,y) \le z \le \psi(x,y) \\
+  (x,y) \in D_{xy}
+\end{cases}\)</span> <span class="math display">\[
 \iiint\limits_\Omega f(x,y,z) dxdydz = \iint\limits_{D_{xy}}dxdy
 \int_{\phi(x,y)}^{\psi(x,y)}f(x,y,z)dz
 \]</span></p></li>
-<li><p>片型域：<span class="math inline">\(\begin{cases}  a \le z \le b
-\\  (x,y) \in D_z \end{cases}\)</span> <span class="math display">\[
+<li><p>片型域：<span class="math inline">\(\begin{cases}
+  a \le z \le b \\
+  (x,y) \in D_z
+\end{cases}\)</span> <span class="math display">\[
 \iiint_\Omega f(x,y,z)dxdydz = \int_a^b dz\iint\limits_{D_z}f(x,y,z)dxdy
 \]</span></p></li>
-<li><p>球坐标系：<span class="math inline">\(\begin{cases}  a \le \theta
-\le b \\  c \le \phi \le d \\  g(\theta, \phi) \le \rho \le h(\theta,
-\phi) \end{cases}\)</span> <span class="math display">\[
+<li><p>球坐标系：<span class="math inline">\(\begin{cases}
+  a \le \theta \le b \\
+  c \le \phi \le d \\
+  g(\theta, \phi) \le \rho \le h(\theta, \phi)
+\end{cases}\)</span> <span class="math display">\[
 \iiint\limits_\Omega f(x,y,z)dxdydz = \int_a^b d\theta \int_c^d d\phi
 \int_{g(\theta, \phi)}^{h(\theta, \phi)} f(\rho\sin\phi\cos\theta,
 \rho\sin\phi\sin\theta, \rho\cos\phi)\rho^2\sin\phi d\rho

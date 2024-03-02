@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","darkmode":true,"version":"8.18.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":null},"fold":{"enable":true,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="第二型积分 定义 设 \(\Omega\) 为空间上一有向几何体，即在 \(\Omega\) 上每一点 \(P\) 处都确定了一方向 \(\overrightarrow{e_P}\)，\(P \in \Omega\)，\(\overrightarrow{A}(P)\) 为 \(\Omega\) 上一向量值函数。首先，将 \(\Omega\) 任意分成 \(n\) 个有向几何体 \(\Delta\O">
+<meta property="og:type" content="article">
+<meta property="og:title" content="第二型积分">
+<meta property="og:url" content="http://example.com/2024/03/02/%E7%AC%AC%E4%BA%8C%E5%9E%8B%E7%A7%AF%E5%88%86/index.html">
+<meta property="og:site_name" content="Abyss&#39;s Blog">
+<meta property="og:description" content="第二型积分 定义 设 \(\Omega\) 为空间上一有向几何体，即在 \(\Omega\) 上每一点 \(P\) 处都确定了一方向 \(\overrightarrow{e_P}\)，\(P \in \Omega\)，\(\overrightarrow{A}(P)\) 为 \(\Omega\) 上一向量值函数。首先，将 \(\Omega\) 任意分成 \(n\) 个有向几何体 \(\Delta\O">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2024-03-02T01:47:36.000Z">
+<meta property="article:modified_time" content="2024-03-02T01:50:19.221Z">
+<meta property="article:author" content="Abyss Skb">
+<meta property="article:tag" content="Math">
+<meta property="article:tag" content="Calculus">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://example.com/2024/03/02/%E7%AC%AC%E4%BA%8C%E5%9E%8B%E7%A7%AF%E5%88%86/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/2024/03/02/%E7%AC%AC%E4%BA%8C%E5%9E%8B%E7%A7%AF%E5%88%86/","path":"2024/03/02/第二型积分/","title":"第二型积分"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>第二型积分 | Abyss's Blog</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Abyss's Blog</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%AC%AC%E4%BA%8C%E5%9E%8B%E7%A7%AF%E5%88%86"><span class="nav-number">1.</span> <span class="nav-text">第二型积分</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9A%E4%B9%89"><span class="nav-number">1.1.</span> <span class="nav-text">定义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%A7%E8%B4%A8"><span class="nav-number">1.2.</span> <span class="nav-text">性质</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%AC%AC%E4%BA%8C%E5%9E%8B%E6%9B%B2%E7%BA%BF%E7%A7%AF%E5%88%86"><span class="nav-number">2.</span> <span class="nav-text">第二型曲线积分</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9A%E4%B9%89-1"><span class="nav-number">2.1.</span> <span class="nav-text">定义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AE%A1%E7%AE%97%E6%96%B9%E6%B3%95"><span class="nav-number">2.2.</span> <span class="nav-text">计算方法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%82%E6%95%B0%E6%B3%95"><span class="nav-number">2.2.1.</span> <span class="nav-text">参数法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%8E%A8%E5%B9%BF"><span class="nav-number">2.2.1.1.</span> <span class="nav-text">推广</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B9%B3%E9%9D%A2%E6%9B%B2%E7%BA%BF%E7%A7%AF%E5%88%86%E4%B8%8E%E8%B7%AF%E5%BE%84%E6%97%A0%E5%85%B3"><span class="nav-number">2.3.</span> <span class="nav-text">平面曲线积分与路径无关</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%A8%E5%BE%AE%E5%88%86%E6%96%B9%E7%A8%8B"><span class="nav-number">2.4.</span> <span class="nav-text">全微分方程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%9A%E4%B9%89-2"><span class="nav-number">2.4.1.</span> <span class="nav-text">定义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A7%A3%E6%B3%95"><span class="nav-number">2.4.2.</span> <span class="nav-text">解法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AE%A1%E7%AE%97%E6%96%B9%E6%B3%95-1"><span class="nav-number">2.5.</span> <span class="nav-text">计算方法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%86%E9%9D%A2%E8%AE%A1%E7%AE%97%E6%B3%95"><span class="nav-number">2.5.1.</span> <span class="nav-text">分面计算法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8A%95%E5%BD%B1%E6%B3%95"><span class="nav-number">2.5.2.</span> <span class="nav-text">投影法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%AB%98%E6%96%AF%E5%85%AC%E5%BC%8F"><span class="nav-number">2.5.3.</span> <span class="nav-text">高斯公式</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%8E%A8%E5%B9%BF-1"><span class="nav-number">2.5.3.1.</span> <span class="nav-text">推广</span></a></li></ol></li></ol></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Abyss Skb</p>
+  <div class="site-description" itemprop="description">Everything is possiblility!!!</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">11</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/03/02/%E7%AC%AC%E4%BA%8C%E5%9E%8B%E7%A7%AF%E5%88%86/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Abyss Skb">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Abyss's Blog">
+      <meta itemprop="description" content="Everything is possiblility!!!">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="第二型积分 | Abyss's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          第二型积分
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2024-03-02 09:47:36 / 修改时间：09:50:19" itemprop="dateCreated datePublished" datetime="2024-03-02T09:47:36+08:00">2024-03-02</time>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h1 id="第二型积分">第二型积分</h1>
+<h2 id="定义">定义</h2>
+<p>设 <span class="math inline">\(\Omega\)</span>
+为空间上一有向几何体，即在 <span class="math inline">\(\Omega\)</span>
+上每一点 <span class="math inline">\(P\)</span> 处都确定了一方向 <span
+class="math inline">\(\overrightarrow{e_P}\)</span>，<span
+class="math inline">\(P \in \Omega\)</span>，<span
+class="math inline">\(\overrightarrow{A}(P)\)</span> 为 <span
+class="math inline">\(\Omega\)</span> 上一向量值函数。首先，将 <span
+class="math inline">\(\Omega\)</span> 任意分成 <span
+class="math inline">\(n\)</span> 个有向几何体 <span
+class="math inline">\(\Delta\Omega_1, \Delta\Omega_2, \cdots,
+\Delta\Omega_n\)</span>；然后在每一个有向几何体上做内积 <span
+class="math inline">\(\overrightarrow{A}(P) \cdot
+\Delta\overrightarrow{\Omega_i}(i = 1, 2, \cdots, n), P_i \in
+\Delta\Omega_i\)</span>，<span
+class="math inline">\(\Delta\overrightarrow{\Omega_i}\)</span> 是以
+<span class="math inline">\(\Delta\Omega_i\)</span> 的几何量为模，以
+<span class="math inline">\(P_i\)</span>
+点的方向为方向的向量，再将上述内积加起来得 <span
+class="math inline">\(\sum\limits_{i=1}^n \overrightarrow{A}(P_i) \cdot
+\Delta\overrightarrow{\Omega_i}\)</span>。若无论 <span
+class="math inline">\(\Omega\)</span> 如何分，<span
+class="math inline">\(P_i \in \Delta \Omega_i\)</span>如何取，极限 <span
+class="math inline">\(\lim\limits_{\lambda\to 0}\sum\limits_{i=1}^n
+\overrightarrow{A}(P_i) \cdot \Delta
+\overrightarrow{\Omega_i}\)</span>，<span class="math inline">\(\lambda
+= \max\{d_i \vert i = 1,2,\cdots, n\}\)</span>，<span
+class="math inline">\(d_i\)</span> 是 <span class="math inline">\(\Delta
+\Omega_i\)</span> 的直径，都存在且相等，则称此极限值为 <span
+class="math inline">\(\overrightarrow{A}(P_i)\)</span> 在 <span
+class="math inline">\(\Omega\)</span> 上给定方向 <span
+class="math inline">\(\overrightarrow{e_P}\)</span>
+下的<strong>第二型积分</strong>，记为 <span class="math display">\[
+\lim\limits_{\lambda\to 0} \sum\limits_{i=1}^n \overrightarrow{A}(P_i)
+\cdot \Delta\overrightarrow{\Omega_i} \triangleq \int\limits_\Omega
+\overrightarrow{A} (P) d \overrightarrow{\Omega}
+\]</span></p>
+<h2 id="性质">性质</h2>
+<h1 id="第二型曲线积分">第二型曲线积分</h1>
+<h2 id="定义-1">定义</h2>
+<p>设 <span class="math inline">\(C\)</span>
+是空间一有向曲线，其方向为其切线给定方向，引入直角坐标，<span
+class="math inline">\(\overrightarrow{A}(P) =
+\{P(x,y,z),Q(x,y,z),R(x,y,z)\}\)</span> 是 <span
+class="math inline">\(C\)</span> 上连续函数，则 <span
+class="math display">\[
+d\Omega \cos\alpha_P = dx,\quad d\Omega\cos\beta_P = dy,\quad
+d\Omega\cos \gamma_P = dz
+\]</span> 称 <span class="math inline">\(\int\limits_C
+\overrightarrow{A}(P) d\overrightarrow{\Omega} = \int\limits_C Pdx + Qdy
++ Rdz\)</span> 为 <span
+class="math inline">\(\overrightarrow{A}(x,y,z)\)</span> 在 <span
+class="math inline">\(C\)</span>
+上给定方向的<strong>第二型曲线积分</strong>。</p>
+<h2 id="计算方法">计算方法</h2>
+<h3 id="参数法">参数法</h3>
+<p>设曲线 <span class="math inline">\(C\)</span> 为 <span
+class="math inline">\(\begin{cases}
+    x = x(t) \\
+    y = y(t) \\
+    z = z(t)
+\end{cases}\)</span> 始点 <span class="math inline">\(t=a\)</span>，终点
+<span class="math inline">\(t=b\)</span>，<span
+class="math inline">\(C\)</span> 为光滑曲线，则 <span
+class="math display">\[
+\begin{split}
+    \int\limits_C Pdx + Qdy + Rdz &amp; = \int_a^b Pdx(t) + Qdy(t) +
+Rdz(t) \\
+    &amp; =\int_a^b \left[P x&#39;(t) + Qy&#39;(t) + Rz&#39;(t)\right]dt
+\end{split}
+\]</span> ### 格林公式 设 <span class="math inline">\(D\)</span>
+为单连通区域，<span class="math inline">\(C\)</span> 为 <span
+class="math inline">\(D\)</span> 的边界闭曲线，其方向为正向。<span
+class="math inline">\(P(x,y), Q(x,y)\)</span> 是 <span
+class="math inline">\(C+D\)</span> 上具有连续一阶偏导的函数，则 <span
+class="math display">\[
+\oint\limits_C P(x,y)dx + Q(x,y)dy = \oiint\limits_D
+\left(\frac{\partial Q}{\partial x} - \frac{\partial P}{\partial
+y}\right) dxdy
+\]</span></p>
+<h4 id="推广">推广</h4>
+<p>设曲线 <span class="math inline">\(C\)</span> 是由 <span
+class="math inline">\(n+1\)</span> 条简单连续、逐段光滑闭曲线 <span
+class="math inline">\(C_0, C_1, \cdots, C_n\)</span> 组成，其中 <span
+class="math inline">\(C_1, \cdots, C_n\)</span> 互不相交，每条都在其余
+<span class="math inline">\(n-1\)</span> 条外部区域内，而它们全体又在
+<span class="math inline">\(C_0\)</span> 所围区域内部。<span
+class="math inline">\(C_0\)</span> 与 <span class="math inline">\(C_1,
+\cdots, C_n\)</span> 所界定区域为 <span
+class="math inline">\(D\)</span>，<span class="math inline">\(C\)</span>
+的方向对 <span class="math inline">\(D\)</span> 而言为左手域方向，而
+<span class="math inline">\(P(x,y), Q(x,y)\)</span> 又是 <span
+class="math inline">\(C+D\)</span> 上具有连续一阶偏导的函数，则 <span
+class="math display">\[
+\oint\limits_C P(x,y)dx + Q(x,y)dy = \iint\limits_D \left(\frac{\partial
+Q}{\partial x} - \frac{\partial P}{\partial y}\right) dxdy
+\]</span></p>
+<h2 id="平面曲线积分与路径无关">平面曲线积分与路径无关</h2>
+<p>设 <span class="math inline">\(D\)</span> 为单连通区域，<span
+class="math inline">\(P, Q\)</span> 为 <span
+class="math inline">\(D\)</span> 上具有连续一阶偏导的函数，在 <span
+class="math inline">\(D\)</span> 上下述四结论等价： 1. <span
+class="math inline">\(D\)</span> 上任意闭曲线 <span
+class="math inline">\(C\)</span>，有 <span
+class="math inline">\(\oint\limits_C Pdx + Qdy = 0\)</span> 2. <span
+class="math inline">\(D\)</span> 上第二型曲线积分 <span
+class="math inline">\(\int\limits_{AB} Pdx + Qdy\)</span> 与路径无关 3.
+<span class="math inline">\(Pdx + Qdy\)</span> 是全微分 4. <span
+class="math inline">\(\frac{\partial P}{\partial y} = \frac{\partial
+Q}{\partial x}\)</span></p>
+<h2 id="全微分方程">全微分方程</h2>
+<h3 id="定义-2">定义</h3>
+<p>如果一阶微分方程 <span class="math inline">\(Pdx + Qdy = 0\)</span>
+满足 <span class="math inline">\(\frac{\partial P}{\partial y} =
+\frac{\partial Q}{\partial
+x}\)</span>，则称此方程为<strong>全微分方程（恰当方程）</strong>。</p>
+<h3 id="解法">解法</h3>
+<p><span class="math display">\[
+\begin{split}
+    通解公式\ u(x,y) = &amp; \int_{(x_0, y_0)}^{(x,y)} Pdx + Qdy = C \\
+    &amp; \int_{x_0}^x P(x,y_0)dx + \int_{y_0}^y Q(x,y)dy = C
+\end{split}
+\]</span></p>
+<p><strong>更一般地</strong>，方程两端乘以一个因子 <span
+class="math inline">\(u(x,y)\)</span> 才可以变成全微分方程。 #
+第二型曲面积分 ## 定义 设 <span class="math inline">\(S\)</span>
+是空间一有向曲面，其方向 <span
+class="math inline">\(\overrightarrow{n_P}, P \in S\)</span> 为给定
+<span class="math inline">\(S\)</span> 上一法向，<span
+class="math inline">\(\overrightarrow{A}(P) =
+\{P(x,y,z),Q(x,y,z),R(x,y,z)\}\)</span> 是 <span
+class="math inline">\(S\)</span> 上连续函数，则 <span
+class="math display">\[
+d\Omega \cos\alpha_P = dydz,\quad d\Omega\cos\beta_P = dzdx,\quad
+d\Omega\cos \gamma_P = dxdy
+\]</span> 称 <span class="math inline">\(\int\limits_S
+\overrightarrow{A}(P) d\overrightarrow{\Omega} = \int\limits_S Pdydz +
+Qdzdx + Rdxdy\)</span> 为 <span
+class="math inline">\(\overrightarrow{A}(x,y,z)\)</span> 在 <span
+class="math inline">\(S\)</span>
+上给定一侧的<strong>第二型曲面积分</strong>。</p>
+<h2 id="计算方法-1">计算方法</h2>
+<h3 id="分面计算法">分面计算法</h3>
+<p><span class="math display">\[
+\iint\limits_S Rdxdy = \begin{cases}
+    \iint\limits_{D_{xy}} R(x, y, g(x,y)) dxdy &amp; S为上侧 \\
+    -\iint\limits_{D_{xy}} R(x,y, g(x,y)) dxdy &amp; S为下侧
+\end{cases}
+\]</span></p>
+<p><span class="math display">\[
+\iint\limits_S Pdydz = \begin{cases}
+    \iint\limits_{D_{yz}} P(g(y,z), y, z) dydz &amp; S为前侧 \\
+    -\iint\limits_{D_{yz}} R(g(y, z), y, z) dydz &amp; S为后侧
+\end{cases}
+\]</span></p>
+<p><span class="math display">\[
+\iint\limits_S Qdzdx = \begin{cases}
+    \iint\limits_{D_{xz}} Q(x, g(x, z), z) dxdy &amp; S为右侧 \\
+    -\iint\limits_{D_{xz}} Q(x, g(x, z), z) dxdy &amp; S为左侧
+\end{cases}
+\]</span></p>
+<h3 id="投影法">投影法</h3>
+<p><span class="math display">\[
+\begin{split}
+    \iint\limits_S Pdydz + Qdzdx + Rdxdy &amp; =\iint\limits_S
+\left[P\left(-\frac{\partial z}{\partial x}\right) +
+Q\left(-\frac{\partial z}{\partial y}\right) + R\right]dxdy \\
+    &amp; = \pm \iint\limits_D \left[P\left(-\frac{\partial z}{\partial
+x}\right) + Q\left(-\frac{\partial z}{\partial y}\right) + R\right]dxdy
+\end{split}
+\]</span></p>
+<h3 id="高斯公式">高斯公式</h3>
+<p>设空间二维单连通区域 <span class="math inline">\(\Omega\)</span>
+的边界 <span class="math inline">\(S\)</span>
+是光滑的，其方向为外法方向，函数 <span
+class="math inline">\(P(x,y,z)\)</span>，<span
+class="math inline">\(Q(x,y,z)\)</span>，<span
+class="math inline">\(R(x,y,z)\)</span> 在 <span
+class="math inline">\(\Omega\)</span> 上具有连续一阶偏导数，则有 <span
+class="math display">\[
+\oiint\limits_S Pdydz + Qdzdx + Rdxdy = \iiint\limits_\Omega
+\left(\frac{\partial P}{\partial x} + \frac{\partial Q}{\partial y} +
+\frac{\partial R}{\partial z}\right) d\Omega
+\]</span></p>
+<h4 id="推广-1">推广</h4>
+<p>设 <span class="math inline">\(S\)</span> 是由两个闭曲面 <span
+class="math inline">\(S_1, S_2\)</span> 组成，<span
+class="math inline">\(S_1\)</span> 的方向为外法方向，<span
+class="math inline">\(S_2\)</span> 的方向为内法方向，且 <span
+class="math inline">\(S_2\)</span> 在 <span
+class="math inline">\(S_1\)</span> 所围区域内部，介于 <span
+class="math inline">\(S_1, S_2\)</span> 之间区域为 <span
+class="math inline">\(\Omega\)</span>，函数 <span
+class="math inline">\(P(x,y,z), Q(x,y,z), R(x,y,z)\)</span> 在 <span
+class="math inline">\(\Omega\)</span> 与 <span
+class="math inline">\(S\)</span> 上具有连续一阶偏导数，则有 <span
+class="math display">\[
+\oiint\limits_S Pdydz + Qdzdx + Rdxdy = \iiint\limits_\Omega
+\left(\frac{\partial P}{\partial x} + \frac{\partial Q}{\partial y} +
+\frac{\partial R}{\partial z}\right) d\Omega
+\]</span></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Math/" rel="tag"># Math</a>
+              <a href="/tags/Calculus/" rel="tag"># Calculus</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2024/03/01/Power-Series/" rel="prev" title="Power Series">
+                  <i class="fa fa-angle-left"></i> Power Series
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    
+  
+  <div class="comments giscus-container">
+  </div>
+  
+  
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Abyss Skb</span>
+  </div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+<script class="next-config" data-name="giscus" type="application/json">{"enable":true,"repo":"AbyssSkb/abyssskb.github.io","repo_id":"R_kgDOLYBnxQ","category":"Announcement","category_id":"DIC_kwDOLYBnxc4Cdl5j","mapping":"pathname","reactions_enabled":1,"emit_metadata":1,"theme":"preferred-color-scheme","lang":"zh-CN","crossorigin":"anonymous","input_position":"bottom","loading":"lazy","iinput_position":"bottom"}</script>
+
+<script>
+document.addEventListener('page:loaded', () => {
+  if (!CONFIG.page.comments) return;
+
+  NexT.utils.loadComments('.giscus-container')
+    .then(() => NexT.utils.getScript('https://giscus.app/client.js', {
+      attributes: {
+        async                   : true,
+        crossOrigin             : 'anonymous',
+        'data-repo'             : CONFIG.giscus.repo,
+        'data-repo-id'          : CONFIG.giscus.repo_id,
+        'data-category'         : CONFIG.giscus.category,
+        'data-category-id'      : CONFIG.giscus.category_id,
+        'data-mapping'          : CONFIG.giscus.mapping,
+        'data-reactions-enabled': CONFIG.giscus.reactions_enabled,
+        'data-emit-metadata'    : CONFIG.giscus.emit_metadata,
+        'data-theme'            : CONFIG.giscus.theme,
+        'data-lang'             : CONFIG.giscus.lang,
+        'data-input-position'   : CONFIG.giscus.input_position,
+        'data-loading'          : CONFIG.giscus.loading
+      },
+      parentNode: document.querySelector('.giscus-container')
+    }));
+});
+</script>
+
+</body>
+</html>
