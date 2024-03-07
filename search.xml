@@ -3,132 +3,34 @@
   <entry>
     <title>树状数组</title>
     <url>/2023/09/28/BIT/</url>
-    <content><![CDATA[<h2 id="树状数组的引入">树状数组的引入</h2>
-<h3 id="普通数组">普通数组</h3>
-<p>我们要实现两种操作：<strong>单点修改</strong>和<strong>区间求和</strong>。对于普通数组而言，<strong>单点修改</strong>的时间复杂度是
-<span
-class="math inline">\(O(1)\)</span>，但<strong>区间求和</strong>的时间复杂度是
-<span class="math inline">\(O(n)\)</span>。</p>
-<p><img
-src="https://pic1.zhimg.com/v2-5652a46124eaa79fafae0558253e6a80_b.jpg" /></p>
-<p>当然，我们也可以用<strong>前缀和</strong>的方法维护这个数组，这样的话<strong>区间求和</strong>的时间复杂度就降到了
-<span
-class="math inline">\(O(1)\)</span>，但是<strong>单点修改</strong>会影响后面所有的元素，时间复杂度是
-<span class="math inline">\(O(n)\)</span>。</p>
-<p><img
-src="https://pic3.zhimg.com/v2-83809502459ae695ec219d6974315292_b.jpg" /></p>
+    <content><![CDATA[<h2 id="树状数组的引入"><a href="#树状数组的引入" class="headerlink" title="树状数组的引入"></a>树状数组的引入</h2><h3 id="普通数组"><a href="#普通数组" class="headerlink" title="普通数组"></a>普通数组</h3><p>我们要实现两种操作：<strong>单点修改</strong>和<strong>区间求和</strong>。对于普通数组而言，<strong>单点修改</strong>的时间复杂度是 $O(1)$，但<strong>区间求和</strong>的时间复杂度是 $O(n)$。</p>
+<p><img src="https://pic1.zhimg.com/v2-5652a46124eaa79fafae0558253e6a80_b.jpg" alt=""></p>
+<p>当然，我们也可以用<strong>前缀和</strong>的方法维护这个数组，这样的话<strong>区间求和</strong>的时间复杂度就降到了 $O(1)$，但是<strong>单点修改</strong>会影响后面所有的元素，时间复杂度是 $O(n)$。</p>
+<p><img src="https://pic3.zhimg.com/v2-83809502459ae695ec219d6974315292_b.jpg" alt=""></p>
 <p>程序最后跑多长时间，是由最慢的一环决定的，因此现在我们希望找到这样一种折中的方法：无论单点修改还是区间查询，它都能不那么慢地完成。</p>
-<p>注意到对 <span class="math inline">\([a,b]\)</span>
-进行区间查询只需查询 <span class="math inline">\([1,b]\)</span> 和 <span
-class="math inline">\([1,a)\)</span>
-然后相减即可（前缀和就是这样进行区间查询的），所以我们可以把区间查询问题转化为求前
-<span class="math inline">\(n\)</span> 项和的问题。</p>
-<p>关于数组的维护，有个很自然的想法：可以用一个数组 <span
-class="math inline">\(C\)</span>
-维护若干个小区间，单点修改时，<strong>只更新包含这一元素的区间</strong>；求前
-<span class="math inline">\(n\)</span>
-项和时，<strong>通过将区间进行组合，得到从 <span
-class="math inline">\(1\)</span> 到 <span
-class="math inline">\(n\)</span>
-的区间，然后对所有用到的区间求和</strong>。实际上，设原数组是 <span
-class="math inline">\(A\)</span>，如果 <span
-class="math inline">\(C_i\)</span> 维护的区间是 <span
-class="math inline">\([A_i,
-A_i]\)</span>，此结构就相当于普通数组（还浪费了一倍内存）；如果 <span
-class="math inline">\(C_i\)</span> 维护的区间就是 <span
-class="math inline">\([1,A_i]\)</span>，此结构就相当于前缀和。</p>
-<h3 id="树状数组">树状数组</h3>
-<p>现在我们试图寻找一种结构，一方面，单点修改时需要更新的区间不会太多；另一方面，区间查询时需要用来组合的区间也不会太多。</p>
-<p>树状数组就是这样一种结构，它巧妙地利用了<strong>二进制</strong>（实际上，树状数组的英文名
-BIT，直译过来就是<strong>二进制下标树</strong>）。例如
-11，转化为二进制数就是 <span
-class="math inline">\((1011)_2\)</span>，如果我们要求前 11
-项和，可以分别查询 <span class="math inline">\(\big(\left(0000\right)_2
-,\left(1000\right)_2\big]\)</span>、<span class="math inline">\(\big(
-\left(1000\right)_2 , \left(1010\right)_2 \big]\)</span> 以及 <span
-class="math inline">\(\big( \left(1010\right)_2 , \left(1011\right)_2
-\big]\)</span>
-的和再相加。这三个区间怎么来的呢？其实就是<strong>不断地去掉二进制数最右边的一个
-1</strong> 的过程（如下图）。</p>
-<p><img
-src="https://pic4.zhimg.com/v2-a53a897f22763ef04a728f8263f06547_b.jpg" /></p>
-<p>我们定义，二进制数最右边的一个 1，连带着它之后的 0 为 <span
-class="math inline">\(\operatorname{lowbit}(x)\)</span>（稍后再来看如何实现）。那么我们用
-<span class="math inline">\(C_i\)</span> 维护区间 <span
-class="math inline">\(\left(A_i-\operatorname{lowbit}\left(A_i\right),A_i\right]\)</span>，这样显然查询前
-<span class="math inline">\(n\)</span> 项和时需要合并的区间数是少于
-<span class="math inline">\(\log_2{n}\)</span>
-的。树状数组的结构大概像下面这样：</p>
-<p><img
-src="https://pic1.zhimg.com/v2-fbaeb49fdbad31a211fe37f068ca8bb0_b.jpg" /></p>
-<p>那么如何更新呢，大家会发现更新就是一个“<strong>爬树</strong>”的过程。一路往上更新，直到
-<span class="math inline">\(MAXN\)</span>（树状数组的容量）。</p>
-<p><img
-src="https://pic3.zhimg.com/v2-df001651925903a86ab640482b78c2d6_b.jpg" /></p>
-<p>我们举个例子来看看这树是怎么爬的。 现有二进制数 <span
-class="math inline">\(\left(100110\right)_2\)</span>，包含它的最小区间当然是
-<span class="math inline">\(\big( \left(100100\right)_2 ,
-\left(100110\right)_2 \big]\)</span>。然后，它也肯定位于区间 <span
-class="math inline">\(\big( \left(100000\right)_2 ,
-\left(101000\right)_2 \big]\)</span> 内。然后是 <span
-class="math inline">\(\big( \left(100000\right)_2, \left(110000\right)_2
-\big]\)</span>，再然后是 <span class="math inline">\(\big( 0 ,
-\left(1000000\right)_2 \big] \dots\)</span></p>
-<p><img
-src="https://pic3.zhimg.com/v2-8ce9df6ada69084d3ccd0df5ecc45b5e_b.jpg" /></p>
-<p>如上图，每一步都把<strong>从右边起一系列连续的 1 变为 0，再把这一系列
-1 的前一位 0 变为
-1</strong>。这看起来像是一个<strong>进位</strong>的过程对吧？实际上，每一次加的正是
-<span
-class="math inline">\(\operatorname{lowbit}\left(x\right)\)</span>。（神奇吧？）这样，我们更新的区间数不会超过
-<span class="math inline">\(\log_2{MAXN}\)</span>。一个能以 <span
-class="math inline">\(O(\log{n})\)</span>
-时间复杂度进行单点修改和区间查询的数据结构就诞生了。</p>
-<h2 id="树状数组的实现">树状数组的实现</h2>
-<p>前面已经讲得很详细了，代码实现倒是一件简单的事了。不过我们需要先解决一个问题：lowbit
-怎么算？如果一位一位验证的话，会形成额外的时间开销。然而，我们有这样神奇的一个公式：</p>
-<p><span
-class="math display">\[\operatorname{lowbit}(x)=(x)\&amp;(-x)\]</span></p>
-<p>为什么可以这样？我们需要知道，计算机里有符号数一般是以<strong>补码</strong>的形式存储的。<span
-class="math inline">\(-x\)</span> 相当于 <span
-class="math inline">\(x\)</span> <strong>按位取反再加
-1</strong>，会把结尾处原来 <span
-class="math inline">\(1000\dots\)</span> 的形式，变成 <span
-class="math inline">\(0111\dots\)</span>，再变成 <span
-class="math inline">\(1000\dots\)</span>；而前面每一位都与原来相反。这时我们再把它和
-<span class="math inline">\(x\)</span> 按位与，得到的结果便是 <span
-class="math inline">\(\operatorname{lowbit}(x)\)</span>。下面的图中举了两个例子：</p>
-<p><img
-src="https://pic3.zhimg.com/v2-fd4b485006b55bfd45c13f4348e1e1ee_b.jpg" /></p>
+<p>注意到对 $[a,b]$ 进行区间查询只需查询 $[1,b]$ 和 $[1,a)$ 然后相减即可（前缀和就是这样进行区间查询的），所以我们可以把区间查询问题转化为求前 $n$ 项和的问题。</p>
+<p>关于数组的维护，有个很自然的想法：可以用一个数组 $C$ 维护若干个小区间，单点修改时，<strong>只更新包含这一元素的区间</strong>；求前 $n$ 项和时，<strong>通过将区间进行组合，得到从 $1$ 到 $n$ 的区间，然后对所有用到的区间求和</strong>。实际上，设原数组是 $A$，如果 $C_i$ 维护的区间是 $[A_i, A_i]$，此结构就相当于普通数组（还浪费了一倍内存）；如果 $C_i$ 维护的区间就是 $[1,A_i]$，此结构就相当于前缀和。</p>
+<h3 id="树状数组"><a href="#树状数组" class="headerlink" title="树状数组"></a>树状数组</h3><p>现在我们试图寻找一种结构，一方面，单点修改时需要更新的区间不会太多；另一方面，区间查询时需要用来组合的区间也不会太多。</p>
+<p>树状数组就是这样一种结构，它巧妙地利用了<strong>二进制</strong>（实际上，树状数组的英文名 BIT，直译过来就是<strong>二进制下标树</strong>）。例如 11，转化为二进制数就是 $(1011)_2$，如果我们要求前 11 项和，可以分别查询 $\big(\left(0000\right)_2 ,\left(1000\right)_2\big]$、$\big( \left(1000\right)_2 , \left(1010\right)_2 \big]$ 以及 $\big( \left(1010\right)_2 , \left(1011\right)_2 \big]$ 的和再相加。这三个区间怎么来的呢？其实就是<strong>不断地去掉二进制数最右边的一个 1</strong> 的过程（如下图）。</p>
+<p><img src="https://pic4.zhimg.com/v2-a53a897f22763ef04a728f8263f06547_b.jpg" alt=""></p>
+<p>我们定义，二进制数最右边的一个 1，连带着它之后的 0 为 $\operatorname{lowbit}(x)$（稍后再来看如何实现）。那么我们用 $C_i$ 维护区间 $\left(A_i-\operatorname{lowbit}\left(A_i\right),A_i\right]$，这样显然查询前 $n$ 项和时需要合并的区间数是少于 $\log_2{n}$ 的。树状数组的结构大概像下面这样：</p>
+<p><img src="https://pic1.zhimg.com/v2-fbaeb49fdbad31a211fe37f068ca8bb0_b.jpg" alt=""></p>
+<p>那么如何更新呢，大家会发现更新就是一个“<strong>爬树</strong>”的过程。一路往上更新，直到 $MAXN$（树状数组的容量）。</p>
+<p><img src="https://pic3.zhimg.com/v2-df001651925903a86ab640482b78c2d6_b.jpg" alt=""></p>
+<p>我们举个例子来看看这树是怎么爬的。 现有二进制数 $\left(100110\right)_2$，包含它的最小区间当然是 $\big( \left(100100\right)_2 , \left(100110\right)_2 \big]$。然后，它也肯定位于区间 $\big( \left(100000\right)_2 , \left(101000\right)_2 \big]$ 内。然后是 $\big( \left(100000\right)_2, \left(110000\right)_2 \big]$，再然后是<br>$\big( 0 , \left(1000000\right)_2 \big] \dots$</p>
+<p><img src="https://pic3.zhimg.com/v2-8ce9df6ada69084d3ccd0df5ecc45b5e_b.jpg" alt=""></p>
+<p>如上图，每一步都把<strong>从右边起一系列连续的 1 变为 0，再把这一系列 1 的前一位 0 变为 1</strong>。这看起来像是一个<strong>进位</strong>的过程对吧？实际上，每一次加的正是 $\operatorname{lowbit}\left(x\right)$。（神奇吧？）这样，我们更新的区间数不会超过 $\log_2{MAXN}$。一个能以 $O(\log{n})$ 时间复杂度进行单点修改和区间查询的数据结构就诞生了。</p>
+<h2 id="树状数组的实现"><a href="#树状数组的实现" class="headerlink" title="树状数组的实现"></a>树状数组的实现</h2><p>前面已经讲得很详细了，代码实现倒是一件简单的事了。不过我们需要先解决一个问题：lowbit 怎么算？如果一位一位验证的话，会形成额外的时间开销。然而，我们有这样神奇的一个公式：</p>
+<script type="math/tex; mode=display">\operatorname{lowbit}(x)=(x)\&(-x)</script><p>为什么可以这样？我们需要知道，计算机里有符号数一般是以<strong>补码</strong>的形式存储的。$-x$ 相当于 $x$ <strong>按位取反再加 1</strong>，会把结尾处原来 $1000\dots$ 的形式，变成 $0111\dots$，再变成 $1000\dots$；而前面每一位都与原来相反。这时我们再把它和 $x$ 按位与，得到的结果便是 $\operatorname{lowbit}(x)$。下面的图中举了两个例子：</p>
+<p><img src="https://pic3.zhimg.com/v2-fd4b485006b55bfd45c13f4348e1e1ee_b.jpg" alt=""></p>
 <p>现在我们可以愉快地实现树状数组了：</p>
-<details class="note primary"><summary><p>单点修改</p>
-</summary>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">modify</span><span class="params">(<span class="type">int</span> k, <span class="type">int</span> x)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = k; i &lt;= n; i += <span class="built_in">lowbit</span>(i)) T[i] += x;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-</details>
-<details class="note primary"><summary><p>求前 <span class="math inline">\(n\)</span> 项和</p>
-</summary>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">query</span><span class="params">(<span class="type">int</span> k)</span> </span>&#123;</span><br><span class="line">    <span class="type">int</span> ans = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = k; i; i -= <span class="built_in">lowbit</span>(i)) ans += T[i];</span><br><span class="line">    <span class="keyword">return</span> ans;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-</details>
-<p>对于区间查询，我们只需用 <code>query(b)</code> 减去
-<code>query(a - 1)</code> 即可。</p>
+<div class="note primary 单点修改 flat"><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">modify</span><span class="params">(<span class="type">int</span> k, <span class="type">int</span> x)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = k; i &lt;= n; i += <span class="built_in">lowbit</span>(i)) T[i] += x;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+<div class="note primary 求前 $n$ 项和 flat"><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">query</span><span class="params">(<span class="type">int</span> k)</span> </span>&#123;</span><br><span class="line">    <span class="type">int</span> ans = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = k; i; i -= <span class="built_in">lowbit</span>(i)) ans += T[i];</span><br><span class="line">    <span class="keyword">return</span> ans;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+<p>对于区间查询，我们只需用 <code>query(b)</code> 减去 <code>query(a - 1)</code> 即可。</p>
 <p>初始化的时候，我们只需要 modify 每个点的初始值即可。</p>
-<h2 id="树状数组的局限性">树状数组的局限性</h2>
-<p>一个高级数据结构，必然有它的局限性。我们回顾一下树状数组的查询，它是通过前缀和来实现区间查询的。如果无法通过前缀和求“差”的方式来求出区间和，那么树状数组是难以求出区间和的。比如
-<span class="math inline">\(\&amp;\)</span>、<span
-class="math inline">\(|\)</span> 和 <span
-class="math inline">\(\min\)</span>。其次，树状数组其实是通过结合律来维护区间信息的，所以树状数组只能维护具有结合律的对象。最后来说说树状数组能维护的例子，比较常见的有：<span
-class="math inline">\(\bigoplus\)</span>，<span
-class="math inline">\(+\)</span>，<span
-class="math inline">\(\times\)</span>。</p>
+<h2 id="树状数组的局限性"><a href="#树状数组的局限性" class="headerlink" title="树状数组的局限性"></a>树状数组的局限性</h2><p>一个高级数据结构，必然有它的局限性。我们回顾一下树状数组的查询，它是通过前缀和来实现区间查询的。如果无法通过前缀和求“差”的方式来求出区间和，那么树状数组是难以求出区间和的。比如 $\&amp;$、$|$ 和 $\min$。其次，树状数组其实是通过结合律来维护区间信息的，所以树状数组只能维护具有结合律的对象。最后来说说树状数组能维护的例子，比较常见的有：$\bigoplus$，$+$，$\times$。</p>
 <p>树状数组还没有没有局限性？相比起线段树，树状数组只能解决<strong>单点修改，区间查询</strong>或者<strong>区间修改，单点查询</strong>的问题，它对于解决<strong>区间修改，区间查询</strong>的问题显得软弱无力。</p>
-<h2 id="树状数组的优势">树状数组的优势</h2>
-<p>首先，树状数组十分好写，无论是修改还是查询，实现起来的代码仅仅两三行。其次，树状数组的常数很小，一是因为它的代码简洁，二是因为它仅仅用
-<span class="math inline">\(O(n)\)</span>
-的空间复杂度就实现了对信息的存储，与之相比线段树至少需要 <span
-class="math inline">\(O(2n)\)</span>
-的空间复杂度。这多一倍的信息存储量也使得线段树能真正意义上实现<strong>区间查询</strong>操作。</p>
+<h2 id="树状数组的优势"><a href="#树状数组的优势" class="headerlink" title="树状数组的优势"></a>树状数组的优势</h2><p>首先，树状数组十分好写，无论是修改还是查询，实现起来的代码仅仅两三行。其次，树状数组的常数很小，一是因为它的代码简洁，二是因为它仅仅用 $O(n)$ 的空间复杂度就实现了对信息的存储，与之相比线段树至少需要 $O(2n)$ 的空间复杂度。这多一倍的信息存储量也使得线段树能真正意义上实现<strong>区间查询</strong>操作。</p>
 ]]></content>
       <tags>
         <tag>数据结构</tag>
@@ -136,46 +38,116 @@ class="math inline">\(O(2n)\)</span>
       </tags>
   </entry>
   <entry>
-    <title>Calculus</title>
-    <url>/2023/12/13/Calculus/</url>
-    <content><![CDATA[<p><span class="math inline">\(\int kdx = kx + C\)</span></p>
-<p><span class="math inline">\(\int x^{\mu}dx = \frac{x^{\mu + 1}}{\mu +
-1} + C\)</span></p>
-<p><span class="math inline">\(\int\frac{dx}{x} = \ln\left\vert
-x\right\vert + C\)</span></p>
-<p><span class="math inline">\(\int\frac{dx}{1 + x^2} = \arctan x +
-C\)</span></p>
-<p><span class="math inline">\(\int\frac{dx}{\sqrt{1 - x^2}} = \arcsin x
-+ C\)</span></p>
-<p><span class="math inline">\(\int\cos xdx = \sin x + C\)</span></p>
-<p><span class="math inline">\(\int\sin xdx = -\cos x + C\)</span></p>
-<p><span class="math inline">\(\int\sec^2 xdx = \tan x + C\)</span></p>
-<p><span class="math inline">\(\int\csc^2 xdx = -\cot x + C\)</span></p>
-<p><span class="math inline">\(\int\sec x\tan xdx = \sec x +
-C\)</span></p>
-<p><span class="math inline">\(\int\csc x\cot xdx = -\csc x +
-C\)</span></p>
-<p><span class="math inline">\(\int e^xdx = e^x + C\)</span></p>
-<p><span class="math inline">\(\int a^xdx = \frac{a^x}{\ln a} +
-C\)</span></p>
-<p><span class="math inline">\(\int\frac{dx}{a^2 + x^2} =
-\frac{1}{a}\arctan{\frac{x}{a}} + C\)</span></p>
-<p><span class="math inline">\(\int\frac{dx}{\sqrt{a^2 - x^2}} =
-\arcsin{\frac{x}{a}} + C\)</span></p>
-<p><span class="math inline">\(\int\frac{dx}{a^2 - x^2} =
-\frac{1}{2a}\ln\left\vert\frac{a + x}{a - x}\right\vert + C\)</span></p>
-<p><span class="math inline">\(\int\tan xdx = -\ln\left\vert \cos
-x\right\vert + C\)</span></p>
-<p><span class="math inline">\(\int\cot xdx = \ln\left\vert\sin
-x\right\vert + C\)</span></p>
-<p><span class="math inline">\(\int\sec xdx = \ln\left\vert\sec x + \tan
-x\right\vert + C\)</span></p>
-<p><span class="math inline">\(\int\csc xdx = \ln\left\vert\csc x - \cot
-x\right\vert + C\)</span></p>
-<p><span class="math inline">\(\int\frac{dx}{\sqrt{x^2 + a^2}} = \ln(x +
-\sqrt{x^2 + a^2}) + C\)</span></p>
-<p><span class="math inline">\(\int\frac{dx}{\sqrt{x^2 - a^2}} =
-\ln\left\vert x + \sqrt{x^2 - a^2}\right\vert + C\)</span></p>
+    <title>Hello World</title>
+    <url>/2023/09/28/Hello/</url>
+    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+]]></content>
+  </entry>
+  <entry>
+    <title>极限</title>
+    <url>/2024/02/26/Limit/</url>
+    <content><![CDATA[<h1 id="数列的极限"><a href="#数列的极限" class="headerlink" title="数列的极限"></a>数列的极限</h1><h2 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h2><p>设 ${x_n}$ 为一数列，如果存在常数 $a$，是对于任意给定的正数 $\epsilon$（不论它多么小），总存在正整数 $N$，使得当 $n &gt; N$时，不等式</p>
+<script type="math/tex; mode=display">
+\left\vert x_n - a \right\vert < \varepsilon</script><p>都成立，那么就称常数 $a$ 是<strong>数列</strong> ${x_n}$ 的<strong>极限</strong>，或者称数列 ${x_n}$ <strong>收敛于</strong> $a$，记为</p>
+<script type="math/tex; mode=display">
+\lim\limits_{n \to \infty }x_n = a</script><p>或</p>
+<script type="math/tex; mode=display">
+x_n \to a \quad (n \to \infty)</script><p>如果不存在这样的常数 $a$，就说数列 ${x<em>n}$ 没有极限，或者说数列 ${x_n}$ 是<strong>发散</strong>的，习惯上也说 $\lim\limits</em>{n \to \infty}x_n$ 不存在。</p>
+<p>数列极限 $\lim\limits_{n\to\infty}x_n = a$ 的定义可表达为</p>
+<script type="math/tex; mode=display">
+\lim\limits_{n \to \infty}x_n = a \Leftrightarrow \forall \varepsilon > 0, \,
+\exists \,正整数\,N，当\,n > N\,时，有\,\left\vert x_n - a\right\vert < \varepsilon</script><h2 id="性质"><a href="#性质" class="headerlink" title="性质"></a>性质</h2><p><strong>定理 $1$（极限的唯一性）$\quad$</strong> 如果数列 ${x_n}$ 收敛，那么它的极限唯一。</p>
+<p><strong>定理 $2$（收敛数列的有界性）$\quad$</strong> 如果数列 ${x_n}$ 收敛，那么数列 ${x_n}$ 一定有界。</p>
+<p><strong>定理 $3$（收敛数列的保号性）$\quad$</strong> 如果 $\lim\limits_{n \to \infty}x_n = a$，且 $a &gt; 0$（或 $a &lt; 0$），那么存在正整数 $N$，当 $n &gt; N$ 时，都有 $x_n &gt; 0$（或 $x_n &lt; 0$）。</p>
+<p><strong>推论$\quad$</strong> 如果数列 ${x<em>n}$ 从某项起有 $x_n \ge 0$（或 $x_n \le 0$），且 $\lim\limits</em>{n\to\infty} x_n = a$，那么 $a \ge 0$（或 $a \le 0$）。</p>
+<p><strong>定理 $4$（收敛数列与其子数列间的关系）$\quad$</strong> 如果数列 ${x_n}$ 收敛于 $a$，那么它的任一子数列也收敛，且极限也是 $a$。</p>
+<h1 id="函数的极限"><a href="#函数的极限" class="headerlink" title="函数的极限"></a>函数的极限</h1><h2 id="定义-1"><a href="#定义-1" class="headerlink" title="定义"></a>定义</h2><p><strong>定义 $1\quad$</strong> 设函数 $f(x)$ 在点 $x_0$ 的某一去心邻域内有定义。如果存在常数 $A$，对于任一给定的正数 $\varepsilon$（不论它多么小），总存在正数 $\delta$，使得当 $x$ 满足不等式 $0 &lt; \left\vert x - x_0 \right\vert &lt; \delta$ 时，对应的函数值 $f(x)$ 都满足不等式</p>
+<script type="math/tex; mode=display">
+\left\vert f(x) < A \right\vert < \varepsilon</script><p>那么常数 $A$ 就叫做<strong>函数 $f(x)$ 当 $x\to x_0$ 时的极限</strong>，记作</p>
+<script type="math/tex; mode=display">
+\lim\limits_{x\to x_0}f(x) = A\ 或\ f(x) \to A\ (\ 当\ x \to x_0\ )</script><p>定义 $1$ 可以简单的表述为</p>
+<script type="math/tex; mode=display">
+\lim\limits_{x\to x_0}f(x) = A \Leftrightarrow \forall \varepsilon > 0, \exists \delta > 0, 当 0 < \left\vert x - x_0 \right\vert < \delta 时, 有 \left\vert f(x) - A \right\vert < \varepsilon</script><p>在 $\lim\limits_{x\to x_0}f(x) = A$ 的定义中，把 $0 &lt; \left\vert x - x_0 \right\vert &lt; \delta$ 改为 $x_0 - \delta &lt; x &lt; x_0$，那么 $A$ 就叫做函数 $f(x)$ 当 $x \to x_0$ 时的<strong>左极限</strong>，记作</p>
+<script type="math/tex; mode=display">
+\lim\limits_{x \to x^-_0}f(x) = A \quad 或 \quad f(x_0^-) = A</script><p>类似的，把 $0 &lt; \left\vert x - x_0\right\vert &lt; \delta$ 改为 $x_0 &lt; x &lt; x_0 + \delta$，那么 $A$ 就叫做函数 $f(x)$ 当 $x \to x_0$ 时的<strong>右极限</strong>，记作</p>
+<script type="math/tex; mode=display">
+\lim\limits_{x \to x^+_0}f(x) = A \quad 或 \quad f(x_0^+) = A</script><p>函数 $f(x)$ 当 $x \to x_0$ 时极限存在的充分必要条件是左极限及右极限各自存在并且相等，即</p>
+<script type="math/tex; mode=display">
+f(x_0^-) = f(x_0^+)</script><p><strong>定义 $2\quad$</strong> 设函数 $f(x)$ 当 $\left\vert x\right\vert$ 大于某一正数时有定义。如果存在常数 $A$，对于任意给定的正数 $\varepsilon$，总存在正数 $X$，使得当 $x$ 满足不等式 $\left\vert x\right\vert &gt; X$ 时，对应的函数值 $f(x)$ 都满足不等式</p>
+<script type="math/tex; mode=display">
+\left\vert f(x) - A \right\vert < \varepsilon</script><p>那么常数 $A$ 就叫做<strong>函数 $f(x)$ 当 $x \to \infty$ 时的极限</strong>，记作</p>
+<script type="math/tex; mode=display">
+\lim\limits_{x \to \infty} = A \quad 或 \quad f(x) \to A (当 x\to \infty)</script><p>定义 $2$ 可简单地表达为</p>
+<script type="math/tex; mode=display">
+\lim\limits_{x \to \infty} f(x) = A \Leftrightarrow \forall \varepsilon > 0, \exists X > 0, 当 \left\vert x \right\vert > X时，有 \left\vert f(x) - A \right\vert < \varepsilon</script><h2 id="性质-1"><a href="#性质-1" class="headerlink" title="性质"></a>性质</h2><p><strong>定理 $1$（函数极限的唯一性）$\quad$</strong> 如果 $\lim\limits_{x \to x_0} f(x)$ 存在，那么这极限唯一。</p>
+<p><strong>定理 $2$（函数极限的局部有界性）$\quad$</strong> 如果 $\lim\limits_{x \to x_0}f(x) = A$，那么存在常数 $M&gt;0$ 和 $\delta &gt; 0$，使得当 $0 &lt; \left\vert x - x_0 \right\vert &lt; \delta$ 时，有 $\left\vert f(x) \right\vert \le M$。</p>
+<p><strong>定理 $3$（函数极限的局部保号性）$\quad$</strong> 如果 $\lim\limits_{x \to x_0}f(x) = A$，且 $A &gt; 0$（或 $A &lt; 0$，那么存在常数 $\delta &gt; 0$，使得当 $0 &lt; \left\vert x - x_0 \right\vert &lt; \delta$ 时，有 $f(x) &gt; 0$（或 $f(x) &lt; 0$）。</p>
+<p><strong>定理 $3^\prime\quad$</strong> 如果 $\lim\limits_{x \to x_0}f(x) = A(A \ne 0)$，那么就存在着 $x_0$ 的某一去心邻域 $\mathring{U}(x_0)$，当 $x \in \mathring{U}(x_0)$ 时，就有 $\left\vert f(x) \right\vert &gt; \frac{\left\vert A\right\vert}{2}$。</p>
+<p><strong>推论$\quad$</strong> 如果在 $x<em>0$ 的某去心邻域内 $f(x) \ge 0$（或 $f(x) \le 0$），而且 $\lim\limits</em>{x\to x_0}f(x) = A$，那么 $A \ge 0$（或 $A \le 0$）。</p>
+<p><strong>定理 $4$（函数极限与数列极限的关系）$\quad$</strong> 如果极限 $\lim\limits<em>{x \to x_0}f(x)$ 存在，${x_n}$ 为函数 $f(x)$ 的定义域内任一收敛于 $x_0$ 的数列，且满足：$x_n \ne x_0$（$n \in N</em>+$），那么相应的函数值数列 ${f(x<em>n)}$ 必收敛，且 $\lim\limits</em>{n \to \infty}f(x<em>n) = \lim\limits</em>{x \to x_0}f(x)$。</p>
+<h1 id="无穷小"><a href="#无穷小" class="headerlink" title="无穷小"></a>无穷小</h1><h2 id="定义-2"><a href="#定义-2" class="headerlink" title="定义"></a>定义</h2><p>如果函数 $f(x)$ 当 $x \to x_0$（或 $x \to \infty$）时的极限为零，那么称函数 $f(x)$ 为当 $x \to x_0$（或 $x \to \infty$）时的无穷小。</p>
+<h2 id="性质-2"><a href="#性质-2" class="headerlink" title="性质"></a>性质</h2><p>在自变量的同一变化过程 $x \to x_0$（或 $x \to \infty$）中，函数 $f(x)$ 具有极限 $A$ 的充分必要条件时 $f(x) = A + \alpha$，其中 $\alpha$ 是无穷小。</p>
+<h2 id="比较"><a href="#比较" class="headerlink" title="比较"></a>比较</h2><p>如果 $\lim\frac{\beta}{\alpha} = 0$，那么就说 $\beta$ 是比 $\alpha$ <strong>高阶的无穷小</strong>，记作 $\beta = o(\alpha)$</p>
+<p>如果 $\lim\frac{\beta}{\alpha} = \infty$，那么就说 $\beta$ 是比 $\alpha$ <strong>低阶的无穷小</strong></p>
+<p>如果 $\lim\frac{\beta}{\alpha} = c \ne 0$，那么就说 $\beta$ 与 $\alpha$ 是<strong>同阶的无穷小</strong></p>
+<p>如果 $\lim\frac{\beta}{\alpha^k} = c \ne 0, k &gt; 0$，那么就说 $\beta$ 是关于 $\alpha$ 的 <strong>$k$ 阶的无穷小</strong></p>
+<p>如果 $\lim\frac{\beta}{\alpha} = 1$，那么就说 $\beta$ 与 $\alpha$ 是<strong>等价无穷小</strong>，记作 $\alpha \sim \beta$</p>
+<p><strong>定理 $1\quad$</strong> $\beta$ 与 $\alpha$ 是等价无穷小的充分必要条件为</p>
+<script type="math/tex; mode=display">
+\beta = \alpha + o(\alpha)</script><p><strong>定理 $2\quad$</strong> 设 $\alpha \sim \tilde\alpha$，$\beta \sim \tilde\beta$，且 $\lim\limits\frac{\tilde\beta}{\tilde\alpha}$ 存在，则</p>
+<script type="math/tex; mode=display">
+\lim\limits\frac{\beta}{\alpha} = \lim\limits\frac{\tilde\beta}{\tilde\alpha}</script><h1 id="无穷大"><a href="#无穷大" class="headerlink" title="无穷大"></a>无穷大</h1><h2 id="定义-3"><a href="#定义-3" class="headerlink" title="定义"></a>定义</h2><p>设函数 $f(x)$ 在 $x_0$ 的某一去心邻域内有定义（或 $\left\vert x \right\vert$ 大于某一正数时有定义）。如果对于任意给定的正数 $M$（不论它有多大），总存在正数 $\delta$（或正数 $X$），只要 $x$ 适合不等式 $0 &lt; \left\vert x - x_0 \right\vert &lt; \delta$（或 $\left\vert x \right\vert &gt; X$），对应的函数值 $f(x)$ 总满足不等式</p>
+<script type="math/tex; mode=display">
+\left\vert f(x) \right\vert > M</script><p>那么称函数 $f(x)$ 是当 $x \to x_0$（或 $x \to \infty$）时的无穷大。</p>
+<h2 id="性质-3"><a href="#性质-3" class="headerlink" title="性质"></a>性质</h2><p>在自变量的同一变化过程中，如果 $f(x)$ 为无穷大，那么 $\frac{1}{f(x)}$ 为无穷小；反之，如果 $f(x)$ 为无穷小，且 $f(x) \ne 0$，那么 $\frac{1}{f(x)}$ 为无穷大。</p>
+<h1 id="极限运算法则"><a href="#极限运算法则" class="headerlink" title="极限运算法则"></a>极限运算法则</h1><p><strong>定理 $1\quad$</strong> 有限个无穷小的和是无穷小</p>
+<p><strong>定理 $2\quad$</strong> 有界函数与无穷小的乘积是无穷小</p>
+<p><strong>推论 $1\quad$</strong> 常数与无穷小的乘积是无穷小</p>
+<p><strong>推论 $2\quad$</strong> 有限个无穷小的乘积是无穷小</p>
+<p><strong>定理 $3\quad$</strong> 如果 $\lim f(x)=A, \lim g(x) = B$，那么</p>
+<ol>
+<li>$\lim\left[f(x) \pm g(x) \right] = \lim f(x) \pm \lim g(x) = A \pm B$</li>
+<li>$\lim\left[f(x) \cdot g(x) \right] = \lim f(x) \cdot \lim g(x) = A \cdot B$</li>
+<li>若又有 $B \ne 0$，则</li>
+</ol>
+<script type="math/tex; mode=display">
+\lim \frac{f(x)}{g(x)} = \frac{\lim f(x)}{\lim g(x)} = \frac{A}{B}</script><p><strong>定理 $4\quad$</strong> 设有数列 ${x_n}$ 和 ${y_n}$。如果</p>
+<script type="math/tex; mode=display">
+\lim\limits_{n\to\infty}x_n = A,\quad \lim\limits_{n\to\infty}y_n = B</script><p>那么</p>
+<ol>
+<li>$\lim\limits_{n\to\infty}(x_n\pm y_n) = A \pm B$</li>
+<li>$\lim\limits_{n\to\infty}(x_n \cdot y_n) = A \cdot B$</li>
+<li>当 $y<em>n \ne 0$（$n = 1, 2, \cdots$）且 $B \ne 0$ 时，$\lim\limits</em>{n\to\infty}\frac{x_n}{y_n} = \frac{A}{B}$</li>
+</ol>
+<p><strong>定理 $5\quad$</strong> 如果 $\varphi(x) \ge \psi(x)$，而 $\lim\limits \varphi(x) = A$，$\lim\limits \psi(x) = B$，那么 $A \ge B$。 </p>
+<p><strong>定理 $6$（复合函数的极限运算法则）$\quad$</strong> 设函数 $y = f\left[g(x)\right]$ 是由函数 $u = g(x)$ 与函数 $y = f(u)$ 复合而成，$f\left[g(x)\right]$ 在点 $x<em>0$ 的某去心邻域内有定义，若 $\lim\limits</em>{x\to x<em>0}g(x) = u_0$，$\lim\limits</em>{u \to u_0}f(u) = A$，且存在 $\delta_0 &gt; 0$，当 $x \in \mathring{U}(x_0, \delta_0)$ 时，有 $g(x) \ne u_0$，则</p>
+<script type="math/tex; mode=display">
+\lim\limits_{x \to x_0}f\left[g(x)\right] = \lim\limits_{u\to u_0}f(u) = A</script><h1 id="极限存在准则"><a href="#极限存在准则" class="headerlink" title="极限存在准则"></a>极限存在准则</h1><p><strong>准则 $\mathrm{I}\quad$</strong> 如果数列 ${x_n}$，${y_n}$ 及 ${z_n}$ 满足下列条件：</p>
+<ol>
+<li>从某项起，即 $\exists n<em>0 \in \N</em>+$，当 $n &gt; n_0$ 时，有<script type="math/tex; mode=display">
+y_n \le x_n \le z_n</script></li>
+<li>$\lim\limits<em>{n \to \infty}y_n = a, \lim\limits</em>{n\to\infty}z_n = a$</li>
+</ol>
+<p>那么数列 ${x<em>n}$ 的极限存在，且 $\lim\limits</em>{n\to\infty}x_n = a$</p>
+<p><strong>准则 $\mathrm{I}^\prime\quad$</strong> 如果</p>
+<ol>
+<li>当 $x \in \mathring{U}(x_0, r)$（或 $\left\vert x \right\vert &gt; M$）时，</li>
+</ol>
+<script type="math/tex; mode=display">
+g(x) \le f(x) \le h(x)</script><ol>
+<li>$\lim\limits<em>{x\to x_0 \atop (x \to \infty)}g(x) = A, \lim\limits</em>{x\to x_0 \atop (x\to\infty)}h(x) = A$</li>
+</ol>
+<p>那么 $\lim\limits_{x\to x_0 \atop (x\to \infty)}f(x)$ 存在，且等于 $A$。</p>
+<p>准则 $\mathrm{I}$ 及准则 $\mathrm{I}^\prime$ 称为<strong>夹逼准则</strong>。</p>
+<p><strong>准则 $\mathrm{II}\quad$</strong> 单调有界数列必有极限。 </p>
 ]]></content>
       <tags>
         <tag>Math</tag>
@@ -183,392 +155,137 @@ x\right\vert + C\)</span></p>
       </tags>
   </entry>
   <entry>
-    <title>Hello World</title>
-    <url>/2023/09/28/Hello/</url>
-    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very
-first post. Check <a href="https://hexo.io/docs/">documentation</a> for
-more info. If you get any problems when using Hexo, you can find the
-answer in <a
-href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or
-you can ask me on <a
-href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="quick-start">Quick Start</h2>
-<h3 id="create-a-new-post">Create a new post</h3>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a
-href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="run-server">Run server</h3>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="generate-static-files">Generate static files</h3>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a
-href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="deploy-to-remote-sites">Deploy to remote sites</h3>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a
-href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+    <title>Lists of Integrals</title>
+    <url>/2023/12/13/Lists-of-Integrals/</url>
+    <content><![CDATA[<p>$\int kdx = kx + C$</p>
+<p>$\int x^{\mu}dx = \frac{x^{\mu + 1}}{\mu + 1} + C$</p>
+<p>$\int\frac{dx}{x} = \ln\left\vert x\right\vert + C$</p>
+<p>$\int\frac{dx}{1 + x^2} = \arctan x + C$</p>
+<p>$\int\frac{dx}{\sqrt{1 - x^2}} = \arcsin x + C$</p>
+<p>$\int\sin xdx = -\cos x + C$</p>
+<p>$\int\cos xdx = \sin x + C$</p>
+<p>$\int\tan xdx = -\ln\left\vert \cos x\right\vert + C$</p>
+<p>$\int\cot xdx = \ln\left\vert\sin x\right\vert + C$</p>
+<p>$\int\sec xdx = \ln\left\vert\sec x + \tan x\right\vert + C$</p>
+<p>$\int\csc xdx = \ln\left\vert\csc x - \cot x\right\vert + C$</p>
+<p>$\int\sec^2 xdx = \tan x + C$</p>
+<p>$\int\csc^2 xdx = -\cot x + C$</p>
+<p>$\int\sec x\tan xdx = \sec x + C$</p>
+<p>$\int\csc x\cot xdx = -\csc x + C$</p>
+<p>$\int e^xdx = e^x + C$</p>
+<p>$\int a^xdx = \frac{a^x}{\ln a} + C$</p>
+<p>$\int\frac{dx}{a^2 + x^2} = \frac{1}{a}\arctan{\frac{x}{a}} + C$</p>
+<p>$\int\frac{dx}{a^2 - x^2} = \frac{1}{2a}\ln\left\vert\frac{a + x}{a - x}\right\vert + C$</p>
+<p>$\int\frac{dx}{\sqrt{a^2 - x^2}} = \arcsin{\frac{x}{a}} + C$</p>
+<p>$\int\frac{dx}{\sqrt{x^2 + a^2}} = \ln\left(x + \sqrt{x^2 + a^2}\right) + C$</p>
+<p>$\int\frac{dx}{\sqrt{x^2 - a^2}} = \ln\left\vert x + \sqrt{x^2 - a^2}\right\vert + C$</p>
 ]]></content>
+      <tags>
+        <tag>Math</tag>
+        <tag>Calculus</tag>
+      </tags>
   </entry>
   <entry>
-    <title>极限</title>
-    <url>/2024/02/26/Limit/</url>
-    <content><![CDATA[<h1 id="数列的极限">数列的极限</h1>
-<h2 id="定义">定义</h2>
-<p>设 <span class="math inline">\(\{x_n\}\)</span>
-为一数列，如果存在常数 <span
-class="math inline">\(a\)</span>，是对于任意给定的正数 <span
-class="math inline">\(\epsilon\)</span>（不论它多么小），总存在正整数
-<span class="math inline">\(N\)</span>，使得当 <span
-class="math inline">\(n &gt; N\)</span>时，不等式 <span
-class="math display">\[
-\left\vert x_n - a \right\vert &lt; \varepsilon
-\]</span> 都成立，那么就称常数 <span class="math inline">\(a\)</span>
-是<strong>数列</strong> <span class="math inline">\(\{x_n\}\)</span>
-的<strong>极限</strong>，或者称数列 <span
-class="math inline">\(\{x_n\}\)</span> <strong>收敛于</strong> <span
-class="math inline">\(a\)</span>，记为 <span class="math display">\[
-\lim\limits_{n \to \infty }x_n = a
-\]</span> 或 <span class="math display">\[
-x_n \to a \quad (n \to \infty)
-\]</span> 如果不存在这样的常数 <span
-class="math inline">\(a\)</span>，就说数列 <span
-class="math inline">\(\{x_n\}\)</span> 没有极限，或者说数列 <span
-class="math inline">\(\{x_n\}\)</span>
-是<strong>发散</strong>的，习惯上也说 <span
-class="math inline">\(\lim\limits_{n \to \infty}x_n\)</span>
-不存在。</p>
-<p>数列极限 <span class="math inline">\(\lim\limits_{n\to\infty}x_n =
-a\)</span> 的定义可表达为 <span class="math display">\[
-\lim\limits_{n \to \infty}x_n = a \Leftrightarrow \forall \varepsilon
-&gt; 0, \,
-\exists \,正整数\,N，当\,n &gt; N\,时，有\,\left\vert x_n - a\right\vert
-&lt; \varepsilon
-\]</span></p>
-<h2 id="性质">性质</h2>
-<p><strong>定理 <span
-class="math inline">\(1\)</span>（极限的唯一性）<span
-class="math inline">\(\quad\)</span></strong> 如果数列 <span
-class="math inline">\(\{x_n\}\)</span> 收敛，那么它的极限唯一。</p>
-<p><strong>定理 <span
-class="math inline">\(2\)</span>（收敛数列的有界性）<span
-class="math inline">\(\quad\)</span></strong> 如果数列 <span
-class="math inline">\(\{x_n\}\)</span> 收敛，那么数列 <span
-class="math inline">\(\{x_n\}\)</span> 一定有界。</p>
-<p><strong>定理 <span
-class="math inline">\(3\)</span>（收敛数列的保号性）<span
-class="math inline">\(\quad\)</span></strong> 如果 <span
-class="math inline">\(\lim\limits_{n \to \infty}x_n = a\)</span>，且
-<span class="math inline">\(a &gt; 0\)</span>（或 <span
-class="math inline">\(a &lt; 0\)</span>），那么存在正整数 <span
-class="math inline">\(N\)</span>，当 <span class="math inline">\(n &gt;
-N\)</span> 时，都有 <span class="math inline">\(x_n &gt; 0\)</span>（或
-<span class="math inline">\(x_n &lt; 0\)</span>）。</p>
-<p><strong>推论<span class="math inline">\(\quad\)</span></strong>
-如果数列 <span class="math inline">\(\{x_n\}\)</span> 从某项起有 <span
-class="math inline">\(x_n \ge 0\)</span>（或 <span
-class="math inline">\(x_n \le 0\)</span>），且 <span
-class="math inline">\(\lim\limits_{n\to\infty} x_n = a\)</span>，那么
-<span class="math inline">\(a \ge 0\)</span>（或 <span
-class="math inline">\(a \le 0\)</span>）。</p>
-<p><strong>定理 <span
-class="math inline">\(4\)</span>（收敛数列与其子数列间的关系）<span
-class="math inline">\(\quad\)</span></strong> 如果数列 <span
-class="math inline">\(\{x_n\}\)</span> 收敛于 <span
-class="math inline">\(a\)</span>，那么它的任一子数列也收敛，且极限也是
-<span class="math inline">\(a\)</span>。</p>
-<h1 id="函数的极限">函数的极限</h1>
-<h2 id="定义-1">定义</h2>
-<p><strong>定义 <span class="math inline">\(1\quad\)</span></strong>
-设函数 <span class="math inline">\(f(x)\)</span> 在点 <span
-class="math inline">\(x_0\)</span> 的某一去心邻域内有定义。如果存在常数
-<span class="math inline">\(A\)</span>，对于任一给定的正数 <span
-class="math inline">\(\varepsilon\)</span>（不论它多么小），总存在正数
-<span class="math inline">\(\delta\)</span>，使得当 <span
-class="math inline">\(x\)</span> 满足不等式 <span
-class="math inline">\(0 &lt; \left\vert x - x_0 \right\vert &lt;
-\delta\)</span> 时，对应的函数值 <span
-class="math inline">\(f(x)\)</span> 都满足不等式 <span
-class="math display">\[
-\left\vert f(x) &lt; A \right\vert &lt; \varepsilon
-\]</span> 那么常数 <span class="math inline">\(A\)</span>
-就叫做<strong>函数 <span class="math inline">\(f(x)\)</span> 当 <span
-class="math inline">\(x\to x_0\)</span> 时的极限</strong>，记作 <span
-class="math display">\[
-\lim\limits_{x\to x_0}f(x) = A\ 或\ f(x) \to A\ (\ 当\ x \to x_0\ )
-\]</span> 定义 <span class="math inline">\(1\)</span> 可以简单的表述为
-<span class="math display">\[
-\lim\limits_{x\to x_0}f(x) = A \Leftrightarrow \forall \varepsilon &gt;
-0, \exists \delta &gt; 0, 当 0 &lt; \left\vert x - x_0 \right\vert &lt;
-\delta 时, 有 \left\vert f(x) - A \right\vert &lt; \varepsilon
-\]</span> 在 <span class="math inline">\(\lim\limits_{x\to x_0}f(x) =
-A\)</span> 的定义中，把 <span class="math inline">\(0 &lt; \left\vert x
-- x_0 \right\vert &lt; \delta\)</span> 改为 <span
-class="math inline">\(x_0 - \delta &lt; x &lt; x_0\)</span>，那么 <span
-class="math inline">\(A\)</span> 就叫做函数 <span
-class="math inline">\(f(x)\)</span> 当 <span class="math inline">\(x \to
-x_0\)</span> 时的<strong>左极限</strong>，记作 <span
-class="math display">\[
-\lim\limits_{x \to x^-_0}f(x) = A \quad 或 \quad f(x_0^-) = A
-\]</span> 类似的，把 <span class="math inline">\(0 &lt; \left\vert x -
-x_0\right\vert &lt; \delta\)</span> 改为 <span class="math inline">\(x_0
-&lt; x &lt; x_0 + \delta\)</span>，那么 <span
-class="math inline">\(A\)</span> 就叫做函数 <span
-class="math inline">\(f(x)\)</span> 当 <span class="math inline">\(x \to
-x_0\)</span> 时的<strong>右极限</strong>，记作 <span
-class="math display">\[
-\lim\limits_{x \to x^+_0}f(x) = A \quad 或 \quad f(x_0^+) = A
-\]</span> 函数 <span class="math inline">\(f(x)\)</span> 当 <span
-class="math inline">\(x \to x_0\)</span>
-时极限存在的充分必要条件是左极限及右极限各自存在并且相等，即 <span
-class="math display">\[
-f(x_0^-) = f(x_0^+)
-\]</span> <strong>定义 <span
-class="math inline">\(2\quad\)</span></strong> 设函数 <span
-class="math inline">\(f(x)\)</span> 当 <span
-class="math inline">\(\left\vert x\right\vert\)</span>
-大于某一正数时有定义。如果存在常数 <span
-class="math inline">\(A\)</span>，对于任意给定的正数 <span
-class="math inline">\(\varepsilon\)</span>，总存在正数 <span
-class="math inline">\(X\)</span>，使得当 <span
-class="math inline">\(x\)</span> 满足不等式 <span
-class="math inline">\(\left\vert x\right\vert &gt; X\)</span>
-时，对应的函数值 <span class="math inline">\(f(x)\)</span> 都满足不等式
-<span class="math display">\[
-\left\vert f(x) - A \right\vert &lt; \varepsilon
-\]</span> 那么常数 <span class="math inline">\(A\)</span>
-就叫做<strong>函数 <span class="math inline">\(f(x)\)</span> 当 <span
-class="math inline">\(x \to \infty\)</span> 时的极限</strong>，记作
-<span class="math display">\[
-\lim\limits_{x \to \infty} = A \quad 或 \quad f(x) \to A (当 x\to
-\infty)
-\]</span> 定义 <span class="math inline">\(2\)</span> 可简单地表达为
-<span class="math display">\[
-\lim\limits_{x \to \infty} f(x) = A \Leftrightarrow \forall \varepsilon
-&gt; 0, \exists X &gt; 0, 当 \left\vert x \right\vert &gt; X时，有
-\left\vert f(x) - A \right\vert &lt; \varepsilon
-\]</span></p>
-<h2 id="性质-1">性质</h2>
-<p><strong>定理 <span
-class="math inline">\(1\)</span>（函数极限的唯一性）<span
-class="math inline">\(\quad\)</span></strong> 如果 <span
-class="math inline">\(\lim\limits_{x \to x_0} f(x)\)</span>
-存在，那么这极限唯一。</p>
-<p><strong>定理 <span
-class="math inline">\(2\)</span>（函数极限的局部有界性）<span
-class="math inline">\(\quad\)</span></strong> 如果 <span
-class="math inline">\(\lim\limits_{x \to x_0}f(x) =
-A\)</span>，那么存在常数 <span class="math inline">\(M&gt;0\)</span> 和
-<span class="math inline">\(\delta &gt; 0\)</span>，使得当 <span
-class="math inline">\(0 &lt; \left\vert x - x_0 \right\vert &lt;
-\delta\)</span> 时，有 <span class="math inline">\(\left\vert f(x)
-\right\vert \le M\)</span>。</p>
-<p><strong>定理 <span
-class="math inline">\(3\)</span>（函数极限的局部保号性）<span
-class="math inline">\(\quad\)</span></strong> 如果 <span
-class="math inline">\(\lim\limits_{x \to x_0}f(x) = A\)</span>，且 <span
-class="math inline">\(A &gt; 0\)</span>（或 <span
-class="math inline">\(A &lt; 0\)</span>，那么存在常数 <span
-class="math inline">\(\delta &gt; 0\)</span>，使得当 <span
-class="math inline">\(0 &lt; \left\vert x - x_0 \right\vert &lt;
-\delta\)</span> 时，有 <span class="math inline">\(f(x) &gt;
-0\)</span>（或 <span class="math inline">\(f(x) &lt; 0\)</span>）。</p>
-<p><strong>定理 <span
-class="math inline">\(3^\prime\quad\)</span></strong> 如果 <span
-class="math inline">\(\lim\limits_{x \to x_0}f(x) = A(A \ne
-0)\)</span>，那么就存在着 <span class="math inline">\(x_0\)</span>
-的某一去心邻域 <span
-class="math inline">\(\mathring{U}(x_0)\)</span>，当 <span
-class="math inline">\(x \in \mathring{U}(x_0)\)</span> 时，就有 <span
-class="math inline">\(\left\vert f(x) \right\vert &gt; \frac{\left\vert
-A\right\vert}{2}\)</span>。</p>
-<p><strong>推论<span class="math inline">\(\quad\)</span></strong>
-如果在 <span class="math inline">\(x_0\)</span> 的某去心邻域内 <span
-class="math inline">\(f(x) \ge 0\)</span>（或 <span
-class="math inline">\(f(x) \le 0\)</span>），而且 <span
-class="math inline">\(\lim\limits_{x\to x_0}f(x) = A\)</span>，那么
-<span class="math inline">\(A \ge 0\)</span>（或 <span
-class="math inline">\(A \le 0\)</span>）。</p>
-<p><strong>定理 <span
-class="math inline">\(4\)</span>（函数极限与数列极限的关系）<span
-class="math inline">\(\quad\)</span></strong> 如果极限 <span
-class="math inline">\(\lim\limits_{x \to x_0}f(x)\)</span> 存在，<span
-class="math inline">\(\{x_n\}\)</span> 为函数 <span
-class="math inline">\(f(x)\)</span> 的定义域内任一收敛于 <span
-class="math inline">\(x_0\)</span> 的数列，且满足：<span
-class="math inline">\(x_n \ne x_0\)</span>（<span
-class="math inline">\(n \in N_+\)</span>），那么相应的函数值数列 <span
-class="math inline">\(\{f(x_n)\}\)</span> 必收敛，且 <span
-class="math inline">\(\lim\limits_{n \to \infty}f(x_n) = \lim\limits_{x
-\to x_0}f(x)\)</span>。</p>
-<h1 id="无穷小">无穷小</h1>
-<h2 id="定义-2">定义</h2>
-<p>如果函数 <span class="math inline">\(f(x)\)</span> 当 <span
-class="math inline">\(x \to x_0\)</span>（或 <span
-class="math inline">\(x \to \infty\)</span>）时的极限为零，那么称函数
-<span class="math inline">\(f(x)\)</span> 为当 <span
-class="math inline">\(x \to x_0\)</span>（或 <span
-class="math inline">\(x \to \infty\)</span>）时的无穷小。 ## 性质
-在自变量的同一变化过程 <span class="math inline">\(x \to
-x_0\)</span>（或 <span class="math inline">\(x \to
-\infty\)</span>）中，函数 <span class="math inline">\(f(x)\)</span>
-具有极限 <span class="math inline">\(A\)</span> 的充分必要条件时 <span
-class="math inline">\(f(x) = A + \alpha\)</span>，其中 <span
-class="math inline">\(\alpha\)</span> 是无穷小。 ## 比较 如果 <span
-class="math inline">\(\lim\frac{\beta}{\alpha} = 0\)</span>，那么就说
-<span class="math inline">\(\beta\)</span> 是比 <span
-class="math inline">\(\alpha\)</span>
-<strong>高阶的无穷小</strong>，记作 <span class="math inline">\(\beta =
-o(\alpha)\)</span></p>
-<p>如果 <span class="math inline">\(\lim\frac{\beta}{\alpha} =
-\infty\)</span>，那么就说 <span class="math inline">\(\beta\)</span>
-是比 <span class="math inline">\(\alpha\)</span>
-<strong>低阶的无穷小</strong></p>
-<p>如果 <span class="math inline">\(\lim\frac{\beta}{\alpha} = c \ne
-0\)</span>，那么就说 <span class="math inline">\(\beta\)</span> 与 <span
-class="math inline">\(\alpha\)</span>
-是<strong>同阶的无穷小</strong></p>
-<p>如果 <span class="math inline">\(\lim\frac{\beta}{\alpha^k} = c \ne
-0, k &gt; 0\)</span>，那么就说 <span
-class="math inline">\(\beta\)</span> 是关于 <span
-class="math inline">\(\alpha\)</span> 的 <strong><span
-class="math inline">\(k\)</span> 阶的无穷小</strong></p>
-<p>如果 <span class="math inline">\(\lim\frac{\beta}{\alpha} =
-1\)</span>，那么就说 <span class="math inline">\(\beta\)</span> 与 <span
-class="math inline">\(\alpha\)</span>
-是<strong>等价无穷小</strong>，记作 <span class="math inline">\(\alpha
-\sim \beta\)</span></p>
-<p><strong>定理 <span class="math inline">\(1\quad\)</span></strong>
-<span class="math inline">\(\beta\)</span> 与 <span
-class="math inline">\(\alpha\)</span> 是等价无穷小的充分必要条件为 <span
-class="math display">\[
-\beta = \alpha + o(\alpha)
-\]</span></p>
-<p><strong>定理 <span class="math inline">\(2\quad\)</span></strong> 设
-<span class="math inline">\(\alpha \sim \tilde\alpha\)</span>，<span
-class="math inline">\(\beta \sim \tilde\beta\)</span>，且 <span
-class="math inline">\(\lim\limits\frac{\tilde\beta}{\tilde\alpha}\)</span>
-存在，则 <span class="math display">\[
-\lim\limits\frac{\beta}{\alpha} =
-\lim\limits\frac{\tilde\beta}{\tilde\alpha}
-\]</span> # 无穷大 ## 定义 设函数 <span
-class="math inline">\(f(x)\)</span> 在 <span
-class="math inline">\(x_0\)</span> 的某一去心邻域内有定义（或 <span
-class="math inline">\(\left\vert x \right\vert\)</span>
-大于某一正数时有定义）。如果对于任意给定的正数 <span
-class="math inline">\(M\)</span>（不论它有多大），总存在正数 <span
-class="math inline">\(\delta\)</span>（或正数 <span
-class="math inline">\(X\)</span>），只要 <span
-class="math inline">\(x\)</span> 适合不等式 <span
-class="math inline">\(0 &lt; \left\vert x - x_0 \right\vert &lt;
-\delta\)</span>（或 <span class="math inline">\(\left\vert x \right\vert
-&gt; X\)</span>），对应的函数值 <span
-class="math inline">\(f(x)\)</span> 总满足不等式 <span
-class="math display">\[
-\left\vert f(x) \right\vert &gt; M
-\]</span> 那么称函数 <span class="math inline">\(f(x)\)</span> 是当
-<span class="math inline">\(x \to x_0\)</span>（或 <span
-class="math inline">\(x \to \infty\)</span>）时的无穷大。</p>
-<h2 id="性质-2">性质</h2>
-<p>在自变量的同一变化过程中，如果 <span
-class="math inline">\(f(x)\)</span> 为无穷大，那么 <span
-class="math inline">\(\frac{1}{f(x)}\)</span> 为无穷小；反之，如果 <span
-class="math inline">\(f(x)\)</span> 为无穷小，且 <span
-class="math inline">\(f(x) \ne 0\)</span>，那么 <span
-class="math inline">\(\frac{1}{f(x)}\)</span> 为无穷大。</p>
-<h1 id="极限运算法则">极限运算法则</h1>
-<p><strong>定理 <span class="math inline">\(1\quad\)</span></strong>
-有限个无穷小的和是无穷小</p>
-<p><strong>定理 <span class="math inline">\(2\quad\)</span></strong>
-有界函数与无穷小的乘积是无穷小</p>
-<p><strong>推论 <span class="math inline">\(1\quad\)</span></strong>
-常数与无穷小的乘积是无穷小</p>
-<p><strong>推论 <span class="math inline">\(2\quad\)</span></strong>
-有限个无穷小的乘积是无穷小</p>
-<p><strong>定理 <span class="math inline">\(3\quad\)</span></strong>
-如果 <span class="math inline">\(\lim f(x)=A, \lim g(x) =
-B\)</span>，那么</p>
-<ol type="1">
-<li><span class="math inline">\(\lim\left[f(x) \pm g(x) \right] = \lim
-f(x) \pm \lim g(x) = A \pm B\)</span></li>
-<li><span class="math inline">\(\lim\left[f(x) \cdot g(x) \right] = \lim
-f(x) \cdot \lim g(x) = A \cdot B\)</span></li>
-<li>若又有 <span class="math inline">\(B \ne 0\)</span>，则</li>
+    <title>多元函数</title>
+    <url>/2024/03/05/Multifunction/</url>
+    <content><![CDATA[<h1 id="多元函数的基本概念"><a href="#多元函数的基本概念" class="headerlink" title="多元函数的基本概念"></a>多元函数的基本概念</h1><ol>
+<li>$N$ 维空间</li>
 </ol>
-<p><span class="math display">\[
-\lim \frac{f(x)}{g(x)} = \frac{\lim f(x)}{\lim g(x)} = \frac{A}{B}
-\]</span></p>
-<p><strong>定理 <span class="math inline">\(4\quad\)</span></strong>
-设有数列 <span class="math inline">\(\{x_n\}\)</span> 和 <span
-class="math inline">\(\{y_n\}\)</span>。如果 <span
-class="math display">\[
-\lim\limits_{n\to\infty}x_n = A,\quad \lim\limits_{n\to\infty}y_n = B
-\]</span> 那么 1. <span
-class="math inline">\(\lim\limits_{n\to\infty}(x_n\pm y_n) = A \pm
-B\)</span> 2. <span class="math inline">\(\lim\limits_{n\to\infty}(x_n
-\cdot y_n) = A \cdot B\)</span> 3. 当 <span class="math inline">\(y_n
-\ne 0\)</span>（<span class="math inline">\(n = 1, 2,
-\cdots\)</span>）且 <span class="math inline">\(B \ne 0\)</span>
-时，<span class="math inline">\(\lim\limits_{n\to\infty}\frac{x_n}{y_n}
-= \frac{A}{B}\)</span></p>
-<p><strong>定理 <span class="math inline">\(5\quad\)</span></strong>
-如果 <span class="math inline">\(\varphi(x) \ge \psi(x)\)</span>，而
-<span class="math inline">\(\lim\limits \varphi(x) = A\)</span>，<span
-class="math inline">\(\lim\limits \psi(x) = B\)</span>，那么 <span
-class="math inline">\(A \ge B\)</span>。</p>
-<p><strong>定理 <span
-class="math inline">\(6\)</span>（复合函数的极限运算法则）<span
-class="math inline">\(\quad\)</span></strong> 设函数 <span
-class="math inline">\(y = f\left[g(x)\right]\)</span> 是由函数 <span
-class="math inline">\(u = g(x)\)</span> 与函数 <span
-class="math inline">\(y = f(u)\)</span> 复合而成，<span
-class="math inline">\(f\left[g(x)\right]\)</span> 在点 <span
-class="math inline">\(x_0\)</span> 的某去心邻域内有定义，若 <span
-class="math inline">\(\lim\limits_{x\to x_0}g(x) = u_0\)</span>，<span
-class="math inline">\(\lim\limits_{u \to u_0}f(u) = A\)</span>，且存在
-<span class="math inline">\(\delta_0 &gt; 0\)</span>，当 <span
-class="math inline">\(x \in \mathring{U}(x_0, \delta_0)\)</span> 时，有
-<span class="math inline">\(g(x) \ne u_0\)</span>，则 <span
-class="math display">\[
-\lim\limits_{x \to x_0}f\left[g(x)\right] = \lim\limits_{u\to u_0}f(u) =
-A
-\]</span></p>
-<h1 id="极限存在准则">极限存在准则</h1>
-<p><strong>准则 <span
-class="math inline">\(\mathrm{I}\quad\)</span></strong> 如果数列 <span
-class="math inline">\(\{x_n\}\)</span>，<span
-class="math inline">\(\{y_n\}\)</span> 及 <span
-class="math inline">\(\{z_n\}\)</span> 满足下列条件： 1. 从某项起，即
-<span class="math inline">\(\exists n_0 \in \N_+\)</span>，当 <span
-class="math inline">\(n &gt; n_0\)</span> 时，有 <span
-class="math display">\[
-y_n \le x_n \le z_n
-\]</span> 2. <span class="math inline">\(\lim\limits_{n \to \infty}y_n =
-a, \lim\limits_{n\to\infty}z_n = a\)</span></p>
-<p>那么数列 <span class="math inline">\(\{x_n\}\)</span> 的极限存在，且
-<span class="math inline">\(\lim\limits_{n\to\infty}x_n = a\)</span></p>
-<p><strong>准则 <span
-class="math inline">\(\mathrm{I}^\prime\quad\)</span></strong> 如果 1.
-当 <span class="math inline">\(x \in \mathring{U}(x_0, r)\)</span>（或
-<span class="math inline">\(\left\vert x \right\vert &gt;
-M\)</span>）时，</p>
-<p><span class="math display">\[
-g(x) \le f(x) \le h(x)
-\]</span></p>
-<ol start="2" type="1">
-<li><span class="math inline">\(\lim\limits_{x\to x_0 \atop (x \to
-\infty)}g(x) = A, \lim\limits_{x\to x_0 \atop (x\to\infty)}h(x) =
-A\)</span></li>
+<p>称有序数组 $(x_1, x_2, \cdots, x_n)$ 为一个 <strong>$n$ 维点（$n$ 维向量）</strong>。所有 $n$ 维点组成的集合称之为 <strong>$n$ 维空间</strong>，记为 $\mathbb{R}^n$。</p>
+<ol>
+<li>$N$ 维空间的距离</li>
 </ol>
-<p>那么 <span class="math inline">\(\lim\limits_{x\to x_0 \atop (x\to
-\infty)}f(x)\)</span> 存在，且等于 <span
-class="math inline">\(A\)</span>。</p>
-<p>准则 <span class="math inline">\(\mathrm{I}\)</span> 及准则 <span
-class="math inline">\(\mathrm{I}^\prime\)</span>
-称为<strong>夹逼准则</strong>。</p>
-<p><strong>准则 <span
-class="math inline">\(\mathrm{II}\quad\)</span></strong>
-单调有界数列必有极限。</p>
+<p>设 $A(x_1, x_2, \cdots, x_n)$ 和 $B(y_1, y_2, \cdots, y_n)$ 为 $\mathbb{R}^n$ 空间上任意两点，称</p>
+<script type="math/tex; mode=display">
+\rho(A, B) = \sqrt{(x_1 - y_1)^2 + (x_2 - y_2)^2 + \cdots + (x_n - y_n)^2}</script><p>为 $A, B$ <strong>两点间的距离</strong>。</p>
+<ol>
+<li>邻域</li>
+</ol>
+<p>设 $\alpha = (a_1, a_2, \cdots, a_n) \in \mathbb{R}^n$，$\delta$ 是某一正数，则 $n$ 维空间内的点集</p>
+<script type="math/tex; mode=display">
+U(a, \delta) = \{x|x\in \mathbb{R}^n, \rho(x, a) < \delta\}</script><p>就定义为 $\mathbb{R}^n$ 中点 $a$ 的 $\delta$ <strong>邻域</strong>。</p>
+<p>记 $\mathring{U}(a, \delta)$ 为不含 $a$ 点的<strong>去心领域</strong>。</p>
+<ol>
+<li>内点、界点和聚点</li>
+</ol>
+<ul>
+<li><p>内点：设 $D \subset \mathbb{R}^n$，$P_0 \in \mathbb{R}^n$，若存在 $P_0$ 的一个邻域使此邻域属于 $D$，称 $P_0$ 为 $D$ 的<strong>内点</strong>。</p>
+</li>
+<li><p>界点：设 $D \subset \mathbb{R}^n$，$P_0 \in \mathbb{R}^n$，若对 $P_0$ 的任何邻域总有 $D$ 中的点且总有 $D$ 外的点，则称 $P_0$ 为 $D$ 的<strong>界点</strong>。</p>
+</li>
+<li><p>聚点：$\forall \delta &gt; 0$，点 $P_0$ 的去心邻域 $\mathring{U}(P_0, \delta)$ 中总有 $D$ 中的无穷多个点，称 $P_0$ 为集合 $D$ 的一个<strong>聚点</strong>。</p>
+</li>
+</ul>
+<h1 id="多元函数的极限"><a href="#多元函数的极限" class="headerlink" title="多元函数的极限"></a>多元函数的极限</h1><h2 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h2><p>设 $z = f(P) = f(x, y)$ 在 $D$ 上有定义，$P_0(x_0, y_0)$ 为 $D$ 的一聚点，$A$ 是一实数，若对 $\forall \varepsilon &gt; 0$，存在 $\delta &gt; 0$，使得当 $0 &lt; \rho(P, P_0) &lt; \delta$ 时，恒有</p>
+<script type="math/tex; mode=display">
+\left\vert f(P) - A \right\vert = \left\vert f(x, y) - A \right\vert < \varepsilon</script><p>则称二元函数 $f(x, y)$ 在点 $P_0$ 处有<strong>二重极限</strong>。</p>
+<p>记 $\lim\limits<em>{P \to P_0} f(P) = \lim\limits</em>{(x, y) \to (x<em>0, y_0)} f(x, y) = \lim\limits</em>{x \to x_0 \atop y \to y_0} f(x, y) = A$</p>
+<h2 id="性质"><a href="#性质" class="headerlink" title="性质"></a>性质</h2><p>$\lim\limits_{x \to x_0 \atop y \to y_0} f(x, y)$ 存在 $\Leftrightarrow$ 点 $P(x, y)$ 沿任何方向、任何路径趋向于 $P_0(x_0, y_0)$ 时，极限都存在且相等。</p>
+<h1 id="连续"><a href="#连续" class="headerlink" title="连续"></a>连续</h1><h2 id="定义-1"><a href="#定义-1" class="headerlink" title="定义"></a>定义</h2><p>设 $(x<em>0, y_0)$ 是 $D$ 的聚点，$z = f(x, y)$ 在 $D$ 上有定义，且 $\lim\limits</em>{x \to x<em>0 \atop y \to y_0} f(x, y) = f(x_0, y_0)$ 或 $\lim\limits</em>{\Delta x \to 0 \atop \Delta y \to 0}\left[f(x_0 + \Delta x, y_0 + \Delta y) - f(x_0, y_0)\right] = 0$，则称 $f(x, y)$ 在点 $(x_0, y_0)$ 处<strong>连续</strong>。</p>
+<h2 id="性质-1"><a href="#性质-1" class="headerlink" title="性质"></a>性质</h2><p>反函数性质去掉，其他的和一元函数相同。</p>
+<h1 id="偏导数"><a href="#偏导数" class="headerlink" title="偏导数"></a>偏导数</h1><h2 id="定义-2"><a href="#定义-2" class="headerlink" title="定义"></a>定义</h2><p>设 $z = f(x,y)$ 在 $(x<em>0, y_0)$ 邻域内有定义，固定 $y= y_0$，若极限 $\lim\limits</em>{x\to x<em>0} \frac{f(x,y_0) - f(x_0, y_0)}{x-x_0} = \lim\limits</em>{\Delta x\to 0} \frac{f(x_0 + \Delta x, y_0) - f(x_0, y_0)}{\Delta x}$ 存在，则称 $f(x,y)$ 在点 $(x_0, y_0)$ 处关于 $x$ 的<strong>偏导数</strong>存在。</p>
+<p>记为 $z’<em>x \Big| </em>{x=x<em>0\atop y=y_0} = f’_x(x_0, y_0) = f’_1(x_0, y_0) = \frac{\partial z}{\partial x}\Big|</em>{(x_0,y_0)}$ </p>
+<p>同样定义</p>
+<script type="math/tex; mode=display">
+\begin{split}
+    \lim\limits_{y\to y_0} \frac{f(x_0,y) - f(x_0, y_0)}{y-y_0} = \lim\limits_{\Delta y\to 0} \frac{f(x_0 , y_0+ \Delta y) - f(x_0, y_0)}{\Delta y} \\
+    = z'_y \Big| _{x=x_0\atop y=y_0} = f'_y(x_0, y_0) = f'_2(x_0, y_0) = \frac{\partial z}{\partial y}\Big|_{(x_0,y_0)}
+\end{split}</script><p>设 $z=f(x,y)$ 在 $D$ 上每一点都有偏导，则其偏导又是 $D$ 上一个新的二元函数——称之为 $f(x,y)$ 在 $D$ 上的<strong>偏导（函）数</strong>。</p>
+<p>记为 $z’_x = f’_x = f’_1 = \frac{\partial z}{\partial x}$；$z’_y = f’_y = f’_2 = \frac{\partial z}{\partial y}$。</p>
+<h2 id="几何意义"><a href="#几何意义" class="headerlink" title="几何意义"></a>几何意义</h2><p>$f’_x(x_0, y_0)$ 表示曲线 $\begin{cases}<br>    y = y_0 \<br>    z = f(x,y)<br>\end{cases}$ 在点 $(x_0, y_0, f(x_0, y_0))$ 处切线的斜率。</p>
+<h2 id="性质-2"><a href="#性质-2" class="headerlink" title="性质"></a>性质</h2><p>若 $z = f(x,y)$ 的二阶混合偏导数 $f’’<em>{xy}, f</em>{yx}’’$ 都存在且连续，则 $f’’<em>{xy} = f</em>{yx}’’$。</p>
+<h1 id="全微分"><a href="#全微分" class="headerlink" title="全微分"></a>全微分</h1><h2 id="定义-3"><a href="#定义-3" class="headerlink" title="定义"></a>定义</h2><p>设 $z = f(x,y)$ 在 $(x_0, y_0)$ 邻域内有定义，$f(x,y)$ 的全增量 $\Delta z = f(x_0 + \Delta x, y_0 + \Delta y) - f(x_0, y_0)$ 可表示为 $\Delta z = A \Delta x + B \Delta y + o(\rho)$ 其中 $A, B$ 为常数，$\rho = \sqrt{(\Delta x)^2 + (\Delta y)^2}$，则称 $f(x,y)$ 在点 $(x_0, y_0)$ 处<strong>可微</strong>，并称 $A\Delta x + B\Delta y$ 为 $f(x,y)$ 在点 $(x_0, y_0)$ 处的<strong>全微分</strong>。</p>
+<p>记为 $dz$，即 $dz = A\Delta x + B\Delta y = Adx + Bdy$</p>
+<h2 id="性质-3"><a href="#性质-3" class="headerlink" title="性质"></a>性质</h2><ul>
+<li><p>设 $z = f(x,y)$ 在 $(x_0, y_0)$ 点可微，则 $f(x,y)$ 在 $(x_0, y_0)$ 点处连续。</p>
+</li>
+<li><p>设 $z = f(x,y)$ 在 $(x_0, y_0)$ 点可微，则 $f(x,y)$ 在 $(x_0, y_0)$ 点处两个偏导数 $f’_x(x_0, y_0), f’_y(x_0, y_0)$ 都存在，且</p>
+<script type="math/tex; mode=display">
+dz \Big|_{x=x_0\atop y=y_0} = f'_x(x_0, y_0)dx + f'_y(x_0, y_0)dy</script></li>
+<li><p>设 $z = f(x,y)$ 在 $(x_0, y_0)$ 点偏导数 $f’_x(x_0, y_0), f’_y(x_0, y_0)$ 都存在，且这两个偏导又在点 $(x_0, y_0)$ 处连续，则 $f(x,y)$ 在 $(x_0, y_0)$ 点可微。</p>
+</li>
+</ul>
+<h2 id="几何意义-1"><a href="#几何意义-1" class="headerlink" title="几何意义"></a>几何意义</h2><p>$z = f(x_0, y_0) + f’_x(x_0, y_0)(x-x_0) + f’_y(x_0, y_0)(y-y_0)$ 是一个平面。</p>
+<p>该平面是过曲线 $\begin{cases}<br>    x = x_0 \<br>    z = f(x,y)<br>\end{cases}$ 和 $\begin{cases}<br>    y = y_0 \<br>    z = f(x,y)<br>\end{cases}$ 在点 $(x_0, y_0, f(x_0, y_0))$ 处两切线的平面。</p>
+<h1 id="关系图"><a href="#关系图" class="headerlink" title="关系图"></a>关系图</h1><div class="table-container">
+<table>
+<thead>
+<tr>
+<th></th>
+<th>连续</th>
+<th>偏导</th>
+<th>可微</th>
+<th>方向导数</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>连续</td>
+<td>√</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+</tr>
+<tr>
+<td>偏导</td>
+<td>×</td>
+<td>√</td>
+<td>×</td>
+<td>×</td>
+</tr>
+<tr>
+<td>可微</td>
+<td>√</td>
+<td>√</td>
+<td>√</td>
+<td>√</td>
+</tr>
+<tr>
+<td>方向导数</td>
+</tr>
+</tbody>
+</table>
+</div>
 ]]></content>
       <tags>
         <tag>Math</tag>
@@ -578,98 +295,18 @@ class="math inline">\(\mathrm{II}\quad\)</span></strong>
   <entry>
     <title>Power Series</title>
     <url>/2024/03/01/Power-Series/</url>
-    <content><![CDATA[<h1 id="函数项级数">函数项级数</h1>
-<h2 id="定义">定义</h2>
-<p>设 <span class="math inline">\(f_n(x)\)</span> 是定义在 <span
-class="math inline">\(D\)</span> 上的一串函数（<span
-class="math inline">\(n = 1, 2, 3,
-\cdots\)</span>），也称之为函数序列，用 "+" 号将其一次连接起来，<span
-class="math inline">\(f_1(x) + f_2(x) + \cdots + f_n(x) + \cdots
-\triangleq \sum\limits_{n=1}^\infty f_n(x)\)</span> 称之为 <span
-class="math inline">\(D\)</span> 上的<strong>函数项级数</strong>。<span
-class="math inline">\(S_n = f_1(x) + f_2(x) + \cdots + f_n(x)\)</span>
-称为<strong>部分和</strong>。<span class="math inline">\(r_n(x) =
-f_{n+1}(x) + f_{n+2}(x) + \cdots\)</span>
-为函数项级数的<strong>余项</strong>。</p>
-<p>对 <span class="math inline">\(x_0 \in D\)</span>，若 <span
-class="math inline">\(\sum\limits_{n=1}^\infty f_n(x_0)\)</span>
-收敛，则称 <span class="math inline">\(x_0\)</span> 为 <span
-class="math inline">\(\sum\limits_{n=1}^\infty f_n(x)\)</span>
-的<strong>收敛点</strong>，收敛点的全体组成的集合称为 <span
-class="math inline">\(\sum\limits_{n=1}^\infty f_n(x)\)</span>
-的<strong>收敛域</strong>，记 <span class="math inline">\(S(x) =
-\lim\limits_{n\to\infty} S_n(x)\)</span>，称 <span
-class="math inline">\(S(x)\)</span>
-为函数项级数的<strong>和函数</strong>。</p>
-<h2 id="性质">性质</h2>
-<h3 id="定理1quad-函数项级数和函数的连续性"><strong>定理1</strong><span
-class="math inline">\(\quad\)</span> 函数项级数和函数的连续性</h3>
-<p>设 <span class="math inline">\(\sum\limits_{n=1}^\infty
-u_n(x)\)</span> 在 <span class="math inline">\([a, b]\)</span>
-上一致收敛，且级数每一项 <span class="math inline">\(u_n(x)\)</span> 在
-<span class="math inline">\([a, b]\)</span> 上都连续，则和函数 <span
-class="math inline">\(S(x)\)</span> 在 <span class="math inline">\([a,
-b]\)</span> 上连续。</p>
-<h3 id="定理2quad-函数项级数逐项积分性"><strong>定理2</strong><span
-class="math inline">\(\quad\)</span> 函数项级数逐项积分性</h3>
-<h3 id="定理3quad-函数项级数逐项微分性"><strong>定理3</strong><span
-class="math inline">\(\quad\)</span> 函数项级数逐项微分性</h3>
-<h1 id="幂级数">幂级数</h1>
-<h2 id="定义-1">定义</h2>
-<p>称 <span class="math inline">\(\sum\limits_{n=0}^\infty a_n x^n = a_0
-+ a_1 x + \cdots + a_n x^n + \cdots\)</span>
-为标准的<strong>幂级数</strong>，这里 <span
-class="math inline">\(a_n\)</span>，<span class="math inline">\(n = 0,
-1, 2, \cdots\)</span> 称之为幂级数的系数。</p>
-<p>称 <span class="math inline">\(\sum\limits_{n=0}^\infty a_n (x-x_0)^n
-= a_0 + a_1(x-x_0) + \cdots + a_n(x-x_0)^n + \cdots\)</span>
-为<strong>一般型幂级数</strong>。</p>
-<p>称 <span class="math inline">\(\sum\limits_{n=0}^\infty a_n
-\phi^n(x)\)</span> 为<strong>广义幂级数</strong>。</p>
-<p>对于 <span class="math inline">\(\sum\limits_{n=0}^\infty a_n
-x^n\)</span>，当 <span class="math inline">\(x=0\)</span>
-时，级数<strong>收敛</strong>，若除 <span
-class="math inline">\(0\)</span>
-以外没有收敛点称为级数<strong>发散</strong>。</p>
-<p>任何一个标准的幂级数 <span
-class="math inline">\(\sum\limits_{n=0}^\infty a_n
-x^n\)</span>，都存在唯一一个 <span
-class="math inline">\(R\)</span>，<span class="math inline">\((R \ge 0
-或 R = +\infty)\)</span> 使 <span
-class="math inline">\(\sum\limits_{n=0}^\infty a_n x^n\)</span> 在 <span
-class="math inline">\((-R, R)\)</span> 内绝对收敛，在 <span
-class="math inline">\((-\infty, -R)\)</span> 和 <span
-class="math inline">\((R, +\infty)\)</span> 上发散，则称 <span
-class="math inline">\(R\)</span> 为 <span
-class="math inline">\(\sum\limits_{n=0}^\infty a_n x^n\)</span>
-的<strong>收敛半径</strong>，<span class="math inline">\((-R,
-R)\)</span> 称之为 <span class="math inline">\(\sum\limits_{n=0}^\infty
-a_n x^n\)</span> 的<strong>收敛区间</strong>。</p>
-<p><span class="math inline">\(\sum\limits_{n=0}^\infty a_n x^n\)</span>
-的<strong>收敛域</strong> <span class="math inline">\(=\)</span>
-收敛区间 <span class="math inline">\((-R, R) \cup \pm R\)</span>
-中收敛的点</p>
-<h2 id="性质-1">性质</h2>
-<p>设 <span class="math inline">\(\sum\limits_{n=0}^\infty a_n
-x^n\)</span> 在 <span class="math inline">\(x_0 \ne 0\)</span>
-点收敛，则 <span class="math inline">\(\sum\limits_{n=0}^\infty a_n
-x^n\)</span> 在 <span class="math inline">\(\vert x\vert &lt; \vert x_0
-\vert\)</span> 上绝对收敛。</p>
-<p><strong>推论</strong>：如果 <span
-class="math inline">\(\sum\limits_{n=0}^\infty a_n x^n\)</span> 在 <span
-class="math inline">\(x_0\)</span> 点发散，则 <span
-class="math inline">\(\sum\limits_{n=0}^\infty a_n x^n\)</span> 在 <span
-class="math inline">\(\vert x\vert &gt; \vert x_0\vert\)</span>
-上发散。</p>
-<p>设 <span class="math inline">\(\sum\limits_{n=0}^\infty a_n
-x^n\)</span> 满足 <span class="math inline">\(\lim\limits_{n\to\infty}
-\left\vert \frac{a_{n+1}}{a_n}\right\vert\)</span> （或 <span
-class="math inline">\(\lim\limits_{n\to\infty} \sqrt[n]{\vert
-a_n\vert}\)</span>）<span class="math inline">\(= \rho \ge
-0\)</span>（或 <span class="math inline">\(+\infty\)</span>），则 <span
-class="math inline">\(R = \frac{1}{\rho}\)</span> 是 <span
-class="math inline">\(\sum\limits_{n=0}^\infty a_n x^n\)</span>
-的收敛半径。</p>
+    <content><![CDATA[<h1 id="函数项级数"><a href="#函数项级数" class="headerlink" title="函数项级数"></a>函数项级数</h1><h2 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h2><p>设 $f<em>n(x)$ 是定义在 $D$ 上的一串函数（$n = 1, 2, 3, \cdots$），也称之为函数序列，用 “+” 号将其一次连接起来，$f_1(x) + f_2(x) + \cdots + f_n(x) + \cdots \triangleq \sum\limits</em>{n=1}^\infty f<em>n(x)$ 称之为 $D$ 上的<strong>函数项级数</strong>。$S_n = f_1(x) + f_2(x) + \cdots + f_n(x)$ 称为<strong>部分和</strong>。$r_n(x) = f</em>{n+1}(x) + f_{n+2}(x) + \cdots$ 为函数项级数的<strong>余项</strong>。</p>
+<p>对 $x<em>0 \in D$，若 $\sum\limits</em>{n=1}^\infty f<em>n(x_0)$ 收敛，则称 $x_0$ 为 $\sum\limits</em>{n=1}^\infty f<em>n(x)$ 的<strong>收敛点</strong>，收敛点的全体组成的集合称为 $\sum\limits</em>{n=1}^\infty f<em>n(x)$ 的<strong>收敛域</strong>，记 $S(x) = \lim\limits</em>{n\to\infty} S_n(x)$，称 $S(x)$ 为函数项级数的<strong>和函数</strong>。</p>
+<h2 id="性质"><a href="#性质" class="headerlink" title="性质"></a>性质</h2><h3 id="定理1-quad-函数项级数和函数的连续性"><a href="#定理1-quad-函数项级数和函数的连续性" class="headerlink" title="定理1$\quad$ 函数项级数和函数的连续性"></a><strong>定理1</strong>$\quad$ 函数项级数和函数的连续性</h3><p>设 $\sum\limits_{n=1}^\infty u_n(x)$ 在 $[a, b]$ 上一致收敛，且级数每一项 $u_n(x)$ 在 $[a, b]$ 上都连续，则和函数 $S(x)$ 在 $[a, b]$ 上连续。</p>
+<h3 id="定理2-quad-函数项级数逐项积分性"><a href="#定理2-quad-函数项级数逐项积分性" class="headerlink" title="定理2$\quad$ 函数项级数逐项积分性"></a><strong>定理2</strong>$\quad$ 函数项级数逐项积分性</h3><h3 id="定理3-quad-函数项级数逐项微分性"><a href="#定理3-quad-函数项级数逐项微分性" class="headerlink" title="定理3$\quad$ 函数项级数逐项微分性"></a><strong>定理3</strong>$\quad$ 函数项级数逐项微分性</h3><h1 id="幂级数"><a href="#幂级数" class="headerlink" title="幂级数"></a>幂级数</h1><h2 id="定义-1"><a href="#定义-1" class="headerlink" title="定义"></a>定义</h2><p>称 $\sum\limits_{n=0}^\infty a_n x^n = a_0 + a_1 x + \cdots + a_n x^n + \cdots$ 为标准的<strong>幂级数</strong>，这里 $a_n$，$n = 0, 1, 2, \cdots$ 称之为幂级数的系数。</p>
+<p>称 $\sum\limits_{n=0}^\infty a_n (x-x_0)^n = a_0 + a_1(x-x_0) + \cdots + a_n(x-x_0)^n + \cdots$ 为<strong>一般型幂级数</strong>。</p>
+<p>称 $\sum\limits_{n=0}^\infty a_n \phi^n(x)$ 为<strong>广义幂级数</strong>。</p>
+<p>对于 $\sum\limits_{n=0}^\infty a_n x^n$，当 $x=0$ 时，级数<strong>收敛</strong>，若除 $0$ 以外没有收敛点称为级数<strong>发散</strong>。</p>
+<p>任何一个标准的幂级数 $\sum\limits<em>{n=0}^\infty a_n x^n$，都存在唯一一个 $R$，$(R \ge 0 或 R = +\infty)$ 使 $\sum\limits</em>{n=0}^\infty a<em>n x^n$ 在 $(-R, R)$ 内绝对收敛，在 $(-\infty, -R)$ 和 $(R, +\infty)$ 上发散，则称 $R$ 为 $\sum\limits</em>{n=0}^\infty a<em>n x^n$ 的<strong>收敛半径</strong>，$(-R, R)$ 称之为 $\sum\limits</em>{n=0}^\infty a_n x^n$ 的<strong>收敛区间</strong>。</p>
+<p>$\sum\limits_{n=0}^\infty a_n x^n$ 的<strong>收敛域</strong> $=$ 收敛区间 $(-R, R) \cup \pm R$ 中收敛的点</p>
+<h2 id="性质-1"><a href="#性质-1" class="headerlink" title="性质"></a>性质</h2><p>设 $\sum\limits<em>{n=0}^\infty a_n x^n$ 在 $x_0 \ne 0$ 点收敛，则 $\sum\limits</em>{n=0}^\infty a_n x^n$ 在 $\vert x\vert &lt; \vert x_0 \vert$ 上绝对收敛。</p>
+<p><strong>推论</strong>：如果 $\sum\limits<em>{n=0}^\infty a_n x^n$ 在 $x_0$ 点发散，则 $\sum\limits</em>{n=0}^\infty a_n x^n$ 在 $\vert x\vert &gt; \vert x_0\vert$ 上发散。</p>
+<p>设 $\sum\limits<em>{n=0}^\infty a_n x^n$ 满足 $\lim\limits</em>{n\to\infty} \left\vert \frac{a<em>{n+1}}{a_n}\right\vert$ （或 $\lim\limits</em>{n\to\infty} \sqrt[n]{\vert a<em>n\vert}$）$= \rho \ge 0$（或 $+\infty$），则 $R = \frac{1}{\rho}$ 是 $\sum\limits</em>{n=0}^\infty a_n x^n$ 的收敛半径。</p>
 ]]></content>
       <tags>
         <tag>Math</tag>
@@ -679,209 +316,60 @@ class="math inline">\(\sum\limits_{n=0}^\infty a_n x^n\)</span>
   <entry>
     <title>黎曼积分</title>
     <url>/2024/02/28/Riemann-Integral/</url>
-    <content><![CDATA[<h1 id="黎曼积分">黎曼积分</h1>
-<h2 id="定义">定义</h2>
-<p>设 <span class="math inline">\(\Omega\)</span>
-为有限的几何体（一段曲线，一段曲面，一块有限空间体），<span
-class="math inline">\(u = f(P)\)</span> 是定义在 <span
-class="math inline">\(\Omega\)</span> 上的点函数，将 <span
-class="math inline">\(\Omega\)</span> 任意分成 <span
-class="math inline">\(n\)</span> 个小的几何体，<span
-class="math inline">\(\Delta\Omega_1,\Delta\Omega_2,\cdots,\Delta\Omega_n\)</span>，并用此记号表示其几何量，称
-<span class="math inline">\(\sup\limits_{P_1, P_2 \in
-\Delta\Omega_i}\left\{\left\vert P_1P_2 \right\vert\right\} =
-d_i\)</span> 为 <span class="math inline">\(\Delta\Omega_i\)</span>
-的直径，<span class="math inline">\(\lambda =
-\max\limits_{i=1,2,\cdots,n}\{d_i\}\)</span>，然后在每个小的几何形体
-<span class="math inline">\(\Delta\Omega_i\)</span> 上做乘积 <span
-class="math inline">\(f(P_i)\Delta\Omega_i, P_i \in
-\Delta\Omega_i\)</span>，并将它们加起来，得 <span
-class="math inline">\(\sum_{i=1}^n
-f(P_i)\Delta\Omega_i\)</span>。如果不论 <span
-class="math inline">\(\Omega\)</span> 如何分，<span
-class="math inline">\(P_i \in \Delta\Omega_i\)</span> 如何取，下述极限
-<span class="math inline">\(\lim\limits_{\lambda \to 0} \sum_{i=1}^n
-f(P_i)\Delta\Omega_i\)</span> 均存在且相等，则称 <span
-class="math inline">\(f(P)\)</span> 在 <span
-class="math inline">\(\Omega\)</span> 上可积，其极限值为 <span
-class="math inline">\(f(P)\)</span> 在 <span
-class="math inline">\(\Omega\)</span> 上黎曼积分。一般记号，<span
-class="math inline">\(\lim\limits_{\lambda\to 0} \sum_{i=1}^n
-f(P_i)\Delta\Omega_i \triangleq \int\limits_\Omega
-f(P)d\Omega\)</span></p>
-<h2 id="性质">性质</h2>
-<ol type="1">
-<li><span class="math inline">\(\int\limits_\Omega f(P)d\Omega =
-\int\limits_\Omega f(P)dV\)</span>，积分与变量无关</li>
-<li><span class="math inline">\(\int\limits_\Omega d\Omega =
-\Omega\)</span></li>
-<li><span class="math inline">\(\int\limits_\Omega \left[\alpha f(P) \pm
-\beta g(P)\right]d\Omega = \alpha \int\limits_\Omega f(P)d\Omega \pm
-\beta\int\limits_\Omega g(P)d\Omega\)</span></li>
-<li>若 <span class="math inline">\(\Omega = \Omega_1 +
-\Omega_2\)</span>，则 <span class="math inline">\(\int\limits_\Omega
-f(P) d\Omega = \int\limits_{\Omega_1} f(P) d\Omega +
-\int\limits_{\Omega_2} f(P)d\Omega\)</span></li>
-<li>若 <span class="math inline">\(f(P) \ge g(P), P \in
-\Omega\)</span>，则 <span class="math inline">\(\int\limits_\Omega f(P)
-d\Omega \ge \int\limits_\Omega g(P)d\Omega\)</span></li>
-<li>若 <span class="math inline">\(P \in \Omega\)</span>，则 <span
-class="math inline">\(\left\vert \int\limits_\Omega f(P)d\Omega
-\right\vert \le \int\limits_\Omega \left\vert f(P) \right\vert
-d\Omega\)</span></li>
-<li>若 <span class="math inline">\(m \le f(P) \le M, P \in
-\Omega\)</span>，则 <span class="math inline">\(m\Omega \le
-\int\limits_\Omega f(P)d\Omega \le M\Omega\)</span></li>
-<li>设 <span class="math inline">\(f(P)\)</span> 是有界闭区域 <span
-class="math inline">\(\Omega\)</span> 上连续函数，则 <span
-class="math inline">\(\int\limits_\Omega f(P)d\Omega = f(P^*)\Omega, P^*
-\in \Omega\)</span></li>
-<li>若 <span class="math inline">\(\Omega\)</span> 关于 <span
-class="math inline">\(x=0(y=0,z=0)\)</span> 对称，且 <span
-class="math inline">\(f(P)\)</span> 是关于 <span
-class="math inline">\(x(y,z)\)</span> 的奇函数，则 <span
-class="math inline">\(\int\limits_\Omega f(P)d\Omega = 0\)</span></li>
+    <content><![CDATA[<h1 id="黎曼积分"><a href="#黎曼积分" class="headerlink" title="黎曼积分"></a>黎曼积分</h1><h2 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h2><p>设 $\Omega$ 为有限的几何体（一段曲线，一段曲面，一块有限空间体），$u = f(P)$ 是定义在 $\Omega$ 上的点函数，将 $\Omega$ 任意分成 $n$ 个小的几何体，$\Delta\Omega<em>1,\Delta\Omega_2,\cdots,\Delta\Omega_n$，并用此记号表示其几何量，称 $\sup\limits</em>{P<em>1, P_2 \in \Delta\Omega_i}\left{\left\vert P_1P_2 \right\vert\right} = d_i$ 为 $\Delta\Omega_i$ 的直径，$\lambda = \max\limits</em>{i=1,2,\cdots,n}{d<em>i}$，然后在每个小的几何形体 $\Delta\Omega_i$ 上做乘积 $f(P_i)\Delta\Omega_i, P_i \in \Delta\Omega_i$，并将它们加起来，得 $\sum</em>{i=1}^n f(P<em>i)\Delta\Omega_i$。如果不论 $\Omega$ 如何分，$P_i \in \Delta\Omega_i$ 如何取，下述极限 $\lim\limits</em>{\lambda \to 0} \sum<em>{i=1}^n f(P_i)\Delta\Omega_i$ 均存在且相等，则称 $f(P)$ 在 $\Omega$ 上可积，其极限值为 $f(P)$ 在 $\Omega$ 上黎曼积分。一般记号，$\lim\limits</em>{\lambda\to 0} \sum<em>{i=1}^n f(P_i)\Delta\Omega_i \triangleq \int\limits</em>\Omega f(P)d\Omega$</p>
+<h2 id="性质"><a href="#性质" class="headerlink" title="性质"></a>性质</h2><ol>
+<li>$\int\limits<em>\Omega f(P)d\Omega = \int\limits</em>\Omega f(P)dV$，积分与变量无关</li>
+<li>$\int\limits_\Omega d\Omega = \Omega$</li>
+<li>$\int\limits<em>\Omega \left[\alpha f(P) \pm \beta g(P)\right]d\Omega = \alpha \int\limits</em>\Omega f(P)d\Omega \pm \beta\int\limits_\Omega g(P)d\Omega$</li>
+<li>若 $\Omega = \Omega<em>1 + \Omega_2$，则 $\int\limits</em>\Omega f(P) d\Omega = \int\limits<em>{\Omega_1} f(P) d\Omega + \int\limits</em>{\Omega_2} f(P)d\Omega$</li>
+<li>若 $f(P) \ge g(P), P \in \Omega$，则 $\int\limits<em>\Omega f(P) d\Omega \ge \int\limits</em>\Omega g(P)d\Omega$</li>
+<li>若 $P \in \Omega$，则 $\left\vert \int\limits<em>\Omega f(P)d\Omega \right\vert \le \int\limits</em>\Omega \left\vert f(P) \right\vert d\Omega$</li>
+<li>若 $m \le f(P) \le M, P \in \Omega$，则 $m\Omega \le \int\limits_\Omega f(P)d\Omega \le M\Omega$</li>
+<li>设 $f(P)$ 是有界闭区域 $\Omega$ 上连续函数，则 $\int\limits_\Omega f(P)d\Omega = f(P^<em>)\Omega, P^</em> \in \Omega$</li>
+<li>若 $\Omega$ 关于 $x=0(y=0,z=0)$ 对称，且 $f(P)$ 是关于 $x(y,z)$ 的奇函数，则 $\int\limits_\Omega f(P)d\Omega = 0$</li>
 </ol>
-<h2 id="一般意义">一般意义</h2>
-<p>表示以 <span class="math inline">\(f(P)\)</span> 为密度函数的几何体
-<span class="math inline">\(\Omega\)</span> 的质量代数和。</p>
-<h1 id="二重积分">二重积分</h1>
-<h2 id="定义-1">定义</h2>
-<p>若 <span class="math inline">\(D\)</span> 是坐标面（不妨设为）<span
-class="math inline">\(oxy\)</span> 平面上的一个有界闭区域，在坐标系下
-<span class="math inline">\(f(P)\)</span> 就是一个二元函数 <span
-class="math inline">\(f(x,y)\)</span>，称它在 <span
-class="math inline">\(D\)</span> 上的黎曼积分为 <span
-class="math inline">\(f(x,y)\)</span> 在 <span
-class="math inline">\(D\)</span> 上的<strong>二重积分</strong>，记为
-<span class="math display">\[
-\iint\limits_D f(x,y)d\sigma = \iint\limits_D f(x,y)dxdy
-\]</span></p>
-<h2 id="物理意义">物理意义</h2>
-<p>表示以 <span class="math inline">\(f(x,y)\)</span>
-为面密度的有限平面区域质量的代数和。</p>
-<h2 id="几何意义">几何意义</h2>
-<p>表示以 <span class="math inline">\(D\)</span> 为底，以 <span
-class="math inline">\(z=f(x,y)\)</span> 为顶的曲顶柱体体积的代数和。</p>
-<h2 id="计算公式">计算公式</h2>
-<ul>
-<li><p><span class="math inline">\(Y-\)</span> 型：<span
-class="math inline">\(\begin{cases}
-  a \le y \le b \\
-  \varphi(y) \le x \le \psi(y)
-\end{cases}\)</span> <span class="math display">\[
-\iint\limits_D f(x,y)dxdy = \int_a^b dy
-\int_{\varphi(y)}^{\psi(y)}f(x,y)dx
-\]</span></p></li>
-<li><p><span class="math inline">\(X-\)</span> 型：<span
-class="math inline">\(\begin{cases}
-  a \le x \le b \\
-  \varphi(x) \le y \le \psi(x)
-\end{cases}\)</span> <span class="math display">\[
-\iint\limits_D f(x,y)dxdy = \int_a^b dx
-\int_{\varphi(x)}^{\psi(x)}f(x,y)dy
-\]</span></p></li>
-<li><p>极坐标系：<span class="math inline">\(\begin{cases}
-  \alpha \le \theta \le \beta \\
-  \varphi(\theta) \le r \le \psi(\theta)
-\end{cases}\)</span> <span class="math display">\[
-\iint\limits_D f(x,y)dxdy = \int_\alpha^\beta d\theta
-\int_{\varphi(\theta)}^{\psi(\theta)}f(r\cos\theta, r\sin\theta)rdr
-\]</span></p></li>
+<h2 id="一般意义"><a href="#一般意义" class="headerlink" title="一般意义"></a>一般意义</h2><p>表示以 $f(P)$ 为密度函数的几何体 $\Omega$ 的质量代数和。</p>
+<h1 id="二重积分"><a href="#二重积分" class="headerlink" title="二重积分"></a>二重积分</h1><h2 id="定义-1"><a href="#定义-1" class="headerlink" title="定义"></a>定义</h2><p>若 $D$ 是坐标面（不妨设为）$oxy$ 平面上的一个有界闭区域，在坐标系下 $f(P)$ 就是一个二元函数 $f(x,y)$，称它在 $D$ 上的黎曼积分为 $f(x,y)$ 在 $D$ 上的<strong>二重积分</strong>，记为</p>
+<script type="math/tex; mode=display">
+\iint\limits_D f(x,y)d\sigma = \iint\limits_D f(x,y)dxdy</script><h2 id="物理意义"><a href="#物理意义" class="headerlink" title="物理意义"></a>物理意义</h2><p>表示以 $f(x,y)$ 为面密度的有限平面区域质量的代数和。</p>
+<h2 id="几何意义"><a href="#几何意义" class="headerlink" title="几何意义"></a>几何意义</h2><p>表示以 $D$ 为底，以 $z=f(x,y)$ 为顶的曲顶柱体体积的代数和。</p>
+<h2 id="计算公式"><a href="#计算公式" class="headerlink" title="计算公式"></a>计算公式</h2><ul>
+<li><p>$Y-$ 型：$\begin{cases}<br>  a \le y \le b \<br>  \varphi(y) \le x \le \psi(y)<br>\end{cases}$</p>
+<script type="math/tex; mode=display">
+\iint\limits_D f(x,y)dxdy = \int_a^b dy \int_{\varphi(y)}^{\psi(y)}f(x,y)dx</script></li>
+<li><p>$X-$ 型：$\begin{cases}<br>  a \le x \le b \<br>  \varphi(x) \le y \le \psi(x)<br>\end{cases}$</p>
+<script type="math/tex; mode=display">
+\iint\limits_D f(x,y)dxdy = \int_a^b dx \int_{\varphi(x)}^{\psi(x)}f(x,y)dy</script></li>
+<li><p>极坐标系：$\begin{cases}<br>  \alpha \le \theta \le \beta \<br>  \varphi(\theta) \le r \le \psi(\theta)<br>\end{cases}$</p>
+<script type="math/tex; mode=display">
+\iint\limits_D f(x,y)dxdy = \int_\alpha^\beta d\theta \int_{\varphi(\theta)}^{\psi(\theta)}f(r\cos\theta, r\sin\theta)rdr</script></li>
 </ul>
-<h2 id="积分换序">积分换序</h2>
-<p>如果 <span class="math inline">\(X-\)</span> 型走不通，不妨用 <span
-class="math inline">\(Y-\)</span> 型试试。</p>
-<h1 id="三重积分">三重积分</h1>
-<h2 id="定义-2">定义</h2>
-<p>若 <span class="math inline">\(\Omega\)</span> 是一有限空间体，<span
-class="math inline">\(f(P)\)</span> 是 <span
-class="math inline">\(\Omega\)</span> 上的点函数，在坐标系下 <span
-class="math inline">\(f(P)\)</span> 就是一个三元函数 <span
-class="math inline">\(f(x,y,z)\)</span>，它在 <span
-class="math inline">\(\Omega\)</span> 上的黎曼积分称之为 <span
-class="math inline">\(f(x,y,z)\)</span> 在 <span
-class="math inline">\(\Omega\)</span>
-上的<strong>三重积分</strong>，记为 <span class="math display">\[
-\iiint\limits_\Omega f(x,y,z)d\Omega = \iiint\limits_\Omega
-f(x,y,z)dxdydz
-\]</span></p>
-<h2 id="物理意义-1">物理意义</h2>
-<p>表示以 <span class="math inline">\(f(x,y,z)\)</span>
-为体密度的有限空间体 <span class="math inline">\(\Omega\)</span>
-质量的代数和。</p>
-<h2 id="计算方法">计算方法</h2>
-<ul>
-<li><p>柱形域：<span class="math inline">\(\begin{cases}
-  \varphi(x,y) \le z \le \psi(x,y) \\
-  (x,y) \in D_{xy}
-\end{cases}\)</span> <span class="math display">\[
-\iiint\limits_\Omega f(x,y,z) dxdydz = \iint\limits_{D_{xy}}dxdy
-\int_{\phi(x,y)}^{\psi(x,y)}f(x,y,z)dz
-\]</span></p></li>
-<li><p>片型域：<span class="math inline">\(\begin{cases}
-  a \le z \le b \\
-  (x,y) \in D_z
-\end{cases}\)</span> <span class="math display">\[
-\iiint_\Omega f(x,y,z)dxdydz = \int_a^b dz\iint\limits_{D_z}f(x,y,z)dxdy
-\]</span></p></li>
-<li><p>球坐标系：<span class="math inline">\(\begin{cases}
-  a \le \theta \le b \\
-  c \le \phi \le d \\
-  g(\theta, \phi) \le \rho \le h(\theta, \phi)
-\end{cases}\)</span> <span class="math display">\[
-\iiint\limits_\Omega f(x,y,z)dxdydz = \int_a^b d\theta \int_c^d d\phi
-\int_{g(\theta, \phi)}^{h(\theta, \phi)} f(\rho\sin\phi\cos\theta,
-\rho\sin\phi\sin\theta, \rho\cos\phi)\rho^2\sin\phi d\rho
-\]</span></p></li>
+<h2 id="积分换序"><a href="#积分换序" class="headerlink" title="积分换序"></a>积分换序</h2><p>如果 $X-$ 型走不通，不妨用 $Y-$ 型试试。</p>
+<h1 id="三重积分"><a href="#三重积分" class="headerlink" title="三重积分"></a>三重积分</h1><h2 id="定义-2"><a href="#定义-2" class="headerlink" title="定义"></a>定义</h2><p>若 $\Omega$ 是一有限空间体，$f(P)$ 是 $\Omega$ 上的点函数，在坐标系下 $f(P)$ 就是一个三元函数 $f(x,y,z)$，它在 $\Omega$ 上的黎曼积分称之为 $f(x,y,z)$ 在 $\Omega$ 上的<strong>三重积分</strong>，记为</p>
+<script type="math/tex; mode=display">
+\iiint\limits_\Omega f(x,y,z)d\Omega = \iiint\limits_\Omega f(x,y,z)dxdydz</script><h2 id="物理意义-1"><a href="#物理意义-1" class="headerlink" title="物理意义"></a>物理意义</h2><p>表示以 $f(x,y,z)$ 为体密度的有限空间体 $\Omega$ 质量的代数和。</p>
+<h2 id="计算方法"><a href="#计算方法" class="headerlink" title="计算方法"></a>计算方法</h2><ul>
+<li><p>柱形域：$\begin{cases}<br>  \varphi(x,y) \le z \le \psi(x,y) \<br>  (x,y) \in D_{xy}<br>\end{cases}$</p>
+<script type="math/tex; mode=display">
+\iiint\limits_\Omega f(x,y,z) dxdydz = \iint\limits_{D_{xy}}dxdy \int_{\phi(x,y)}^{\psi(x,y)}f(x,y,z)dz</script></li>
+<li><p>片型域：$\begin{cases}<br>  a \le z \le b \<br>  (x,y) \in D_z<br>\end{cases}$</p>
+<script type="math/tex; mode=display">
+\iiint_\Omega f(x,y,z)dxdydz = \int_a^b dz\iint\limits_{D_z}f(x,y,z)dxdy</script></li>
+<li><p>球坐标系：$\begin{cases}<br>  a \le \theta \le b \<br>  c \le \phi \le d \<br>  g(\theta, \phi) \le \rho \le h(\theta, \phi)<br>\end{cases}$</p>
+<script type="math/tex; mode=display">
+\iiint\limits_\Omega f(x,y,z)dxdydz = \int_a^b d\theta \int_c^d d\phi \int_{g(\theta, \phi)}^{h(\theta, \phi)} f(\rho\sin\phi\cos\theta, \rho\sin\phi\sin\theta, \rho\cos\phi)\rho^2\sin\phi d\rho</script></li>
 </ul>
-<h1 id="第一型曲线积分">第一型曲线积分</h1>
-<h2 id="定义-3">定义</h2>
-<p>若 <span class="math inline">\(C\)</span>
-是空间（或平面）一有限曲线段，<span class="math inline">\(f(P)\)</span>
-是 <span class="math inline">\(C\)</span>
-上点函数，在引进坐标系下，<span class="math inline">\(f(P) =
-f(x,y,z)(f(x,y))\)</span>，称 <span class="math inline">\(f(P)\)</span>
-在 <span class="math inline">\(C\)</span> 上黎曼积分叫 <span
-class="math inline">\(f\)</span> 在 <span
-class="math inline">\(C\)</span>
-上的<strong>第一型曲线积分</strong>，记为 <span class="math display">\[
-\int\limits_C f(x,y,z) ds \left(或\int\limits_C f(x,y)ds\right)
-\]</span></p>
-<h2 id="物理意义-2">物理意义</h2>
-<p>表示以 <span class="math inline">\(f(x,y,z)\)</span> 或 <span
-class="math inline">\(f(x,y)\)</span> 为线密度的曲线 <span
-class="math inline">\(C\)</span> 的质量的代数和。</p>
-<h2 id="几何意义-1">几何意义</h2>
-<p>表示以 <span class="math inline">\(C\)</span> 为准线，母线平行于
-<span class="math inline">\(oz\)</span> 轴的柱面介于 <span
-class="math inline">\(oxy\)</span> 平面与 <span
-class="math inline">\(z=f(x,y)\)</span> 之间面积的代数和。</p>
-<h2 id="计算方法-1">计算方法</h2>
-<p>将曲线 <span class="math inline">\(C\)</span>
-用参数方程来表示，然后代入积分公式转化成一元积分。</p>
-<h1 id="第一型曲面积分">第一型曲面积分</h1>
-<h2 id="定义-4">定义</h2>
-<p>若 <span class="math inline">\(S\)</span> 是空间上一有限曲面，<span
-class="math inline">\(f(P)\)</span> 是 <span
-class="math inline">\(S\)</span> 上的点函数，在引进坐标系下，<span
-class="math inline">\(f(P) = f(x,y,z)\)</span>，<span
-class="math inline">\(f(P)\)</span> 在 <span
-class="math inline">\(S\)</span> 上黎曼积分叫 <span
-class="math inline">\(f(P)\)</span> 在 <span
-class="math inline">\(S\)</span>
-上的<strong>第一型曲面积分</strong>，记为 <span class="math display">\[
-\iint\limits_S f(x,y,z) dS
-\]</span></p>
-<h2 id="物理意义-3">物理意义</h2>
-<p>表示以 <span class="math inline">\(f(x,y,z)\)</span> 为面密度的曲面
-<span class="math inline">\(S\)</span> 的质量的代数和。</p>
-<h2 id="计算方法-2">计算方法</h2>
-<p>转化为二重积分 <span class="math display">\[
-\iint\limits_S f(x,y,z)dS = \iint\limits_D f(x,y,g(x,y))
-\sqrt{g_x^{\prime\ 2} + g_y^{\prime\ 2} + 1} dxdy
-\]</span></p>
-]]></content>
+<h1 id="第一型曲线积分"><a href="#第一型曲线积分" class="headerlink" title="第一型曲线积分"></a>第一型曲线积分</h1><h2 id="定义-3"><a href="#定义-3" class="headerlink" title="定义"></a>定义</h2><p>若 $C$ 是空间（或平面）一有限曲线段，$f(P)$ 是 $C$ 上点函数，在引进坐标系下，$f(P) = f(x,y,z)(f(x,y))$，称 $f(P)$ 在 $C$ 上黎曼积分叫 $f$ 在 $C$ 上的<strong>第一型曲线积分</strong>，记为</p>
+<script type="math/tex; mode=display">
+\int\limits_C f(x,y,z) ds \left(或\int\limits_C f(x,y)ds\right)</script><h2 id="物理意义-2"><a href="#物理意义-2" class="headerlink" title="物理意义"></a>物理意义</h2><p>表示以 $f(x,y,z)$ 或 $f(x,y)$ 为线密度的曲线 $C$ 的质量的代数和。</p>
+<h2 id="几何意义-1"><a href="#几何意义-1" class="headerlink" title="几何意义"></a>几何意义</h2><p>表示以 $C$ 为准线，母线平行于 $oz$ 轴的柱面介于 $oxy$ 平面与 $z=f(x,y)$ 之间面积的代数和。</p>
+<h2 id="计算方法-1"><a href="#计算方法-1" class="headerlink" title="计算方法"></a>计算方法</h2><p>将曲线 $C$ 用参数方程来表示，然后代入积分公式转化成一元积分。</p>
+<h1 id="第一型曲面积分"><a href="#第一型曲面积分" class="headerlink" title="第一型曲面积分"></a>第一型曲面积分</h1><h2 id="定义-4"><a href="#定义-4" class="headerlink" title="定义"></a>定义</h2><p>若 $S$ 是空间上一有限曲面，$f(P)$ 是 $S$ 上的点函数，在引进坐标系下，$f(P) = f(x,y,z)$，$f(P)$ 在 $S$ 上黎曼积分叫 $f(P)$ 在 $S$ 上的<strong>第一型曲面积分</strong>，记为</p>
+<script type="math/tex; mode=display">
+\iint\limits_S f(x,y,z) dS</script><h2 id="物理意义-3"><a href="#物理意义-3" class="headerlink" title="物理意义"></a>物理意义</h2><p>表示以 $f(x,y,z)$ 为面密度的曲面 $S$ 的质量的代数和。</p>
+<h2 id="计算方法-2"><a href="#计算方法-2" class="headerlink" title="计算方法"></a>计算方法</h2><p>转化为二重积分</p>
+<script type="math/tex; mode=display">
+\iint\limits_S f(x,y,z)dS = \iint\limits_D f(x,y,g(x,y)) \sqrt{g_x^{\prime\ 2} + g_y^{\prime\ 2} + 1} dxdy</script>]]></content>
       <tags>
         <tag>Math</tag>
         <tag>Calculus</tag>
@@ -890,30 +378,18 @@ class="math inline">\(S\)</span>
   <entry>
     <title>STL</title>
     <url>/2023/10/05/STL/</url>
-    <content><![CDATA[<h2 id="栈">栈</h2>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;stack&gt;</span></span></span><br><span class="line">stack &lt;<span class="type">int</span>&gt; S;</span><br><span class="line">S.<span class="built_in">top</span>();</span><br><span class="line">S.<span class="built_in">pop</span>();</span><br><span class="line">S.<span class="built_in">push</span>();</span><br><span class="line">S.<span class="built_in">size</span>();</span><br><span class="line">S.<span class="built_in">empty</span>();</span><br></pre></td></tr></table></figure>
-<h2 id="手写栈">手写栈</h2>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span> S[maxn],h;</span><br><span class="line">S[++h] = x; <span class="comment">// push</span></span><br><span class="line">h--;        <span class="comment">// pop</span></span><br></pre></td></tr></table></figure>
-<h2 id="队列">队列</h2>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;queue&gt;</span></span></span><br><span class="line">queue &lt;<span class="type">int</span>&gt; Q;</span><br><span class="line">Q.<span class="built_in">front</span>();</span><br><span class="line">Q.<span class="built_in">pop</span>();</span><br><span class="line">Q.<span class="built_in">push</span>();</span><br><span class="line">Q.<span class="built_in">size</span>();</span><br><span class="line">Q.<span class="built_in">empty</span>();</span><br></pre></td></tr></table></figure>
-<h2 id="手写队列">手写队列</h2>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span> Q[maxn],h,t;</span><br><span class="line">Q[++h] = x;  <span class="comment">// push</span></span><br><span class="line">t++;         <span class="comment">// pop</span></span><br></pre></td></tr></table></figure>
-<h2 id="双端队列">双端队列</h2>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;deque&gt;</span></span></span><br><span class="line">deque&lt;<span class="type">int</span>&gt; Dq;</span><br><span class="line">Dq.</span><br></pre></td></tr></table></figure>
-<h2 id="优先队列">优先队列</h2>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;queue&gt;</span></span></span><br><span class="line">priority_queue &lt;<span class="type">int</span>&gt; Pq;</span><br><span class="line">Pq.<span class="built_in">top</span>();</span><br><span class="line">Pq.<span class="built_in">pop</span>();</span><br><span class="line">Pq.<span class="built_in">push</span>();</span><br><span class="line">Pq.<span class="built_in">size</span>();</span><br><span class="line">Pq.<span class="built_in">empty</span>();</span><br></pre></td></tr></table></figure>
-<h2 id="小根堆">小根堆</h2>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line">priority_queue &lt;<span class="type">int</span>,vector&lt;<span class="type">int</span>&gt;,greater&lt;<span class="type">int</span>&gt; &gt; Pq;</span><br></pre></td></tr></table></figure>
-<h2 id="向量">向量</h2>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;vector&gt;</span></span></span><br><span class="line">vector&lt;<span class="type">int</span>&gt; V;</span><br><span class="line">V.<span class="built_in">push_back</span>();</span><br><span class="line">V.<span class="built_in">pop_back</span>();</span><br><span class="line">V.<span class="built_in">size</span>();</span><br><span class="line">V[i];</span><br><span class="line">V.<span class="built_in">clear</span>();</span><br><span class="line"><span class="built_in">sort</span>(V.<span class="built_in">begin</span>(), V.<span class="built_in">end</span>());</span><br></pre></td></tr></table></figure>
-<h2 id="列表">列表</h2>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;list&gt;</span></span></span><br><span class="line">list&lt;<span class="type">int</span>&gt; L;</span><br><span class="line">L.<span class="built_in">clear</span>();</span><br><span class="line">L.<span class="built_in">push_back</span>(x);</span><br><span class="line">L.<span class="built_in">push_front</span>(x);</span><br><span class="line">L.<span class="built_in">pop_back</span>();</span><br><span class="line">L.<span class="built_in">pop_front</span>();</span><br><span class="line">iter = L.<span class="built_in">erase</span>(iter); <span class="comment">//删除 iter 处的元素，并且返回下一元素的迭代器</span></span><br><span class="line">iter = L.<span class="built_in">insert</span>(iter, x); <span class="comment">//在 iter 处插入 x，并且返回 x 的迭代器</span></span><br></pre></td></tr></table></figure>
-<h2 id="映射">映射</h2>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;map&gt;</span></span></span><br><span class="line">map&lt;string, <span class="type">int</span>&gt; M;</span><br><span class="line">M[<span class="string">&quot;ATP&quot;</span>] = <span class="number">5</span>;</span><br><span class="line"><span class="keyword">if</span> (M.<span class="built_in">count</span>(<span class="string">&quot;...&quot;</span>) ...;</span><br><span class="line">M.<span class="built_in">erase</span>(<span class="string">&quot;...&quot;</span>);</span><br><span class="line">M.<span class="built_in">clear</span>();</span><br><span class="line">M.<span class="built_in">empty</span>();</span><br><span class="line">M.<span class="built_in">size</span>();</span><br></pre></td></tr></table></figure>
-<h2 id="集合">集合</h2>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;set&gt;</span></span></span><br><span class="line">set&lt;<span class="type">int</span>&gt; S;</span><br><span class="line">S.<span class="built_in">insert</span>();</span><br><span class="line">S.<span class="built_in">erase</span>();</span><br><span class="line">S.<span class="built_in">size</span>();</span><br><span class="line">S.<span class="built_in">empty</span>();</span><br><span class="line">set&lt;<span class="type">int</span>&gt;::iterator i;</span><br><span class="line">i = S.<span class="built_in">upper_bound</span>(x);      <span class="comment">//查询大于等于 x 中最小的数</span></span><br><span class="line">i = S.<span class="built_in">upper_bound</span>(x); i--; <span class="comment">//查询小于 x 中最大的数</span></span><br><span class="line">i = S.<span class="built_in">lower_bound</span>(x);      <span class="comment">//查询大于 x 中最小的数</span></span><br><span class="line">i = S.<span class="built_in">lower_bound</span>(x); i--; <span class="comment">//查询小于等于 x 中最大的数</span></span><br><span class="line">i = S.<span class="built_in">find</span>(x); <span class="keyword">if</span> (i != S.<span class="built_in">end</span>()) ...;</span><br><span class="line"><span class="keyword">for</span>(i = S.<span class="built_in">begin</span>(); i != S.<span class="built_in">end</span>(); i++);</span><br></pre></td></tr></table></figure>
-<h2 id="字符串">字符串</h2>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;string&gt;</span></span></span><br><span class="line">string S;</span><br><span class="line">S.<span class="built_in">length</span>(); <span class="comment">//字符串的长度，等价于 S.size()</span></span><br><span class="line">S.<span class="built_in">insert</span>(index, count, ch); <span class="comment">//在第 index 处插入 count 个字符 ch</span></span><br><span class="line">S.<span class="built_in">erase</span>(pos, n); <span class="comment">//删除从第 pos 开始的 n 个字符</span></span><br><span class="line">S.<span class="built_in">substr</span>(pos, len); <span class="comment">//获取从下标 pos 开始的长度为 len 的子字符串</span></span><br><span class="line">S.<span class="built_in">replace</span>(pos, len, str); <span class="comment">//替换从下标 pos 开始的长度为 len 的子字符串为 str</span></span><br><span class="line">pos = S.<span class="built_in">find</span>(str, pos); <span class="comment">//从下标 pos 查找 S 中是否有子字符串 str，有则返回 str 的第一个下标，没有则返回 string::pos</span></span><br></pre></td></tr></table></figure>
+    <content><![CDATA[<h2 id="栈"><a href="#栈" class="headerlink" title="栈"></a>栈</h2><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;stack&gt;</span></span></span><br><span class="line">stack &lt;<span class="type">int</span>&gt; S;</span><br><span class="line">S.<span class="built_in">top</span>();</span><br><span class="line">S.<span class="built_in">pop</span>();</span><br><span class="line">S.<span class="built_in">push</span>();</span><br><span class="line">S.<span class="built_in">size</span>();</span><br><span class="line">S.<span class="built_in">empty</span>();</span><br></pre></td></tr></table></figure>
+<h2 id="手写栈"><a href="#手写栈" class="headerlink" title="手写栈"></a>手写栈</h2><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span> S[maxn],h;</span><br><span class="line">S[++h] = x; <span class="comment">// push</span></span><br><span class="line">h--;        <span class="comment">// pop</span></span><br></pre></td></tr></table></figure>
+<h2 id="队列"><a href="#队列" class="headerlink" title="队列"></a>队列</h2><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;queue&gt;</span></span></span><br><span class="line">queue &lt;<span class="type">int</span>&gt; Q;</span><br><span class="line">Q.<span class="built_in">front</span>();</span><br><span class="line">Q.<span class="built_in">pop</span>();</span><br><span class="line">Q.<span class="built_in">push</span>();</span><br><span class="line">Q.<span class="built_in">size</span>();</span><br><span class="line">Q.<span class="built_in">empty</span>();</span><br></pre></td></tr></table></figure>
+<h2 id="手写队列"><a href="#手写队列" class="headerlink" title="手写队列"></a>手写队列</h2><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span> Q[maxn],h,t;</span><br><span class="line">Q[++h] = x;  <span class="comment">// push</span></span><br><span class="line">t++;         <span class="comment">// pop</span></span><br></pre></td></tr></table></figure>
+<h2 id="双端队列"><a href="#双端队列" class="headerlink" title="双端队列"></a>双端队列</h2><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;deque&gt;</span></span></span><br><span class="line">deque&lt;<span class="type">int</span>&gt; Dq;</span><br><span class="line">Dq.</span><br></pre></td></tr></table></figure>
+<h2 id="优先队列"><a href="#优先队列" class="headerlink" title="优先队列"></a>优先队列</h2><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;queue&gt;</span></span></span><br><span class="line">priority_queue &lt;<span class="type">int</span>&gt; Pq;</span><br><span class="line">Pq.<span class="built_in">top</span>();</span><br><span class="line">Pq.<span class="built_in">pop</span>();</span><br><span class="line">Pq.<span class="built_in">push</span>();</span><br><span class="line">Pq.<span class="built_in">size</span>();</span><br><span class="line">Pq.<span class="built_in">empty</span>();</span><br></pre></td></tr></table></figure>
+<h2 id="小根堆"><a href="#小根堆" class="headerlink" title="小根堆"></a>小根堆</h2><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line">priority_queue &lt;<span class="type">int</span>,vector&lt;<span class="type">int</span>&gt;,greater&lt;<span class="type">int</span>&gt; &gt; Pq;</span><br></pre></td></tr></table></figure>
+<h2 id="向量"><a href="#向量" class="headerlink" title="向量"></a>向量</h2><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;vector&gt;</span></span></span><br><span class="line">vector&lt;<span class="type">int</span>&gt; V;</span><br><span class="line">V.<span class="built_in">push_back</span>();</span><br><span class="line">V.<span class="built_in">pop_back</span>();</span><br><span class="line">V.<span class="built_in">size</span>();</span><br><span class="line">V[i];</span><br><span class="line">V.<span class="built_in">clear</span>();</span><br><span class="line"><span class="built_in">sort</span>(V.<span class="built_in">begin</span>(), V.<span class="built_in">end</span>());</span><br></pre></td></tr></table></figure>
+<h2 id="列表"><a href="#列表" class="headerlink" title="列表"></a>列表</h2><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;list&gt;</span></span></span><br><span class="line">list&lt;<span class="type">int</span>&gt; L;</span><br><span class="line">L.<span class="built_in">clear</span>();</span><br><span class="line">L.<span class="built_in">push_back</span>(x);</span><br><span class="line">L.<span class="built_in">push_front</span>(x);</span><br><span class="line">L.<span class="built_in">pop_back</span>();</span><br><span class="line">L.<span class="built_in">pop_front</span>();</span><br><span class="line">iter = L.<span class="built_in">erase</span>(iter); <span class="comment">//删除 iter 处的元素，并且返回下一元素的迭代器</span></span><br><span class="line">iter = L.<span class="built_in">insert</span>(iter, x); <span class="comment">//在 iter 处插入 x，并且返回 x 的迭代器</span></span><br></pre></td></tr></table></figure>
+<h2 id="映射"><a href="#映射" class="headerlink" title="映射"></a>映射</h2><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;map&gt;</span></span></span><br><span class="line">map&lt;string, <span class="type">int</span>&gt; M;</span><br><span class="line">M[<span class="string">&quot;ATP&quot;</span>] = <span class="number">5</span>;</span><br><span class="line"><span class="keyword">if</span> (M.<span class="built_in">count</span>(<span class="string">&quot;...&quot;</span>) ...;</span><br><span class="line">M.<span class="built_in">erase</span>(<span class="string">&quot;...&quot;</span>);</span><br><span class="line">M.<span class="built_in">clear</span>();</span><br><span class="line">M.<span class="built_in">empty</span>();</span><br><span class="line">M.<span class="built_in">size</span>();</span><br></pre></td></tr></table></figure>
+<h2 id="集合"><a href="#集合" class="headerlink" title="集合"></a>集合</h2><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;set&gt;</span></span></span><br><span class="line">set&lt;<span class="type">int</span>&gt; S;</span><br><span class="line">S.<span class="built_in">insert</span>();</span><br><span class="line">S.<span class="built_in">erase</span>();</span><br><span class="line">S.<span class="built_in">size</span>();</span><br><span class="line">S.<span class="built_in">empty</span>();</span><br><span class="line">set&lt;<span class="type">int</span>&gt;::iterator i;</span><br><span class="line">i = S.<span class="built_in">upper_bound</span>(x);      <span class="comment">//查询大于等于 x 中最小的数</span></span><br><span class="line">i = S.<span class="built_in">upper_bound</span>(x); i--; <span class="comment">//查询小于 x 中最大的数</span></span><br><span class="line">i = S.<span class="built_in">lower_bound</span>(x);      <span class="comment">//查询大于 x 中最小的数</span></span><br><span class="line">i = S.<span class="built_in">lower_bound</span>(x); i--; <span class="comment">//查询小于等于 x 中最大的数</span></span><br><span class="line">i = S.<span class="built_in">find</span>(x); <span class="keyword">if</span> (i != S.<span class="built_in">end</span>()) ...;</span><br><span class="line"><span class="keyword">for</span>(i = S.<span class="built_in">begin</span>(); i != S.<span class="built_in">end</span>(); i++);</span><br></pre></td></tr></table></figure>
+<h2 id="字符串"><a href="#字符串" class="headerlink" title="字符串"></a>字符串</h2><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;string&gt;</span></span></span><br><span class="line">string S;</span><br><span class="line">S.<span class="built_in">length</span>(); <span class="comment">//字符串的长度，等价于 S.size()</span></span><br><span class="line">S.<span class="built_in">insert</span>(index, count, ch); <span class="comment">//在第 index 处插入 count 个字符 ch</span></span><br><span class="line">S.<span class="built_in">erase</span>(pos, n); <span class="comment">//删除从第 pos 开始的 n 个字符</span></span><br><span class="line">S.<span class="built_in">substr</span>(pos, len); <span class="comment">//获取从下标 pos 开始的长度为 len 的子字符串</span></span><br><span class="line">S.<span class="built_in">replace</span>(pos, len, str); <span class="comment">//替换从下标 pos 开始的长度为 len 的子字符串为 str</span></span><br><span class="line">pos = S.<span class="built_in">find</span>(str, pos); <span class="comment">//从下标 pos 查找 S 中是否有子字符串 str，有则返回 str 的第一个下标，没有则返回 string::pos</span></span><br></pre></td></tr></table></figure>
 ]]></content>
       <tags>
         <tag>数据结构</tag>
@@ -923,17 +399,11 @@ class="math inline">\(S\)</span>
   <entry>
     <title>STM32</title>
     <url>/2023/11/25/STM32/</url>
-    <content><![CDATA[<h2 id="gpio">GPIO</h2>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">HAL_GPIO_WritePin</span><span class="params">(GPIO_TypeDef *GPIOx, <span class="type">uint16_t</span> GPIO_Pin, GPIO_PinState PinState)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="function">GPIO_PinState <span class="title">HAL_GPIO_ReadPin</span><span class="params">(GPIO_TypeDef *GPIOx, <span class="type">uint16_t</span> GPIO_Pin)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">HAL_GPIO_TogglePin</span><span class="params">(GPIO_TypeDef *GPIOx, <span class="type">uint16_t</span> GPIO_Pin)</span></span>;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<h2 id="lcd">LCD</h2>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">LCD_Init</span><span class="params">(<span class="type">void</span>)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">LCD_SetTextColor</span><span class="params">(vu16 Color)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">LCD_SetBackColor</span><span class="params">(vu16 Color)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">LCD_Clear</span><span class="params">(u16 Color)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">LCD_DisplayStringLine</span><span class="params">(u8 Line, u8 *ptr)</span></span>;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<h2 id="tim">TIM</h2>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="function">HAL_StatusTypeDef <span class="title">HAL_TIM_Base_Start_IT</span><span class="params">(TIM_HandleTypeDef *htim)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">HAL_TIM_PeriodElapsedCallback</span><span class="params">(TIM_HandleTypeDef *htim)</span></span>;</span><br></pre></td></tr></table></figure>
-<h2 id="uart">UART</h2>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="function">HAL_StatusTypeDef <span class="title">HAL_UART_Transmit</span><span class="params">(UART_HandleTypeDef *huart, <span class="type">uint8_t</span> *pData, <span class="type">uint16_t</span> Size, <span class="type">uint32_t</span> Timeout)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="function">HAL_StatusTypeDef <span class="title">HAL_UART_Transmit_IT</span><span class="params">(UART_HandleTypeDef *huart, <span class="type">uint8_t</span> *pData, <span class="type">uint16_t</span> Size)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">HAL_UART_TxCpltCallback</span><span class="params">(UART_HandleTypeDef *huart)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="function">HAL_StatusTypeDef <span class="title">HAL_UART_Receive</span><span class="params">(UART_HandleTypeDef *huart, <span class="type">uint8_t</span> *pData, <span class="type">uint16_t</span> Size, <span class="type">uint32_t</span> Timeout)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="function">HAL_StatusTypeDef <span class="title">HAL_UART_Receive_IT</span><span class="params">(UART_HandleTypeDef *huart, <span class="type">uint8_t</span> *pData, <span class="type">uint16_t</span> Size)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">HAL_UART_RxCpltCallback</span><span class="params">(UART_HandleTypeDef *huart)</span></span>;</span><br></pre></td></tr></table></figure>
-<h2 id="adc">ADC</h2>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="function">HAL_StatusTypeDef <span class="title">HAL_ADC_Start</span><span class="params">(ADC_HandleTypeDef *hadc)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">uint32_t</span> <span class="title">HAL_ADC_GetValue</span><span class="params">(ADC_HandleTypeDef *hadc)</span></span>;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-]]></content>
+    <content><![CDATA[<h2 id="GPIO"><a href="#GPIO" class="headerlink" title="GPIO"></a>GPIO</h2><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">HAL_GPIO_WritePin</span><span class="params">(GPIO_TypeDef *GPIOx, <span class="type">uint16_t</span> GPIO_Pin, GPIO_PinState PinState)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="function">GPIO_PinState <span class="title">HAL_GPIO_ReadPin</span><span class="params">(GPIO_TypeDef *GPIOx, <span class="type">uint16_t</span> GPIO_Pin)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">HAL_GPIO_TogglePin</span><span class="params">(GPIO_TypeDef *GPIOx, <span class="type">uint16_t</span> GPIO_Pin)</span></span>;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h2 id="LCD"><a href="#LCD" class="headerlink" title="LCD"></a>LCD</h2><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">LCD_Init</span><span class="params">(<span class="type">void</span>)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">LCD_SetTextColor</span><span class="params">(vu16 Color)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">LCD_SetBackColor</span><span class="params">(vu16 Color)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">LCD_Clear</span><span class="params">(u16 Color)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">LCD_DisplayStringLine</span><span class="params">(u8 Line, u8 *ptr)</span></span>;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h2 id="TIM"><a href="#TIM" class="headerlink" title="TIM"></a>TIM</h2><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="function">HAL_StatusTypeDef <span class="title">HAL_TIM_Base_Start_IT</span><span class="params">(TIM_HandleTypeDef *htim)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">HAL_TIM_PeriodElapsedCallback</span><span class="params">(TIM_HandleTypeDef *htim)</span></span>;</span><br></pre></td></tr></table></figure>
+<h2 id="UART"><a href="#UART" class="headerlink" title="UART"></a>UART</h2><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="function">HAL_StatusTypeDef <span class="title">HAL_UART_Transmit</span><span class="params">(UART_HandleTypeDef *huart, <span class="type">uint8_t</span> *pData, <span class="type">uint16_t</span> Size, <span class="type">uint32_t</span> Timeout)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="function">HAL_StatusTypeDef <span class="title">HAL_UART_Transmit_IT</span><span class="params">(UART_HandleTypeDef *huart, <span class="type">uint8_t</span> *pData, <span class="type">uint16_t</span> Size)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">HAL_UART_TxCpltCallback</span><span class="params">(UART_HandleTypeDef *huart)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="function">HAL_StatusTypeDef <span class="title">HAL_UART_Receive</span><span class="params">(UART_HandleTypeDef *huart, <span class="type">uint8_t</span> *pData, <span class="type">uint16_t</span> Size, <span class="type">uint32_t</span> Timeout)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="function">HAL_StatusTypeDef <span class="title">HAL_UART_Receive_IT</span><span class="params">(UART_HandleTypeDef *huart, <span class="type">uint8_t</span> *pData, <span class="type">uint16_t</span> Size)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">HAL_UART_RxCpltCallback</span><span class="params">(UART_HandleTypeDef *huart)</span></span>;</span><br></pre></td></tr></table></figure>
+<h2 id="ADC"><a href="#ADC" class="headerlink" title="ADC"></a>ADC</h2><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="function">HAL_StatusTypeDef <span class="title">HAL_ADC_Start</span><span class="params">(ADC_HandleTypeDef *hadc)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">uint32_t</span> <span class="title">HAL_ADC_GetValue</span><span class="params">(ADC_HandleTypeDef *hadc)</span></span>;</span><br><span class="line"></span><br></pre></td></tr></table></figure>]]></content>
       <tags>
         <tag>STM32</tag>
         <tag>单片机</tag>
@@ -942,89 +412,34 @@ class="math inline">\(S\)</span>
   <entry>
     <title>级数</title>
     <url>/2024/02/29/Series/</url>
-    <content><![CDATA[<h1 id="无穷级数">无穷级数</h1>
-<h2 id="定义">定义</h2>
-<p>设 <span class="math inline">\(\{a_n\}\)</span> 为一个无穷数列，用
-“+” 将 <span class="math inline">\(a_n\)</span>
-的项以此连起来，得到一个式子 <span class="math inline">\(a_1 + a_2 +
-\cdots + a_n +
-\cdots\)</span>，称此式子为<strong>（无穷数项）级数</strong>，简记为
-<span class="math inline">\(\sum\limits_{n=1}^\infty a_n\)</span></p>
-<p><span class="math inline">\(a_1\)</span> 称为第一项，<span
-class="math inline">\(a_n\)</span> 称为通项，<span
-class="math inline">\(S_n = a_1 + a_2 + \cdots + a_n\)</span>
-称为<strong>部分和</strong>。</p>
-<h2 id="敛散性">敛散性</h2>
-<p>设 <span class="math inline">\(\sum\limits_{n=1}^\infty a_n\)</span>
-为一级数，<span class="math inline">\(S_n = a_1 + a_2 + \cdots +
-a_n\)</span> 为其部分和，若 <span
-class="math inline">\(\lim\limits_{n\to\infty} S_n\)</span>
-存在，则称级数 <span class="math inline">\(\sum\limits_{n=1}^\infty
-a_n\)</span> <strong>收敛</strong>，此时 <span
-class="math inline">\(\lim\limits_{n\to\infty} S_n =
-\sum\limits_{n=1}^\infty a_n\)</span>。若 <span
-class="math inline">\(\lim\limits_{n\to\infty} S_n\)</span>
-不存在，则称级数 <span class="math inline">\(\sum\limits_{n=1}^\infty
-a_n\)</span> <strong>发散</strong>。</p>
-<h2 id="性质">性质</h2>
-<ol type="1">
-<li><span class="math inline">\(k \ne 0\)</span> 时，<span
-class="math inline">\(\sum\limits_{n=1}^\infty a_n\)</span> 与 <span
-class="math inline">\(\sum\limits_{n=1}^\infty ka_n\)</span>
-的敛散性一致，且收敛时 <span
-class="math inline">\(\sum\limits_{n=1}^\infty ka_n =
-k\sum\limits_{n=1}^\infty a_n\)</span>。</li>
-<li>若 <span class="math inline">\(\sum\limits_{n=1}^\infty a_n\)</span>
-与 <span class="math inline">\(\sum\limits_{n=1}^\infty b_n\)</span>
-都收敛，则 <span class="math inline">\(\sum\limits_{n=1}^\infty (a_n \pm
-b_n)\)</span> 也收敛，且 <span
-class="math inline">\(\sum\limits_{n=1}^\infty (a_n \pm b_n) =
-\sum\limits_{n=1}^\infty a_n \pm \sum\limits_{n=1}^\infty
-b_n\)</span>。</li>
+    <content><![CDATA[<h1 id="无穷级数"><a href="#无穷级数" class="headerlink" title="无穷级数"></a>无穷级数</h1><h2 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h2><p>设 ${a<em>n}$ 为一个无穷数列，用 “+” 将 $a_n$ 的项以此连起来，得到一个式子 $a_1 + a_2 + \cdots + a_n + \cdots$，称此式子为<strong>（无穷数项）级数</strong>，简记为 $\sum\limits</em>{n=1}^\infty a_n$</p>
+<p>$a_1$ 称为第一项，$a_n$ 称为通项，$S_n = a_1 + a_2 + \cdots + a_n$ 称为<strong>部分和</strong>。</p>
+<h2 id="敛散性"><a href="#敛散性" class="headerlink" title="敛散性"></a>敛散性</h2><p>设 $\sum\limits<em>{n=1}^\infty a_n$ 为一级数，$S_n = a_1 + a_2 + \cdots + a_n$ 为其部分和，若 $\lim\limits</em>{n\to\infty} S<em>n$ 存在，则称级数 $\sum\limits</em>{n=1}^\infty a<em>n$ <strong>收敛</strong>，此时 $\lim\limits</em>{n\to\infty} S<em>n = \sum\limits</em>{n=1}^\infty a<em>n$。若 $\lim\limits</em>{n\to\infty} S<em>n$ 不存在，则称级数 $\sum\limits</em>{n=1}^\infty a_n$ <strong>发散</strong>。</p>
+<h2 id="性质"><a href="#性质" class="headerlink" title="性质"></a>性质</h2><ol>
+<li>$k \ne 0$ 时，$\sum\limits<em>{n=1}^\infty a_n$ 与 $\sum\limits</em>{n=1}^\infty ka<em>n$ 的敛散性一致，且收敛时 $\sum\limits</em>{n=1}^\infty ka<em>n = k\sum\limits</em>{n=1}^\infty a_n$。</li>
+<li>若 $\sum\limits<em>{n=1}^\infty a_n$ 与 $\sum\limits</em>{n=1}^\infty b<em>n$ 都收敛，则 $\sum\limits</em>{n=1}^\infty (a<em>n \pm b_n)$ 也收敛，且 $\sum\limits</em>{n=1}^\infty (a<em>n \pm b_n) = \sum\limits</em>{n=1}^\infty a<em>n \pm \sum\limits</em>{n=1}^\infty b_n$。</li>
 <li>一个级数去掉或添加有限项不改变级数的敛散性。</li>
 <li>收敛级数满足结合律。</li>
-<li>若 <span class="math inline">\(\sum\limits_{n=1}^\infty a_n\)</span>
-收敛，则 <span class="math inline">\(\lim\limits_{n\to\infty} a_n =
-0\)</span>。</li>
+<li>若 $\sum\limits<em>{n=1}^\infty a_n$ 收敛，则 $\lim\limits</em>{n\to\infty} a_n = 0$。</li>
 </ol>
-<h2 id="两个重要级数">两个重要级数</h2>
-<ul>
-<li><h3 id="等比级数-sumlimits_n1infty-rn">等比级数 <span
-class="math inline">\(\sum\limits_{n=1}^\infty r^n\)</span></h3></li>
+<h2 id="两个重要级数"><a href="#两个重要级数" class="headerlink" title="两个重要级数"></a>两个重要级数</h2><ul>
+<li><h3 id="等比级数-sum-limits-n-1-infty-r-n"><a href="#等比级数-sum-limits-n-1-infty-r-n" class="headerlink" title="等比级数 $\sum\limits_{n=1}^\infty r^n$"></a>等比级数 $\sum\limits_{n=1}^\infty r^n$</h3></li>
 </ul>
-<p>当 <span class="math inline">\(\vert r\vert &lt; 1\)</span>
-时收敛；</p>
-<p>当 <span class="math inline">\(\vert r \vert \ge 1\)</span>
-时发散。</p>
+<p>当 $\vert r\vert &lt; 1$ 时收敛；</p>
+<p>当 $\vert r \vert \ge 1$ 时发散。</p>
 <ul>
-<li><h3 id="p-级数-sumlimits_n1infty-frac1np">p-级数 <span
-class="math inline">\(\sum\limits_{n=1}^\infty
-\frac{1}{n^p}\)</span></h3></li>
+<li><h3 id="p-级数-sum-limits-n-1-infty-frac-1-n-p"><a href="#p-级数-sum-limits-n-1-infty-frac-1-n-p" class="headerlink" title="p-级数 $\sum\limits_{n=1}^\infty \frac{1}{n^p}$"></a>p-级数 $\sum\limits_{n=1}^\infty \frac{1}{n^p}$</h3></li>
 </ul>
-<p>当 <span class="math inline">\(0 &lt; p \le 1\)</span> 时发散；</p>
-<p>当 <span class="math inline">\(p&gt;1\)</span> 时收敛。</p>
-<h1 id="正项级数">正项级数</h1>
-<h2 id="定义-1">定义</h2>
-<p>称满足 <span class="math inline">\(a_n &gt; 0\)</span> 的无穷级数
-<span class="math inline">\(\sum\limits_{n=1}^\infty a_n\)</span>
-为<strong>正项级数</strong>。</p>
-<h2 id="敛散性判别法">敛散性判别法</h2>
-<ol type="1">
-<li>正项级数 <span
-class="math inline">\(\sum\limits_{n=1}^\infty\)</span> 收敛 <span
-class="math inline">\(\Leftrightarrow\)</span> 部分和有上界。</li>
+<p>当 $0 &lt; p \le 1$ 时发散；</p>
+<p>当 $p&gt;1$ 时收敛。</p>
+<h1 id="正项级数"><a href="#正项级数" class="headerlink" title="正项级数"></a>正项级数</h1><h2 id="定义-1"><a href="#定义-1" class="headerlink" title="定义"></a>定义</h2><p>称满足 $a<em>n &gt; 0$ 的无穷级数 $\sum\limits</em>{n=1}^\infty a_n$ 为<strong>正项级数</strong>。</p>
+<h2 id="敛散性判别法"><a href="#敛散性判别法" class="headerlink" title="敛散性判别法"></a>敛散性判别法</h2><ol>
+<li>正项级数 $\sum\limits_{n=1}^\infty$ 收敛 $\Leftrightarrow$ 部分和有上界。</li>
 <li>比较判别法</li>
 </ol>
-<p>设 <span class="math inline">\(\sum\limits_{n=1}^\infty
-a_n\)</span>，<span class="math inline">\(\sum\limits_{n=1}^\infty
-b_n\)</span> 为两个正项级数，若从某项以后有 <span
-class="math inline">\(a_n \le b_n\)</span>，则</p>
-<p>当 <span class="math inline">\(\sum\limits_{n=1}^\infty b_n\)</span>
-收敛时，<span class="math inline">\(\sum\limits_{n=1}^\infty
-a_n\)</span> 收敛；</p>
-<p>当 <span class="math inline">\(\sum\limits_{n=1}^\infty a_n\)</span>
-发散时，<span class="math inline">\(\sum\limits_{n=1}^\infty
-b_n\)</span> 发散。</p>
+<p>设 $\sum\limits<em>{n=1}^\infty a_n$，$\sum\limits</em>{n=1}^\infty b_n$ 为两个正项级数，若从某项以后有 $a_n \le b_n$，则</p>
+<p>当 $\sum\limits<em>{n=1}^\infty b_n$ 收敛时，$\sum\limits</em>{n=1}^\infty a_n$ 收敛；</p>
+<p>当 $\sum\limits<em>{n=1}^\infty a_n$ 发散时，$\sum\limits</em>{n=1}^\infty b_n$ 发散。</p>
 ]]></content>
       <tags>
         <tag>Math</tag>
@@ -1034,73 +449,44 @@ b_n\)</span> 发散。</p>
   <entry>
     <title>Ubuntu</title>
     <url>/2023/03/21/Ubuntu/</url>
-    <content><![CDATA[<h3 id="前言">前言</h3>
-<p>由于软件安装教程具有时效性，故只放置官网链接。</p>
-<h3 id="更新系统时间">更新系统时间</h3>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cp</span> /usr/share/zoneinfo/Asia/Shanghai /etc/localtime</span><br></pre></td></tr></table></figure>
-<h3 id="修改主机名">修改主机名</h3>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">vim /etc/hostname</span><br><span class="line">vim /etc/hosts</span><br></pre></td></tr></table></figure>
-<h3 id="修改root密码">修改root密码</h3>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">passwd</span><br></pre></td></tr></table></figure>
-<h3 id="修改静态-ip">修改静态 IP</h3>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">nmtui <span class="comment">#注意设置DNS</span></span><br></pre></td></tr></table></figure>
-<h3 id="挂载-ntfs-硬盘">挂载 NTFS 硬盘</h3>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">mount -t ntfs-3g /dev/sda3 /mnt/pssd</span><br></pre></td></tr></table></figure>
-<h3 id="开机自动挂载ntfs硬盘">开机自动挂载NTFS硬盘</h3>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">vim /etc/fstab</span><br><span class="line">/dev/sda3 /mnt ntfs-3g defaults 0 0</span><br></pre></td></tr></table></figure>
-<h3 id="系统监控软件">系统监控软件</h3>
-<ul>
-<li><h4 id="s-tui">s-tui</h4></li>
+    <content><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>由于软件安装教程具有时效性，故只放置官网链接。</p>
+<h3 id="更新系统时间"><a href="#更新系统时间" class="headerlink" title="更新系统时间"></a>更新系统时间</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cp</span> /usr/share/zoneinfo/Asia/Shanghai /etc/localtime</span><br></pre></td></tr></table></figure>
+<h3 id="修改主机名"><a href="#修改主机名" class="headerlink" title="修改主机名"></a>修改主机名</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">vim /etc/hostname</span><br><span class="line">vim /etc/hosts</span><br></pre></td></tr></table></figure>
+<h3 id="修改root密码"><a href="#修改root密码" class="headerlink" title="修改root密码"></a>修改root密码</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">passwd</span><br></pre></td></tr></table></figure>
+<h3 id="修改静态-IP"><a href="#修改静态-IP" class="headerlink" title="修改静态 IP"></a>修改静态 IP</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">nmtui <span class="comment">#注意设置DNS</span></span><br></pre></td></tr></table></figure>
+<h3 id="挂载-NTFS-硬盘"><a href="#挂载-NTFS-硬盘" class="headerlink" title="挂载 NTFS 硬盘"></a>挂载 NTFS 硬盘</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">mount -t ntfs-3g /dev/sda3 /mnt/pssd</span><br></pre></td></tr></table></figure>
+<h3 id="开机自动挂载NTFS硬盘"><a href="#开机自动挂载NTFS硬盘" class="headerlink" title="开机自动挂载NTFS硬盘"></a>开机自动挂载NTFS硬盘</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">vim /etc/fstab</span><br><span class="line">/dev/sda3 /mnt ntfs-3g defaults 0 0</span><br></pre></td></tr></table></figure>
+<h3 id="系统监控软件"><a href="#系统监控软件" class="headerlink" title="系统监控软件"></a>系统监控软件</h3><ul>
+<li><h4 id="s-tui"><a href="#s-tui" class="headerlink" title="s-tui"></a>s-tui</h4></li>
 </ul>
-<details class="note "><summary><p>Code</p>
-</summary>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">apt install python3-pip python3-dev -y</span><br><span class="line">pip3 install s-tui</span><br></pre></td></tr></table></figure>
-
-</details>
-<h3 id="ddns">DDNS</h3>
-<ul>
-<li><h4 id="ddns-go"><a
-href="https://github.com/jeessy2/ddns-go">ddns-go</a></h4></li>
+<div class="note Code flat"><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">apt install python3-pip python3-dev -y</span><br><span class="line">pip3 install s-tui</span><br></pre></td></tr></table></figure></div>
+<h3 id="DDNS"><a href="#DDNS" class="headerlink" title="DDNS"></a>DDNS</h3><ul>
+<li><h4 id="ddns-go"><a href="#ddns-go" class="headerlink" title="ddns-go"></a><a href="https://github.com/jeessy2/ddns-go">ddns-go</a></h4></li>
 </ul>
-<h3 id="私有云">私有云</h3>
-<ul>
-<li><h4 id="nextcloud"><a
-href="https://github.com/jeessy2/ddns-go">Nextcloud</a></h4></li>
+<h3 id="私有云"><a href="#私有云" class="headerlink" title="私有云"></a>私有云</h3><ul>
+<li><h4 id="Nextcloud"><a href="#Nextcloud" class="headerlink" title="Nextcloud"></a><a href="https://github.com/jeessy2/ddns-go">Nextcloud</a></h4></li>
 </ul>
-<h3 id="免费-ssl-证书">免费 SSL 证书</h3>
-<ul>
-<li><h4 id="acme.sh"><a
-href="https://github.com/acmesh-official/acme.sh">acme.sh</a></h4></li>
+<h3 id="免费-SSL-证书"><a href="#免费-SSL-证书" class="headerlink" title="免费 SSL 证书"></a>免费 SSL 证书</h3><ul>
+<li><h4 id="acme-sh"><a href="#acme-sh" class="headerlink" title="acme.sh"></a><a href="https://github.com/acmesh-official/acme.sh">acme.sh</a></h4></li>
 </ul>
-<p>安装MC服务器 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">#先下载服务器版安装包 https://mcversions.net/</span><br><span class="line">apt install openjdk-17-jre -y</span><br><span class="line">mkdir /etc/minecraft</span><br><span class="line">cd /etc/minecraft</span><br><span class="line">java -Xms2G -Xmx4G -jar server.jar nogui</span><br><span class="line"></span><br><span class="line">vim eula.txt</span><br><span class="line">eula=true</span><br><span class="line"></span><br><span class="line">vim /lib/systemd/system/minecraft.service</span><br><span class="line">[Unit]</span><br><span class="line">Description=Minecraft Server</span><br><span class="line">Wants=network.target</span><br><span class="line">After=network.target</span><br><span class="line"></span><br><span class="line">[Service]</span><br><span class="line">Type=simple</span><br><span class="line">WorkingDirectory=/etc/minecraft/</span><br><span class="line">ExecStart=/usr/bin/java -Xms2G -Xmx4G -jar /etc/minecraft/server.jar nogui</span><br><span class="line">RestartSec=30</span><br><span class="line">Restart=on-failure</span><br><span class="line">KillMode=process</span><br><span class="line">KillSignal=SIGINT</span><br><span class="line">SuccessExitStatus=130</span><br><span class="line">StandardInput=null</span><br><span class="line"></span><br><span class="line">[Install]</span><br><span class="line">WantedBy=default.target</span><br><span class="line"></span><br><span class="line">systemctl enable minecraft</span><br><span class="line">systemctl start minecraft</span><br><span class="line">#记得在路由器上转发25565端口</span><br></pre></td></tr></table></figure></p>
-<h3 id="下载器">下载器</h3>
-<ul>
-<li><h4 id="aria2"><a
-href="https://github.com/P3TERX/aria2.sh">Aria2</a></h4></li>
-<li><h4 id="ariang"><a
-href="http://ariang.mayswind.net/zh_Hans/">AriaNg</a></h4></li>
+<p>安装MC服务器<br><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">#先下载服务器版安装包 https://mcversions.net/</span><br><span class="line">apt install openjdk-17-jre -y</span><br><span class="line">mkdir /etc/minecraft</span><br><span class="line">cd /etc/minecraft</span><br><span class="line">java -Xms2G -Xmx4G -jar server.jar nogui</span><br><span class="line"></span><br><span class="line">vim eula.txt</span><br><span class="line">eula=true</span><br><span class="line"></span><br><span class="line">vim /lib/systemd/system/minecraft.service</span><br><span class="line">[Unit]</span><br><span class="line">Description=Minecraft Server</span><br><span class="line">Wants=network.target</span><br><span class="line">After=network.target</span><br><span class="line"></span><br><span class="line">[Service]</span><br><span class="line">Type=simple</span><br><span class="line">WorkingDirectory=/etc/minecraft/</span><br><span class="line">ExecStart=/usr/bin/java -Xms2G -Xmx4G -jar /etc/minecraft/server.jar nogui</span><br><span class="line">RestartSec=30</span><br><span class="line">Restart=on-failure</span><br><span class="line">KillMode=process</span><br><span class="line">KillSignal=SIGINT</span><br><span class="line">SuccessExitStatus=130</span><br><span class="line">StandardInput=null</span><br><span class="line"></span><br><span class="line">[Install]</span><br><span class="line">WantedBy=default.target</span><br><span class="line"></span><br><span class="line">systemctl enable minecraft</span><br><span class="line">systemctl start minecraft</span><br><span class="line">#记得在路由器上转发25565端口</span><br></pre></td></tr></table></figure></p>
+<h3 id="下载器"><a href="#下载器" class="headerlink" title="下载器"></a>下载器</h3><ul>
+<li><h4 id="Aria2"><a href="#Aria2" class="headerlink" title="Aria2"></a><a href="https://github.com/P3TERX/aria2.sh">Aria2</a></h4></li>
+<li><h4 id="AriaNg"><a href="#AriaNg" class="headerlink" title="AriaNg"></a><a href="http://ariang.mayswind.net/zh_Hans/">AriaNg</a></h4></li>
 </ul>
-<h3 id="媒体服务器">媒体服务器</h3>
-<ul>
-<li><h4 id="plex"><a href="https://www.plex.tv/">Plex</a></h4></li>
-<li><h4 id="jellyfin"><a
-href="https://jellyfin.org/">Jellyfin</a></h4></li>
+<h3 id="媒体服务器"><a href="#媒体服务器" class="headerlink" title="媒体服务器"></a>媒体服务器</h3><ul>
+<li><h4 id="Plex"><a href="#Plex" class="headerlink" title="Plex"></a><a href="https://www.plex.tv/">Plex</a></h4></li>
+<li><h4 id="Jellyfin"><a href="#Jellyfin" class="headerlink" title="Jellyfin"></a><a href="https://jellyfin.org/">Jellyfin</a></h4></li>
 </ul>
-<h3 id="网页版-ssh">网页版 SSH</h3>
-<ul>
-<li><h4 id="sshwifty"><a
-href="https://github.com/nirui/sshwifty">Sshwifty</a></h4></li>
+<h3 id="网页版-SSH"><a href="#网页版-SSH" class="headerlink" title="网页版 SSH"></a>网页版 SSH</h3><ul>
+<li><h4 id="Sshwifty"><a href="#Sshwifty" class="headerlink" title="Sshwifty"></a><a href="https://github.com/nirui/sshwifty">Sshwifty</a></h4></li>
 </ul>
-<h3 id="博客">博客</h3>
-<ul>
-<li><h4 id="hexo"><a
-href="https://hexo.io/zh-cn/index.html">Hexo</a></h4></li>
-<li><h4 id="next"><a
-href="https://theme-next.js.org/">NexT</a></h4></li>
+<h3 id="博客"><a href="#博客" class="headerlink" title="博客"></a>博客</h3><ul>
+<li><h4 id="Hexo"><a href="#Hexo" class="headerlink" title="Hexo"></a><a href="https://hexo.io/zh-cn/index.html">Hexo</a></h4></li>
+<li><h4 id="NexT"><a href="#NexT" class="headerlink" title="NexT"></a><a href="https://theme-next.js.org/">NexT</a></h4></li>
 </ul>
-<h3 id="科学上网">科学上网</h3>
-<ul>
-<li><h4 id="v2raya"><a href="https://v2raya.org/">v2rayA</a></h4></li>
+<h3 id="科学上网"><a href="#科学上网" class="headerlink" title="科学上网"></a>科学上网</h3><ul>
+<li><h4 id="v2rayA"><a href="#v2rayA" class="headerlink" title="v2rayA"></a><a href="https://v2raya.org/">v2rayA</a></h4></li>
 </ul>
 ]]></content>
       <tags>
@@ -1110,211 +496,250 @@ href="https://theme-next.js.org/">NexT</a></h4></li>
       </tags>
   </entry>
   <entry>
+    <title>三角级数</title>
+    <url>/2024/03/02/Trigonometric-Series/</url>
+    <content><![CDATA[<h1 id="三角级数"><a href="#三角级数" class="headerlink" title="三角级数"></a>三角级数</h1><h2 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h2><p>称 $\frac{1}{2}a<em>0 + \sum\limits</em>{n=1}^\infty a_n\cos nx + b_n \sin nx$ 为<strong>三角级数</strong>。</p>
+<h1 id="傅里叶级数"><a href="#傅里叶级数" class="headerlink" title="傅里叶级数"></a>傅里叶级数</h1><h2 id="定义-1"><a href="#定义-1" class="headerlink" title="定义"></a>定义</h2><p>若 $f(x)$ 以 $2\pi$ 为周期，且以下积分存在</p>
+<script type="math/tex; mode=display">
+\begin{split}
+    &a_0 = \frac{1}{\pi}\int_{-\pi}^\pi f(x)dx \\
+    &a_n = \frac{1}{\pi}\int_{-\pi}^\pi f(x)\cos nxdx \\
+    &b_n = \frac{1}{\pi}\int_{-\pi}^\pi f(x)\sin nxdx
+\end{split}</script><p>称 $\frac{1}{2} a<em>0 + \sum\limits</em>{n=1}^\infty a_n \cos nx + b_n \sin nx$ 为 $f(x)$ 的<strong>傅里叶级数</strong>，简称为 $F-$ 级数。</p>
+<p>其中 $a_0, a_n, b_n(n=1,2,\cdots)$ 为<strong>傅里叶系数</strong>。</p>
+<p>若 $f(x)$ 为奇函数，$a<em>0 = a_n = 0(n=1, 2, \cdots)$，$b_n = \frac{2}{\pi}\int_0^\pi f(x)\sin nx dx$，此时 $F-$ 级数变为 $\sum\limits</em>{n=1}^\infty b_n \sin nx$，称为 <strong>$F-$ 正弦型级数</strong>。</p>
+<p>若 $f(x)$ 为偶函数，$b<em>n = 0, a_0 = \frac{2}{\pi}\int_0^\pi f(x)dx, a_n = \frac{2}{\pi}\int_0^\pi f(x)\cos nx dx, (n=1,2,\cdots)$，此时 $F-$ 级数变为 $\frac{1}{2} a_0 + \sum\limits</em>{n=1}^\infty a_n \cos nx$，称为 <strong>$F-$ 余弦型级数</strong></p>
+<h2 id="狄利克雷定理"><a href="#狄利克雷定理" class="headerlink" title="狄利克雷定理"></a>狄利克雷定理</h2><p>若 $f(x)$ 在 $[-\pi, \pi]$ 上满足：</p>
+<ol>
+<li>至多有限个第一类间断点</li>
+<li>至多有限个极值</li>
+</ol>
+<p>则 $f(x)$ 在 $[-\pi, \pi]$ 上 $F-$ 级数收敛，且</p>
+<script type="math/tex; mode=display">
+\frac{1}{2}a_0 + \sum\limits_{n=1}^\infty (a_n \cos nx + b_n \sin nx) = \begin{cases}
+    f(x) & x 为 (-\pi, \pi) 的连续点 \\
+    \frac{1}{2}  \left[f(x^+) + f(x^-)\right] & x 为 (-\pi, \pi) 的第一类间断点 \\
+    \frac{1}{2} \left[f(-\pi^+) + f(\pi^-)\right]& x = \pm\pi
+\end{cases}</script><h2 id="以-2l-为周期的函数的傅里叶级数"><a href="#以-2l-为周期的函数的傅里叶级数" class="headerlink" title="以 $2l$ 为周期的函数的傅里叶级数"></a>以 $2l$ 为周期的函数的傅里叶级数</h2><p>$f(x)$ 在 $[-l, l]$ 的 $F-$ 级数为 $\frac{1}{2}a<em>0 + \sum\limits</em>{n=1}^\infty \left(a_n \cos \frac{n\pi}{l}x + b_n \sin \frac{n\pi}{l}x\right)$，其中</p>
+<script type="math/tex; mode=display">
+\begin{split}
+    &a_0 = \frac{1}{l}\int_{-l}^l f(x)dx \\
+    &a_n = \frac{1}{l}\int_{-l}^l f(x)\cos \frac{n\pi}{l}xdx \\
+    &b_n = \frac{1}{l}\int_{-l}^l f(x)\sin \frac{n\pi}{l}xdx
+\end{split}</script><h2 id="有限区间上函数的傅里叶级数"><a href="#有限区间上函数的傅里叶级数" class="headerlink" title="有限区间上函数的傅里叶级数"></a>有限区间上函数的傅里叶级数</h2><p>对在 $[a,b]$ 定义的函数 $f(x)$ 的傅里叶级数，可以将 $f(x)$ 延拓成以 $T = b-a$ 为周期的函数</p>
+<h3 id="在-0-l-上的正弦型级数"><a href="#在-0-l-上的正弦型级数" class="headerlink" title="在 $[0,l]$ 上的正弦型级数"></a>在 $[0,l]$ 上的正弦型级数</h3><p><strong>方法：</strong> 将 $f(x)$ 奇延拓成 $[-l, l]$ 上的奇函数</p>
+<script type="math/tex; mode=display">
+g(x) = \begin{cases}
+    f(x) & x \in [0, l] \\
+    -f(x) & x \in [-l, 0)
+\end{cases}</script><p>则 $g(x)$ 在 $[-l, l]$ 上的 $F-$ 级数就是 $f(x)$ 在 $[0, l]$ 上正弦型级数。</p>
+<script type="math/tex; mode=display">
+b_n = \frac{2}{l} \int_0^l f(x) \sin \frac{n\pi}{l}xdx</script><script type="math/tex; mode=display">
+\sum\limits_{n=1}^\infty b_n \sin \frac{n\pi}{l}x = \begin{cases}
+\begin{gather*}
+    \frac{1}{2}\left[f(x^+) + f(x^-)\right] &x\in (0, l) \\
+    0 & x=0,l
+\end{gather*}
+\end{cases}</script>]]></content>
+      <tags>
+        <tag>Math</tag>
+        <tag>Series</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>二次型</title>
+    <url>/2024/03/07/quadratic/</url>
+    <content><![CDATA[<h1 id="合同矩阵"><a href="#合同矩阵" class="headerlink" title="合同矩阵"></a>合同矩阵</h1><h2 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h2><p>给定两个 $n$ 阶方阵 $A$ 和 $B$，如果存在可逆矩阵 $C$，使得</p>
+<script type="math/tex; mode=display">
+B = C^\prime A C</script><p>则称 $A$ 和 $B$ 合同。</p>
+<h2 id="性质"><a href="#性质" class="headerlink" title="性质"></a>性质</h2><ol>
+<li>自反性：任一 $n$ 阶方阵 $A$ 都与自身合同</li>
+<li>对称性：若 $A$ 与 $B$ 合同，则 $B$ 与 $A$ 合同</li>
+<li>传递性：若 $A$ 与 $B$ 合同，且 $B$ 与 $C$ 合同，则 $A$ 与 $C$ 合同</li>
+</ol>
+<p>对任一实对称矩阵 $A$，存在正交矩阵 $P$，使 $P^{-1}AP = P^\prime AP = D$ 为对角矩阵，因此，任一实对称矩阵都与对角矩阵合同。</p>
+<p>对称矩阵与非对称矩阵不合同。</p>
+<p>若 $A, B$ 均为实对称矩阵，则</p>
+<script type="math/tex; mode=display">
+A \backsimeq B \Leftrightarrow A\,与\,B\,的正惯性指数，负惯性指数对应相等</script><h1 id="二次型"><a href="#二次型" class="headerlink" title="二次型"></a>二次型</h1><h2 id="定义-1"><a href="#定义-1" class="headerlink" title="定义"></a>定义</h2><p>含有 $n$ 个变量 $x_1, x_2, \cdots, x_n$，而系数取自数域 $F$ 的 $n$ 元二次齐次函数</p>
+<script type="math/tex; mode=display">
+f(x_1, x_2, \cdots, x_n) = \sum_{i = 1}^n\sum_{j = 1}^n a_{ij}x_ix_j</script><p>称为<strong>数域 $F$ 上的 $n$ 元二次型</strong>，简称<strong>二次型</strong>。</p>
+<p>记</p>
+<script type="math/tex; mode=display">
+A = \begin{pmatrix}
+a_{11} & a_{12} & \cdots & a_{1n} \\
+a_{21} & a_{22} & \cdots & a_{2n} \\
+\vdots & \vdots &   & \vdots \\
+a_{n1} & a_{n2} & \cdots & a_{nn}
+\end{pmatrix}
+,\ 
+X = \begin{pmatrix}
+x_1 \\
+x_2 \\
+\vdots \\
+x_n
+\end{pmatrix}</script><p>则二次型可记为</p>
+<script type="math/tex; mode=display">
+f = X^\prime A X</script><p>称对称矩阵 $A$ 为<strong>二次型 $f$ 的对称矩阵</strong>，称 $A$ 的秩为<strong>二次型 $f$ 的秩</strong>。</p>
+<h2 id="化标准形"><a href="#化标准形" class="headerlink" title="化标准形"></a>化标准形</h2><p>称只含平方项的二次型为<strong>标准二次型</strong>。</p>
+<p>称形如</p>
+<script type="math/tex; mode=display">
+f = y_1^2 + y_2^2 + \cdots + y_p^2 - y_{p + 1}^2 - \cdots - y_{p + 1}^2</script><p>的实二次型为<strong>规范二次型</strong>。</p>
+<h3 id="正交变换"><a href="#正交变换" class="headerlink" title="正交变换"></a>正交变换</h3><p>对任意 $n$ 元实二次型</p>
+<script type="math/tex; mode=display">
+f = X^\prime AX</script><p>存在正交线性变换</p>
+<script type="math/tex; mode=display">
+X = PY</script><p>将二次型 $f$ 化为标准形</p>
+<script type="math/tex; mode=display">
+f = \lambda_1y_1^2 + \lambda_2y_2^2 + \cdots + \lambda_ny_n^2</script><p>其中 $\lambda_1, \lambda_2, \cdots, \lambda_n$ 是 $A$ 的 $n$ 个特征值。</p>
+<h3 id="拉格朗日配方法"><a href="#拉格朗日配方法" class="headerlink" title="拉格朗日配方法"></a>拉格朗日配方法</h3><h3 id="初等变换（狗都不用）"><a href="#初等变换（狗都不用）" class="headerlink" title="初等变换（狗都不用）"></a>初等变换（<del>狗都不用</del>）</h3><h1 id="正定实二次型"><a href="#正定实二次型" class="headerlink" title="正定实二次型"></a>正定实二次型</h1><h2 id="惯性定律"><a href="#惯性定律" class="headerlink" title="惯性定律"></a>惯性定律</h2><p>设 $n$ 元实二次型 $f = X^\prime AX$ 经实可逆线性变换 $X = C_1Y, X = C_2Z$ 分别化为标准形</p>
+<script type="math/tex; mode=display">
+f = k_1y_1^2 + k_2y_2^2 + \cdots + k_ny_n^2\\
+f = l_1z_1^2 + l_2z_2^2 + \cdots + l_nz_n^2</script><p>则 $k_1, k_2, \cdots, k_n$ 中正数的个数与 $l_1, l_2, \cdots, l_n$ 中正数的个数相等，$k_1, k_2, \cdots, k_n$中负数的个数与 $l_1, l_2, \cdots, l_n$ 中负数的个数也相等，分别称之为 $f$ 的<strong>正惯性指数</strong>与<strong>负惯性指数</strong>。</p>
+<h2 id="正定二次型"><a href="#正定二次型" class="headerlink" title="正定二次型"></a>正定二次型</h2><h3 id="定义-2"><a href="#定义-2" class="headerlink" title="定义"></a>定义</h3><p>设有 $n$ 元实二次型 $f = X^\prime AX$，如果对 $\mathbb{R}^n$ 中任何列向量 $X \ne 0$，都有 $X^\prime AX &gt; 0$，则称 $f$ 为<strong>正定二次型</strong>。称正定二次型的矩阵为<strong>正定矩阵</strong>。</p>
+<p>显然，正定矩阵一定是实对称矩阵，反之未必。</p>
+<h3 id="性质-1"><a href="#性质-1" class="headerlink" title="性质"></a>性质</h3><p>设 $A$ 是 $n$ 阶方阵，顺序选取 $A$ 的前 $k(0 \le k \le n)$ 行、前 $k$ 列构成的矩阵称为 $A$ 的 $k$ 阶顺序主子阵，其行列式称为 $A$ 的 $k$ 阶顺序<strong>主子式</strong>。</p>
+<p>下面是 $n$ 元实二次型 $f = X^\prime AX$ 为正定二次型的充要条件：</p>
+<ol>
+<li>$f$ 的标准形中的 $n$ 个系数全为正数，即 $f$ 的正惯性指数是 $n$。</li>
+<li>$f$ 的矩阵 $A$ 的特征值全大于零。</li>
+<li>存在实可逆矩阵 $Q$，使 $A = Q^\prime Q$。</li>
+<li>$A$ 的各阶顺序主子式都大于零。</li>
+</ol>
+<h1 id="空间中的曲面与直线"><a href="#空间中的曲面与直线" class="headerlink" title="空间中的曲面与直线"></a>空间中的曲面与直线</h1><h2 id="球面"><a href="#球面" class="headerlink" title="球面"></a>球面</h2><p>已知球面的球心在点 $M_0(x_0, y_0, z_0)$，半径是 $r$，则该<strong>球面方程</strong>为</p>
+<script type="math/tex; mode=display">
+(x - x_0)^2 + (y - y_0)^2 + (z - z_0)^2 = r^2</script><h2 id="柱面"><a href="#柱面" class="headerlink" title="柱面"></a>柱面</h2><p>平行于定直线并沿定曲线 $C$ 移动的直线 $L$ 形成的轨迹叫做<strong>柱面</strong>，定曲线 $C$ 叫做柱面的<strong>准线</strong>，动直线 $L$ 叫做柱面的<strong>母线</strong>。</p>
+<h3 id="椭圆柱面"><a href="#椭圆柱面" class="headerlink" title="椭圆柱面"></a>椭圆柱面</h3><script type="math/tex; mode=display">
+\frac{x^2}{a^2} + \frac{y^2}{b^2} = 1</script><h3 id="双曲柱面"><a href="#双曲柱面" class="headerlink" title="双曲柱面"></a>双曲柱面</h3><script type="math/tex; mode=display">
+\frac{x^2}{a^2} - \frac{y^2}{b^2} = 1</script><h3 id="抛物柱面"><a href="#抛物柱面" class="headerlink" title="抛物柱面"></a>抛物柱面</h3><script type="math/tex; mode=display">
+x^2 = 2py</script><h2 id="旋转曲面"><a href="#旋转曲面" class="headerlink" title="旋转曲面"></a>旋转曲面</h2><p>由一条平面曲线 $C$ 绕该平面上的一条定直线 $L$ 旋转一周所成的曲面叫做<strong>旋转曲面</strong>，曲线 $C$ 称为<strong>母线</strong>，直线 $L$ 称为<strong>旋转轴</strong>。</p>
+<h3 id="圆锥面"><a href="#圆锥面" class="headerlink" title="圆锥面"></a>圆锥面</h3><script type="math/tex; mode=display">
+z^2 = k^2(x^2 + y^2)</script><h3 id="单叶旋转双曲面"><a href="#单叶旋转双曲面" class="headerlink" title="单叶旋转双曲面"></a>单叶旋转双曲面</h3><script type="math/tex; mode=display">
+\frac{x^2 + y^2}{a^2} - \frac{z^2}{b^2} = 1</script><h3 id="双叶旋转双曲面"><a href="#双叶旋转双曲面" class="headerlink" title="双叶旋转双曲面"></a>双叶旋转双曲面</h3><script type="math/tex; mode=display">
+\frac{x^2}{a^2} - \frac{y^2 + z^2}{b^2} = 1</script><h3 id="旋转椭球面"><a href="#旋转椭球面" class="headerlink" title="旋转椭球面"></a>旋转椭球面</h3><script type="math/tex; mode=display">
+\frac{x^2 + y^2}{a^2} + \frac{z^2}{b^2} = 1</script><h3 id="旋转抛物面"><a href="#旋转抛物面" class="headerlink" title="旋转抛物面"></a>旋转抛物面</h3><script type="math/tex; mode=display">
+x^2 + y^2 = 2pz</script><h2 id="空间曲线"><a href="#空间曲线" class="headerlink" title="空间曲线"></a>空间曲线</h2><p>空间曲线可以视为两个通过它的曲面的交线。若空间曲线 $C$ 是两个曲面</p>
+<script type="math/tex; mode=display">
+S_1 : F(x, y, z) = 0\\
+S_2 : G(x, y, z) = 0</script><p>的交线，则曲线 $C$ 的方程为</p>
+<script type="math/tex; mode=display">
+\begin{cases}
+F(x, y, z) = 0\\
+G(x, y, z) = 0
+\end{cases}</script><p>称其为<strong>空间曲线 $C$ 的一般方程</strong>。</p>
+<p>有时，空间曲线 $C$ 的方程也可以用参数表示成</p>
+<script type="math/tex; mode=display">
+\begin{cases}
+x = x(t)\\
+y = y(t)\\
+z = z(t)
+\end{cases}</script><p>设 $C$ 是一条空间曲线，$\pi$ 是一个平面，以 $C$ 为准线，作母线垂直于 $\pi$ 的柱面，该柱面与平面 $\pi$ 的交线叫做 $C$ 在平面 $\pi$ 上的<strong>投影曲线</strong>，简称<strong>投影</strong>。</p>
+<p>设曲线 $C$ 的方程是</p>
+<script type="math/tex; mode=display">
+\begin{cases}
+F_1(x, y, z) = 0\\
+F_2(x, y, z) = 0
+\end{cases}</script><p>从这个方程组中消去 $z$ 可以得到以 $C$ 为准线，母线垂直于 $xOy$ 面的柱面方程</p>
+<script type="math/tex; mode=display">
+F(x, y) = 0</script><p>故曲线</p>
+<script type="math/tex; mode=display">
+\begin{cases}
+F(x, y) = 0\\
+z = 0
+\end{cases}</script><p>是曲线 $C$ 在 $xOy$ 面上的投影。</p>
+<h1 id="二次曲线"><a href="#二次曲线" class="headerlink" title="二次曲线"></a>二次曲线</h1><p>一般的三元二次方程都可写成</p>
+<script type="math/tex; mode=display">
+X^\prime AX + v^\prime X + a_{44} = 0</script><p>存在正交变换</p>
+<script type="math/tex; mode=display">
+X = PY</script><p>使二次型 $X^\prime AX$ 化为标准二次型 $\lambda_1x^{\prime 2} + \lambda_2y^{\prime 2} + \lambda_3z^{\prime 2}$。这意味着存在三维几何空间中适当的直角坐标系，使原来的三元二次方程化成</p>
+<script type="math/tex; mode=display">
+\lambda_1x^{\prime 2} + \lambda_2y^{\prime 2} + \lambda_3z^{\prime 2} + a_{14}^\prime x^\prime + a_{24}^\prime y^\prime + a_{34}^\prime z^\prime + a_{44} = 0</script><p>再作平移变换，可化简为</p>
+<script type="math/tex; mode=display">
+\lambda_1\bar{x}^2 + \lambda_2\bar y^2 + \lambda_3\bar z^2 = d</script><h2 id="椭球面"><a href="#椭球面" class="headerlink" title="椭球面"></a>椭球面</h2><script type="math/tex; mode=display">
+\frac{x^2}{a^2} + \frac{y^2}{b^2} + \frac{z^2}{c^2} = 1</script><h2 id="单叶双曲面"><a href="#单叶双曲面" class="headerlink" title="单叶双曲面"></a>单叶双曲面</h2><script type="math/tex; mode=display">
+\frac{x^2}{a^2} + \frac{y^2}{b^2} - \frac{z^2}{c^2} = 1</script><h2 id="双叶双曲面"><a href="#双叶双曲面" class="headerlink" title="双叶双曲面"></a>双叶双曲面</h2><script type="math/tex; mode=display">
+\frac{x^2}{a^2} - \frac{y^2}{b^2} - \frac{z^2}{c^2} = 1</script><h2 id="椭圆抛物面"><a href="#椭圆抛物面" class="headerlink" title="椭圆抛物面"></a>椭圆抛物面</h2><script type="math/tex; mode=display">
+\frac{x^2}{2p} + \frac{y^2}{2q} = z\quad（p, q\ 同号）</script><h2 id="双曲抛物面（马鞍面）"><a href="#双曲抛物面（马鞍面）" class="headerlink" title="双曲抛物面（马鞍面）"></a>双曲抛物面（马鞍面）</h2><script type="math/tex; mode=display">
+\frac{x^2}{2p} - \frac{y^2}{2q} = z\quad（p, q\ 同号）</script><h2 id="二次锥面"><a href="#二次锥面" class="headerlink" title="二次锥面"></a>二次锥面</h2><script type="math/tex; mode=display">
+\frac{x^2}{a^2} + \frac{y^2}{b^2} - \frac{z^2}{c^2} = 0</script>]]></content>
+      <tags>
+        <tag>Math</tag>
+        <tag>Linear Algebra</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>第二型积分</title>
     <url>/2024/03/02/%E7%AC%AC%E4%BA%8C%E5%9E%8B%E7%A7%AF%E5%88%86/</url>
-    <content><![CDATA[<h1 id="第二型积分">第二型积分</h1>
-<h2 id="定义">定义</h2>
-<p>设 <span class="math inline">\(\Omega\)</span>
-为空间上一有向几何体，即在 <span class="math inline">\(\Omega\)</span>
-上每一点 <span class="math inline">\(P\)</span> 处都确定了一方向 <span
-class="math inline">\(\overrightarrow{e_P}\)</span>，<span
-class="math inline">\(P \in \Omega\)</span>，<span
-class="math inline">\(\overrightarrow{A}(P)\)</span> 为 <span
-class="math inline">\(\Omega\)</span> 上一向量值函数。首先，将 <span
-class="math inline">\(\Omega\)</span> 任意分成 <span
-class="math inline">\(n\)</span> 个有向几何体 <span
-class="math inline">\(\Delta\Omega_1, \Delta\Omega_2, \cdots,
-\Delta\Omega_n\)</span>；然后在每一个有向几何体上做内积 <span
-class="math inline">\(\overrightarrow{A}(P) \cdot
-\Delta\overrightarrow{\Omega_i}(i = 1, 2, \cdots, n), P_i \in
-\Delta\Omega_i\)</span>，<span
-class="math inline">\(\Delta\overrightarrow{\Omega_i}\)</span> 是以
-<span class="math inline">\(\Delta\Omega_i\)</span> 的几何量为模，以
-<span class="math inline">\(P_i\)</span>
-点的方向为方向的向量，再将上述内积加起来得 <span
-class="math inline">\(\sum\limits_{i=1}^n \overrightarrow{A}(P_i) \cdot
-\Delta\overrightarrow{\Omega_i}\)</span>。若无论 <span
-class="math inline">\(\Omega\)</span> 如何分，<span
-class="math inline">\(P_i \in \Delta \Omega_i\)</span>如何取，极限 <span
-class="math inline">\(\lim\limits_{\lambda\to 0}\sum\limits_{i=1}^n
-\overrightarrow{A}(P_i) \cdot \Delta
-\overrightarrow{\Omega_i}\)</span>，<span class="math inline">\(\lambda
-= \max\{d_i \vert i = 1,2,\cdots, n\}\)</span>，<span
-class="math inline">\(d_i\)</span> 是 <span class="math inline">\(\Delta
-\Omega_i\)</span> 的直径，都存在且相等，则称此极限值为 <span
-class="math inline">\(\overrightarrow{A}(P_i)\)</span> 在 <span
-class="math inline">\(\Omega\)</span> 上给定方向 <span
-class="math inline">\(\overrightarrow{e_P}\)</span>
-下的<strong>第二型积分</strong>，记为 <span class="math display">\[
-\lim\limits_{\lambda\to 0} \sum\limits_{i=1}^n \overrightarrow{A}(P_i)
-\cdot \Delta\overrightarrow{\Omega_i} \triangleq \int\limits_\Omega
-\overrightarrow{A} (P) d \overrightarrow{\Omega}
-\]</span></p>
-<h2 id="性质">性质</h2>
-<h1 id="第二型曲线积分">第二型曲线积分</h1>
-<h2 id="定义-1">定义</h2>
-<p>设 <span class="math inline">\(C\)</span>
-是空间一有向曲线，其方向为其切线给定方向，引入直角坐标，<span
-class="math inline">\(\overrightarrow{A}(P) =
-\{P(x,y,z),Q(x,y,z),R(x,y,z)\}\)</span> 是 <span
-class="math inline">\(C\)</span> 上连续函数，则 <span
-class="math display">\[
-d\Omega \cos\alpha_P = dx,\quad d\Omega\cos\beta_P = dy,\quad
-d\Omega\cos \gamma_P = dz
-\]</span> 称 <span class="math inline">\(\int\limits_C
-\overrightarrow{A}(P) d\overrightarrow{\Omega} = \int\limits_C Pdx + Qdy
-+ Rdz\)</span> 为 <span
-class="math inline">\(\overrightarrow{A}(x,y,z)\)</span> 在 <span
-class="math inline">\(C\)</span>
-上给定方向的<strong>第二型曲线积分</strong>。</p>
-<h2 id="计算方法">计算方法</h2>
-<h3 id="参数法">参数法</h3>
-<p>设曲线 <span class="math inline">\(C\)</span> 为 <span
-class="math inline">\(\begin{cases}
-    x = x(t) \\
-    y = y(t) \\
-    z = z(t)
-\end{cases}\)</span> 始点 <span class="math inline">\(t=a\)</span>，终点
-<span class="math inline">\(t=b\)</span>，<span
-class="math inline">\(C\)</span> 为光滑曲线，则 <span
-class="math display">\[
+    <content><![CDATA[<h1 id="第二型积分"><a href="#第二型积分" class="headerlink" title="第二型积分"></a>第二型积分</h1><h2 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h2><p>设 $\Omega$ 为空间上一有向几何体，即在 $\Omega$ 上每一点 $P$ 处都确定了一方向 $\overrightarrow{e<em>P}$，$P \in \Omega$，$\overrightarrow{A}(P)$ 为 $\Omega$ 上一向量值函数。首先，将 $\Omega$ 任意分成 $n$ 个有向几何体 $\Delta\Omega_1, \Delta\Omega_2, \cdots, \Delta\Omega_n$；然后在每一个有向几何体上做内积 $\overrightarrow{A}(P) \cdot \Delta\overrightarrow{\Omega_i}(i = 1, 2, \cdots, n), P_i \in \Delta\Omega_i$，$\Delta\overrightarrow{\Omega_i}$ 是以 $\Delta\Omega_i$ 的几何量为模，以 $P_i$ 点的方向为方向的向量，再将上述内积加起来得 $\sum\limits</em>{i=1}^n \overrightarrow{A}(P<em>i) \cdot \Delta\overrightarrow{\Omega_i}$。若无论 $\Omega$ 如何分，$P_i \in \Delta \Omega_i$如何取，极限 $\lim\limits</em>{\lambda\to 0}\sum\limits_{i=1}^n \overrightarrow{A}(P_i) \cdot \Delta \overrightarrow{\Omega_i}$，$\lambda = \max{d_i \vert i = 1,2,\cdots, n}$，$d_i$ 是 $\Delta \Omega_i$ 的直径，都存在且相等，则称此极限值为 $\overrightarrow{A}(P_i)$ 在 $\Omega$ 上给定方向 $\overrightarrow{e_P}$ 下的<strong>第二型积分</strong>，记为</p>
+<script type="math/tex; mode=display">
+\lim\limits_{\lambda\to 0} \sum\limits_{i=1}^n \overrightarrow{A}(P_i) \cdot \Delta\overrightarrow{\Omega_i} \triangleq \int\limits_\Omega \overrightarrow{A} (P) d \overrightarrow{\Omega}</script><h2 id="性质"><a href="#性质" class="headerlink" title="性质"></a>性质</h2><h1 id="第二型曲线积分"><a href="#第二型曲线积分" class="headerlink" title="第二型曲线积分"></a>第二型曲线积分</h1><h2 id="定义-1"><a href="#定义-1" class="headerlink" title="定义"></a>定义</h2><p>设 $C$ 是空间一有向曲线，其方向为其切线给定方向，引入直角坐标，$\overrightarrow{A}(P) = {P(x,y,z),Q(x,y,z),R(x,y,z)}$ 是 $C$ 上连续函数，则</p>
+<script type="math/tex; mode=display">
+d\Omega \cos\alpha_P = dx,\quad d\Omega\cos\beta_P = dy,\quad d\Omega\cos \gamma_P = dz</script><p>称 $\int\limits_C \overrightarrow{A}(P) d\overrightarrow{\Omega} = \int\limits_C Pdx + Qdy + Rdz$ 为 $\overrightarrow{A}(x,y,z)$ 在 $C$ 上给定方向的<strong>第二型曲线积分</strong>。</p>
+<h2 id="计算方法"><a href="#计算方法" class="headerlink" title="计算方法"></a>计算方法</h2><h3 id="参数法"><a href="#参数法" class="headerlink" title="参数法"></a>参数法</h3><p>设曲线 $C$ 为 $\begin{cases}<br>    x = x(t) \<br>    y = y(t) \<br>    z = z(t)<br>\end{cases}$ 始点 $t=a$，终点 $t=b$，$C$ 为光滑曲线，则</p>
+<script type="math/tex; mode=display">
 \begin{split}
-    \int\limits_C Pdx + Qdy + Rdz &amp; = \int_a^b Pdx(t) + Qdy(t) +
-Rdz(t) \\
-    &amp; =\int_a^b \left[P x&#39;(t) + Qy&#39;(t) + Rz&#39;(t)\right]dt
-\end{split}
-\]</span> ### 格林公式 设 <span class="math inline">\(D\)</span>
-为单连通区域，<span class="math inline">\(C\)</span> 为 <span
-class="math inline">\(D\)</span> 的边界闭曲线，其方向为正向。<span
-class="math inline">\(P(x,y), Q(x,y)\)</span> 是 <span
-class="math inline">\(C+D\)</span> 上具有连续一阶偏导的函数，则 <span
-class="math display">\[
-\oint\limits_C P(x,y)dx + Q(x,y)dy = \oiint\limits_D
-\left(\frac{\partial Q}{\partial x} - \frac{\partial P}{\partial
-y}\right) dxdy
-\]</span></p>
-<h4 id="推广">推广</h4>
-<p>设曲线 <span class="math inline">\(C\)</span> 是由 <span
-class="math inline">\(n+1\)</span> 条简单连续、逐段光滑闭曲线 <span
-class="math inline">\(C_0, C_1, \cdots, C_n\)</span> 组成，其中 <span
-class="math inline">\(C_1, \cdots, C_n\)</span> 互不相交，每条都在其余
-<span class="math inline">\(n-1\)</span> 条外部区域内，而它们全体又在
-<span class="math inline">\(C_0\)</span> 所围区域内部。<span
-class="math inline">\(C_0\)</span> 与 <span class="math inline">\(C_1,
-\cdots, C_n\)</span> 所界定区域为 <span
-class="math inline">\(D\)</span>，<span class="math inline">\(C\)</span>
-的方向对 <span class="math inline">\(D\)</span> 而言为左手域方向，而
-<span class="math inline">\(P(x,y), Q(x,y)\)</span> 又是 <span
-class="math inline">\(C+D\)</span> 上具有连续一阶偏导的函数，则 <span
-class="math display">\[
-\oint\limits_C P(x,y)dx + Q(x,y)dy = \iint\limits_D \left(\frac{\partial
-Q}{\partial x} - \frac{\partial P}{\partial y}\right) dxdy
-\]</span></p>
-<h2 id="平面曲线积分与路径无关">平面曲线积分与路径无关</h2>
-<p>设 <span class="math inline">\(D\)</span> 为单连通区域，<span
-class="math inline">\(P, Q\)</span> 为 <span
-class="math inline">\(D\)</span> 上具有连续一阶偏导的函数，在 <span
-class="math inline">\(D\)</span> 上下述四结论等价： 1. <span
-class="math inline">\(D\)</span> 上任意闭曲线 <span
-class="math inline">\(C\)</span>，有 <span
-class="math inline">\(\oint\limits_C Pdx + Qdy = 0\)</span> 2. <span
-class="math inline">\(D\)</span> 上第二型曲线积分 <span
-class="math inline">\(\int\limits_{AB} Pdx + Qdy\)</span> 与路径无关 3.
-<span class="math inline">\(Pdx + Qdy\)</span> 是全微分 4. <span
-class="math inline">\(\frac{\partial P}{\partial y} = \frac{\partial
-Q}{\partial x}\)</span></p>
-<h2 id="全微分方程">全微分方程</h2>
-<h3 id="定义-2">定义</h3>
-<p>如果一阶微分方程 <span class="math inline">\(Pdx + Qdy = 0\)</span>
-满足 <span class="math inline">\(\frac{\partial P}{\partial y} =
-\frac{\partial Q}{\partial
-x}\)</span>，则称此方程为<strong>全微分方程（恰当方程）</strong>。</p>
-<h3 id="解法">解法</h3>
-<p><span class="math display">\[
+    \int\limits_C Pdx + Qdy + Rdz & = \int_a^b Pdx(t) + Qdy(t) + Rdz(t) \\
+    & =\int_a^b \left[P x'(t) + Qy'(t) + Rz'(t)\right]dt
+\end{split}</script><h3 id="格林公式"><a href="#格林公式" class="headerlink" title="格林公式"></a>格林公式</h3><p>设 $D$ 为单连通区域，$C$ 为 $D$ 的边界闭曲线，其方向为<strong>正向</strong>。$P(x,y), Q(x,y)$ 是 $C+D$ 上具有连续一阶偏导的函数，则</p>
+<script type="math/tex; mode=display">
+\oint\limits_C P(x,y)dx + Q(x,y)dy = \oiint\limits_D \left(\frac{\partial Q}{\partial x} - \frac{\partial P}{\partial y}\right) dxdy</script><h4 id="推广"><a href="#推广" class="headerlink" title="推广"></a>推广</h4><p>设曲线 $C$ 是由 $n+1$ 条简单连续、逐段光滑闭曲线 $C_0, C_1, \cdots, C_n$ 组成，其中 $C_1, \cdots, C_n$ 互不相交，每条都在其余 $n-1$ 条外部区域内，而它们全体又在 $C_0$ 所围区域内部。$C_0$ 与 $C_1, \cdots, C_n$ 所界定区域为 $D$，$C$ 的方向对 $D$ 而言为<strong>左手域方向</strong>，而 $P(x,y), Q(x,y)$ 又是 $C+D$ 上具有连续一阶偏导的函数，则</p>
+<script type="math/tex; mode=display">
+\oint\limits_C P(x,y)dx + Q(x,y)dy = \iint\limits_D \left(\frac{\partial Q}{\partial x} - \frac{\partial P}{\partial y}\right) dxdy</script><h3 id="斯托克斯公式"><a href="#斯托克斯公式" class="headerlink" title="斯托克斯公式"></a>斯托克斯公式</h3><p>设 $C$ 为分段光滑有向闭曲线，$S$ 是以 $C$ 为边界的任一分片光滑的有向曲面，$C$ 与 $S$ 的方向满足<strong>右手螺旋方向</strong>，函数 $P(x,y,z), Q(x,y,z), R(x,y,z)$ 是 $S+C$ 上具有连续偏导的函数，则</p>
+<script type="math/tex; mode=display">
 \begin{split}
-    通解公式\ u(x,y) = &amp; \int_{(x_0, y_0)}^{(x,y)} Pdx + Qdy = C \\
-    &amp; \int_{x_0}^x P(x,y_0)dx + \int_{y_0}^y Q(x,y)dy = C
-\end{split}
-\]</span></p>
-<p><strong>更一般地</strong>，方程两端乘以一个因子 <span
-class="math inline">\(u(x,y)\)</span> 才可以变成全微分方程。 #
-第二型曲面积分 ## 定义 设 <span class="math inline">\(S\)</span>
-是空间一有向曲面，其方向 <span
-class="math inline">\(\overrightarrow{n_P}, P \in S\)</span> 为给定
-<span class="math inline">\(S\)</span> 上一法向，<span
-class="math inline">\(\overrightarrow{A}(P) =
-\{P(x,y,z),Q(x,y,z),R(x,y,z)\}\)</span> 是 <span
-class="math inline">\(S\)</span> 上连续函数，则 <span
-class="math display">\[
-d\Omega \cos\alpha_P = dydz,\quad d\Omega\cos\beta_P = dzdx,\quad
-d\Omega\cos \gamma_P = dxdy
-\]</span> 称 <span class="math inline">\(\int\limits_S
-\overrightarrow{A}(P) d\overrightarrow{\Omega} = \int\limits_S Pdydz +
-Qdzdx + Rdxdy\)</span> 为 <span
-class="math inline">\(\overrightarrow{A}(x,y,z)\)</span> 在 <span
-class="math inline">\(S\)</span>
-上给定一侧的<strong>第二型曲面积分</strong>。</p>
-<h2 id="计算方法-1">计算方法</h2>
-<h3 id="分面计算法">分面计算法</h3>
-<p><span class="math display">\[
+    \oint\limits_C Pdx + Qdy + Rdz & =\iint\limits_S \left(\frac{\partial R}{\partial y} - \frac{\partial Q}{\partial z}\right) dydz + \left(\frac{\partial P}{\partial z} - \frac{\partial R}{\partial x}\right) dzdx + \left(\frac{\partial Q}{\partial x} - \frac{\partial P}{\partial y}\right) dxdy \\
+    & = \iint\limits_S \begin{vmatrix}
+        dydz & dzdx & dxdy \\
+        \frac{\partial}{\partial x} & \frac{\partial}{\partial y} & \frac{\partial}{\partial z} \\
+        P & Q & R
+    \end{vmatrix} \\
+    & = \iint\limits_S \begin{vmatrix}
+        \cos\alpha & \cos\beta & \cos\gamma \\
+        \frac{\partial}{\partial x} & \frac{\partial}{\partial y} & \frac{\partial}{\partial z} \\
+        P & Q & R
+    \end{vmatrix} dS
+\end{split}</script><h2 id="平面曲线积分与路径无关"><a href="#平面曲线积分与路径无关" class="headerlink" title="平面曲线积分与路径无关"></a>平面曲线积分与路径无关</h2><p>设 $D$ 为单连通区域，$P, Q$ 为 $D$ 上具有连续一阶偏导的函数，在 $D$ 上下述四结论等价：</p>
+<ol>
+<li>$D$ 上任意闭曲线 $C$，有 $\oint\limits_C Pdx + Qdy = 0$</li>
+<li>$D$ 上第二型曲线积分 $\int\limits_{AB} Pdx + Qdy$ 与路径无关</li>
+<li>$Pdx + Qdy$ 是全微分</li>
+<li>$\frac{\partial P}{\partial y} = \frac{\partial Q}{\partial x}$</li>
+</ol>
+<h2 id="全微分方程"><a href="#全微分方程" class="headerlink" title="全微分方程"></a>全微分方程</h2><h3 id="定义-2"><a href="#定义-2" class="headerlink" title="定义"></a>定义</h3><p>如果一阶微分方程 $Pdx + Qdy = 0$ 满足 $\frac{\partial P}{\partial y} = \frac{\partial Q}{\partial x}$，则称此方程为<strong>全微分方程（恰当方程）</strong>。</p>
+<h3 id="解法"><a href="#解法" class="headerlink" title="解法"></a>解法</h3><script type="math/tex; mode=display">
+\begin{split}
+    通解公式\ u(x,y) = & \int_{(x_0, y_0)}^{(x,y)} Pdx + Qdy = C \\
+    & \int_{x_0}^x P(x,y_0)dx + \int_{y_0}^y Q(x,y)dy = C
+\end{split}</script><p><strong>更一般地</strong>，方程两端乘以一个因子 $u(x,y)$ 才可以变成全微分方程。</p>
+<h2 id="空间曲线积分与路径无关"><a href="#空间曲线积分与路径无关" class="headerlink" title="空间曲线积分与路径无关"></a>空间曲线积分与路径无关</h2><p>设 $\Omega$ 为空间二维单连通区域，$P, Q, R$ 为 $\Omega$ 上具有连续一阶偏导的函数，在 $\Omega$ 上下述四结论等价：</p>
+<ol>
+<li>$\Omega$ 上任意闭曲线 $C$，有 $\oint\limits_C Pdx + Qdy + Rdz = 0$</li>
+<li>$\Omega$ 上第二型曲线积分 $\int_{AB} Pdx + Qdy + Rdz$ 与路径无关</li>
+<li>$Pdx + Qdy + Rdz$ 是全微分</li>
+<li>$\frac{\partial R}{\partial y} = \frac{\partial Q}{\partial z}, \frac{\partial P}{\partial z} = \frac{\partial R}{\partial x}, \frac{\partial P}{\partial y} = \frac{\partial Q}{\partial x}$<h1 id="第二型曲面积分"><a href="#第二型曲面积分" class="headerlink" title="第二型曲面积分"></a>第二型曲面积分</h1><h2 id="定义-3"><a href="#定义-3" class="headerlink" title="定义"></a>定义</h2>设 $S$ 是空间一有向曲面，其方向 $\overrightarrow{n_P}, P \in S$ 为给定 $S$ 上一法向，$\overrightarrow{A}(P) = {P(x,y,z),Q(x,y,z),R(x,y,z)}$ 是 $S$ 上连续函数，则<script type="math/tex; mode=display">
+d\Omega \cos\alpha_P = dydz,\quad d\Omega\cos\beta_P = dzdx,\quad d\Omega\cos \gamma_P = dxdy</script>称 $\int\limits_S \overrightarrow{A}(P) d\overrightarrow{\Omega} = \int\limits_S Pdydz + Qdzdx + Rdxdy$ 为 $\overrightarrow{A}(x,y,z)$ 在 $S$ 上给定一侧的<strong>第二型曲面积分</strong>。</li>
+</ol>
+<h2 id="计算方法-1"><a href="#计算方法-1" class="headerlink" title="计算方法"></a>计算方法</h2><h3 id="分面计算法"><a href="#分面计算法" class="headerlink" title="分面计算法"></a>分面计算法</h3><script type="math/tex; mode=display">
 \iint\limits_S Rdxdy = \begin{cases}
-    \iint\limits_{D_{xy}} R(x, y, g(x,y)) dxdy &amp; S为上侧 \\
-    -\iint\limits_{D_{xy}} R(x,y, g(x,y)) dxdy &amp; S为下侧
-\end{cases}
-\]</span></p>
-<p><span class="math display">\[
+    \iint\limits_{D_{xy}} R(x, y, g(x,y)) dxdy & S为上侧 \\
+    -\iint\limits_{D_{xy}} R(x,y, g(x,y)) dxdy & S为下侧
+\end{cases}</script><script type="math/tex; mode=display">
 \iint\limits_S Pdydz = \begin{cases}
-    \iint\limits_{D_{yz}} P(g(y,z), y, z) dydz &amp; S为前侧 \\
-    -\iint\limits_{D_{yz}} R(g(y, z), y, z) dydz &amp; S为后侧
-\end{cases}
-\]</span></p>
-<p><span class="math display">\[
+    \iint\limits_{D_{yz}} P(g(y,z), y, z) dydz & S为前侧 \\
+    -\iint\limits_{D_{yz}} R(g(y, z), y, z) dydz & S为后侧
+\end{cases}</script><script type="math/tex; mode=display">
 \iint\limits_S Qdzdx = \begin{cases}
-    \iint\limits_{D_{xz}} Q(x, g(x, z), z) dxdy &amp; S为右侧 \\
-    -\iint\limits_{D_{xz}} Q(x, g(x, z), z) dxdy &amp; S为左侧
-\end{cases}
-\]</span></p>
-<h3 id="投影法">投影法</h3>
-<p><span class="math display">\[
+    \iint\limits_{D_{xz}} Q(x, g(x, z), z) dxdy & S为右侧 \\
+    -\iint\limits_{D_{xz}} Q(x, g(x, z), z) dxdy & S为左侧
+\end{cases}</script><h3 id="投影法"><a href="#投影法" class="headerlink" title="投影法"></a>投影法</h3><script type="math/tex; mode=display">
 \begin{split}
-    \iint\limits_S Pdydz + Qdzdx + Rdxdy &amp; =\iint\limits_S
-\left[P\left(-\frac{\partial z}{\partial x}\right) +
-Q\left(-\frac{\partial z}{\partial y}\right) + R\right]dxdy \\
-    &amp; = \pm \iint\limits_D \left[P\left(-\frac{\partial z}{\partial
-x}\right) + Q\left(-\frac{\partial z}{\partial y}\right) + R\right]dxdy
-\end{split}
-\]</span></p>
-<h3 id="高斯公式">高斯公式</h3>
-<p>设空间二维单连通区域 <span class="math inline">\(\Omega\)</span>
-的边界 <span class="math inline">\(S\)</span>
-是光滑的，其方向为外法方向，函数 <span
-class="math inline">\(P(x,y,z)\)</span>，<span
-class="math inline">\(Q(x,y,z)\)</span>，<span
-class="math inline">\(R(x,y,z)\)</span> 在 <span
-class="math inline">\(\Omega\)</span> 上具有连续一阶偏导数，则有 <span
-class="math display">\[
-\oiint\limits_S Pdydz + Qdzdx + Rdxdy = \iiint\limits_\Omega
-\left(\frac{\partial P}{\partial x} + \frac{\partial Q}{\partial y} +
-\frac{\partial R}{\partial z}\right) d\Omega
-\]</span></p>
-<h4 id="推广-1">推广</h4>
-<p>设 <span class="math inline">\(S\)</span> 是由两个闭曲面 <span
-class="math inline">\(S_1, S_2\)</span> 组成，<span
-class="math inline">\(S_1\)</span> 的方向为外法方向，<span
-class="math inline">\(S_2\)</span> 的方向为内法方向，且 <span
-class="math inline">\(S_2\)</span> 在 <span
-class="math inline">\(S_1\)</span> 所围区域内部，介于 <span
-class="math inline">\(S_1, S_2\)</span> 之间区域为 <span
-class="math inline">\(\Omega\)</span>，函数 <span
-class="math inline">\(P(x,y,z), Q(x,y,z), R(x,y,z)\)</span> 在 <span
-class="math inline">\(\Omega\)</span> 与 <span
-class="math inline">\(S\)</span> 上具有连续一阶偏导数，则有 <span
-class="math display">\[
-\oiint\limits_S Pdydz + Qdzdx + Rdxdy = \iiint\limits_\Omega
-\left(\frac{\partial P}{\partial x} + \frac{\partial Q}{\partial y} +
-\frac{\partial R}{\partial z}\right) d\Omega
-\]</span></p>
-]]></content>
+    \iint\limits_S Pdydz + Qdzdx + Rdxdy & =\iint\limits_S \left[P\left(-\frac{\partial z}{\partial x}\right) + Q\left(-\frac{\partial z}{\partial y}\right) + R\right]dxdy \\
+    & = \pm \iint\limits_D \left[P\left(-\frac{\partial z}{\partial x}\right) + Q\left(-\frac{\partial z}{\partial y}\right) + R\right]dxdy
+\end{split}</script><h3 id="高斯公式"><a href="#高斯公式" class="headerlink" title="高斯公式"></a>高斯公式</h3><p>设<strong>空间二维单连通</strong>区域 $\Omega$ 的边界 $S$ 是光滑的，其方向为<strong>外法方向</strong>，函数 $P(x,y,z)$，$Q(x,y,z)$，$R(x,y,z)$ 在 $\Omega$ 上具有连续一阶偏导数，则有</p>
+<script type="math/tex; mode=display">
+\oiint\limits_S Pdydz + Qdzdx + Rdxdy = \iiint\limits_\Omega \left(\frac{\partial P}{\partial x} + \frac{\partial Q}{\partial y} + \frac{\partial R}{\partial z}\right) d\Omega</script><h4 id="推广-1"><a href="#推广-1" class="headerlink" title="推广"></a>推广</h4><p>设 $S$ 是由两个闭曲面 $S_1, S_2$ 组成，$S_1$ 的方向为外法方向，$S_2$ 的方向为内法方向，且 $S_2$ 在 $S_1$ 所围区域内部，介于 $S_1, S_2$ 之间区域为 $\Omega$，函数 $P(x,y,z), Q(x,y,z), R(x,y,z)$ 在 $\Omega$ 与 $S$ 上具有连续一阶偏导数，则有</p>
+<script type="math/tex; mode=display">
+\oiint\limits_S Pdydz + Qdzdx + Rdxdy = \iiint\limits_\Omega \left(\frac{\partial P}{\partial x} + \frac{\partial Q}{\partial y} + \frac{\partial R}{\partial z}\right) d\Omega</script>]]></content>
       <tags>
         <tag>Math</tag>
         <tag>Calculus</tag>
