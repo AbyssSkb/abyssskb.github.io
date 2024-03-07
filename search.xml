@@ -52,6 +52,37 @@
 ]]></content>
   </entry>
   <entry>
+    <title>Lists of Integrals</title>
+    <url>/2023/12/13/Lists-of-Integrals/</url>
+    <content><![CDATA[<p>$\int kdx = kx + C$</p>
+<p>$\int x^{\mu}dx = \frac{x^{\mu + 1}}{\mu + 1} + C$</p>
+<p>$\int\frac{dx}{x} = \ln\left\vert x\right\vert + C$</p>
+<p>$\int\frac{dx}{1 + x^2} = \arctan x + C$</p>
+<p>$\int\frac{dx}{\sqrt{1 - x^2}} = \arcsin x + C$</p>
+<p>$\int\sin xdx = -\cos x + C$</p>
+<p>$\int\cos xdx = \sin x + C$</p>
+<p>$\int\tan xdx = -\ln\left\vert \cos x\right\vert + C$</p>
+<p>$\int\cot xdx = \ln\left\vert\sin x\right\vert + C$</p>
+<p>$\int\sec xdx = \ln\left\vert\sec x + \tan x\right\vert + C$</p>
+<p>$\int\csc xdx = \ln\left\vert\csc x - \cot x\right\vert + C$</p>
+<p>$\int\sec^2 xdx = \tan x + C$</p>
+<p>$\int\csc^2 xdx = -\cot x + C$</p>
+<p>$\int\sec x\tan xdx = \sec x + C$</p>
+<p>$\int\csc x\cot xdx = -\csc x + C$</p>
+<p>$\int e^xdx = e^x + C$</p>
+<p>$\int a^xdx = \frac{a^x}{\ln a} + C$</p>
+<p>$\int\frac{dx}{a^2 + x^2} = \frac{1}{a}\arctan{\frac{x}{a}} + C$</p>
+<p>$\int\frac{dx}{a^2 - x^2} = \frac{1}{2a}\ln\left\vert\frac{a + x}{a - x}\right\vert + C$</p>
+<p>$\int\frac{dx}{\sqrt{a^2 - x^2}} = \arcsin{\frac{x}{a}} + C$</p>
+<p>$\int\frac{dx}{\sqrt{x^2 + a^2}} = \ln\left(x + \sqrt{x^2 + a^2}\right) + C$</p>
+<p>$\int\frac{dx}{\sqrt{x^2 - a^2}} = \ln\left\vert x + \sqrt{x^2 - a^2}\right\vert + C$</p>
+]]></content>
+      <tags>
+        <tag>Math</tag>
+        <tag>Calculus</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>极限</title>
     <url>/2024/02/26/Limit/</url>
     <content><![CDATA[<h1 id="数列的极限"><a href="#数列的极限" class="headerlink" title="数列的极限"></a>数列的极限</h1><h2 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h2><p>设 ${x_n}$ 为一数列，如果存在常数 $a$，是对于任意给定的正数 $\epsilon$（不论它多么小），总存在正整数 $N$，使得当 $n &gt; N$时，不等式</p>
@@ -148,37 +179,6 @@ g(x) \le f(x) \le h(x)</script><ol>
 <p>那么 $\lim\limits_{x\to x_0 \atop (x\to \infty)}f(x)$ 存在，且等于 $A$。</p>
 <p>准则 $\mathrm{I}$ 及准则 $\mathrm{I}^\prime$ 称为<strong>夹逼准则</strong>。</p>
 <p><strong>准则 $\mathrm{II}\quad$</strong> 单调有界数列必有极限。 </p>
-]]></content>
-      <tags>
-        <tag>Math</tag>
-        <tag>Calculus</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Lists of Integrals</title>
-    <url>/2023/12/13/Lists-of-Integrals/</url>
-    <content><![CDATA[<p>$\int kdx = kx + C$</p>
-<p>$\int x^{\mu}dx = \frac{x^{\mu + 1}}{\mu + 1} + C$</p>
-<p>$\int\frac{dx}{x} = \ln\left\vert x\right\vert + C$</p>
-<p>$\int\frac{dx}{1 + x^2} = \arctan x + C$</p>
-<p>$\int\frac{dx}{\sqrt{1 - x^2}} = \arcsin x + C$</p>
-<p>$\int\sin xdx = -\cos x + C$</p>
-<p>$\int\cos xdx = \sin x + C$</p>
-<p>$\int\tan xdx = -\ln\left\vert \cos x\right\vert + C$</p>
-<p>$\int\cot xdx = \ln\left\vert\sin x\right\vert + C$</p>
-<p>$\int\sec xdx = \ln\left\vert\sec x + \tan x\right\vert + C$</p>
-<p>$\int\csc xdx = \ln\left\vert\csc x - \cot x\right\vert + C$</p>
-<p>$\int\sec^2 xdx = \tan x + C$</p>
-<p>$\int\csc^2 xdx = -\cot x + C$</p>
-<p>$\int\sec x\tan xdx = \sec x + C$</p>
-<p>$\int\csc x\cot xdx = -\csc x + C$</p>
-<p>$\int e^xdx = e^x + C$</p>
-<p>$\int a^xdx = \frac{a^x}{\ln a} + C$</p>
-<p>$\int\frac{dx}{a^2 + x^2} = \frac{1}{a}\arctan{\frac{x}{a}} + C$</p>
-<p>$\int\frac{dx}{a^2 - x^2} = \frac{1}{2a}\ln\left\vert\frac{a + x}{a - x}\right\vert + C$</p>
-<p>$\int\frac{dx}{\sqrt{a^2 - x^2}} = \arcsin{\frac{x}{a}} + C$</p>
-<p>$\int\frac{dx}{\sqrt{x^2 + a^2}} = \ln\left(x + \sqrt{x^2 + a^2}\right) + C$</p>
-<p>$\int\frac{dx}{\sqrt{x^2 - a^2}} = \ln\left\vert x + \sqrt{x^2 - a^2}\right\vert + C$</p>
 ]]></content>
       <tags>
         <tag>Math</tag>
@@ -447,55 +447,6 @@ dz \Big|_{x=x_0\atop y=y_0} = f'_x(x_0, y_0)dx + f'_y(x_0, y_0)dy</script></li>
       </tags>
   </entry>
   <entry>
-    <title>Ubuntu</title>
-    <url>/2023/03/21/Ubuntu/</url>
-    <content><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>由于软件安装教程具有时效性，故只放置官网链接。</p>
-<h3 id="更新系统时间"><a href="#更新系统时间" class="headerlink" title="更新系统时间"></a>更新系统时间</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cp</span> /usr/share/zoneinfo/Asia/Shanghai /etc/localtime</span><br></pre></td></tr></table></figure>
-<h3 id="修改主机名"><a href="#修改主机名" class="headerlink" title="修改主机名"></a>修改主机名</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">vim /etc/hostname</span><br><span class="line">vim /etc/hosts</span><br></pre></td></tr></table></figure>
-<h3 id="修改root密码"><a href="#修改root密码" class="headerlink" title="修改root密码"></a>修改root密码</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">passwd</span><br></pre></td></tr></table></figure>
-<h3 id="修改静态-IP"><a href="#修改静态-IP" class="headerlink" title="修改静态 IP"></a>修改静态 IP</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">nmtui <span class="comment">#注意设置DNS</span></span><br></pre></td></tr></table></figure>
-<h3 id="挂载-NTFS-硬盘"><a href="#挂载-NTFS-硬盘" class="headerlink" title="挂载 NTFS 硬盘"></a>挂载 NTFS 硬盘</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">mount -t ntfs-3g /dev/sda3 /mnt/pssd</span><br></pre></td></tr></table></figure>
-<h3 id="开机自动挂载NTFS硬盘"><a href="#开机自动挂载NTFS硬盘" class="headerlink" title="开机自动挂载NTFS硬盘"></a>开机自动挂载NTFS硬盘</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">vim /etc/fstab</span><br><span class="line">/dev/sda3 /mnt ntfs-3g defaults 0 0</span><br></pre></td></tr></table></figure>
-<h3 id="系统监控软件"><a href="#系统监控软件" class="headerlink" title="系统监控软件"></a>系统监控软件</h3><ul>
-<li><h4 id="s-tui"><a href="#s-tui" class="headerlink" title="s-tui"></a>s-tui</h4></li>
-</ul>
-<div class="note Code flat"><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">apt install python3-pip python3-dev -y</span><br><span class="line">pip3 install s-tui</span><br></pre></td></tr></table></figure></div>
-<h3 id="DDNS"><a href="#DDNS" class="headerlink" title="DDNS"></a>DDNS</h3><ul>
-<li><h4 id="ddns-go"><a href="#ddns-go" class="headerlink" title="ddns-go"></a><a href="https://github.com/jeessy2/ddns-go">ddns-go</a></h4></li>
-</ul>
-<h3 id="私有云"><a href="#私有云" class="headerlink" title="私有云"></a>私有云</h3><ul>
-<li><h4 id="Nextcloud"><a href="#Nextcloud" class="headerlink" title="Nextcloud"></a><a href="https://github.com/jeessy2/ddns-go">Nextcloud</a></h4></li>
-</ul>
-<h3 id="免费-SSL-证书"><a href="#免费-SSL-证书" class="headerlink" title="免费 SSL 证书"></a>免费 SSL 证书</h3><ul>
-<li><h4 id="acme-sh"><a href="#acme-sh" class="headerlink" title="acme.sh"></a><a href="https://github.com/acmesh-official/acme.sh">acme.sh</a></h4></li>
-</ul>
-<p>安装MC服务器<br><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">#先下载服务器版安装包 https://mcversions.net/</span><br><span class="line">apt install openjdk-17-jre -y</span><br><span class="line">mkdir /etc/minecraft</span><br><span class="line">cd /etc/minecraft</span><br><span class="line">java -Xms2G -Xmx4G -jar server.jar nogui</span><br><span class="line"></span><br><span class="line">vim eula.txt</span><br><span class="line">eula=true</span><br><span class="line"></span><br><span class="line">vim /lib/systemd/system/minecraft.service</span><br><span class="line">[Unit]</span><br><span class="line">Description=Minecraft Server</span><br><span class="line">Wants=network.target</span><br><span class="line">After=network.target</span><br><span class="line"></span><br><span class="line">[Service]</span><br><span class="line">Type=simple</span><br><span class="line">WorkingDirectory=/etc/minecraft/</span><br><span class="line">ExecStart=/usr/bin/java -Xms2G -Xmx4G -jar /etc/minecraft/server.jar nogui</span><br><span class="line">RestartSec=30</span><br><span class="line">Restart=on-failure</span><br><span class="line">KillMode=process</span><br><span class="line">KillSignal=SIGINT</span><br><span class="line">SuccessExitStatus=130</span><br><span class="line">StandardInput=null</span><br><span class="line"></span><br><span class="line">[Install]</span><br><span class="line">WantedBy=default.target</span><br><span class="line"></span><br><span class="line">systemctl enable minecraft</span><br><span class="line">systemctl start minecraft</span><br><span class="line">#记得在路由器上转发25565端口</span><br></pre></td></tr></table></figure></p>
-<h3 id="下载器"><a href="#下载器" class="headerlink" title="下载器"></a>下载器</h3><ul>
-<li><h4 id="Aria2"><a href="#Aria2" class="headerlink" title="Aria2"></a><a href="https://github.com/P3TERX/aria2.sh">Aria2</a></h4></li>
-<li><h4 id="AriaNg"><a href="#AriaNg" class="headerlink" title="AriaNg"></a><a href="http://ariang.mayswind.net/zh_Hans/">AriaNg</a></h4></li>
-</ul>
-<h3 id="媒体服务器"><a href="#媒体服务器" class="headerlink" title="媒体服务器"></a>媒体服务器</h3><ul>
-<li><h4 id="Plex"><a href="#Plex" class="headerlink" title="Plex"></a><a href="https://www.plex.tv/">Plex</a></h4></li>
-<li><h4 id="Jellyfin"><a href="#Jellyfin" class="headerlink" title="Jellyfin"></a><a href="https://jellyfin.org/">Jellyfin</a></h4></li>
-</ul>
-<h3 id="网页版-SSH"><a href="#网页版-SSH" class="headerlink" title="网页版 SSH"></a>网页版 SSH</h3><ul>
-<li><h4 id="Sshwifty"><a href="#Sshwifty" class="headerlink" title="Sshwifty"></a><a href="https://github.com/nirui/sshwifty">Sshwifty</a></h4></li>
-</ul>
-<h3 id="博客"><a href="#博客" class="headerlink" title="博客"></a>博客</h3><ul>
-<li><h4 id="Hexo"><a href="#Hexo" class="headerlink" title="Hexo"></a><a href="https://hexo.io/zh-cn/index.html">Hexo</a></h4></li>
-<li><h4 id="NexT"><a href="#NexT" class="headerlink" title="NexT"></a><a href="https://theme-next.js.org/">NexT</a></h4></li>
-</ul>
-<h3 id="科学上网"><a href="#科学上网" class="headerlink" title="科学上网"></a>科学上网</h3><ul>
-<li><h4 id="v2rayA"><a href="#v2rayA" class="headerlink" title="v2rayA"></a><a href="https://v2raya.org/">v2rayA</a></h4></li>
-</ul>
-]]></content>
-      <tags>
-        <tag>Linux</tag>
-        <tag>Ubuntu</tag>
-        <tag>Sever</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>三角级数</title>
     <url>/2024/03/02/Trigonometric-Series/</url>
     <content><![CDATA[<h1 id="三角级数"><a href="#三角级数" class="headerlink" title="三角级数"></a>三角级数</h1><h2 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h2><p>称 $\frac{1}{2}a<em>0 + \sum\limits</em>{n=1}^\infty a_n\cos nx + b_n \sin nx$ 为<strong>三角级数</strong>。</p>
@@ -544,6 +495,55 @@ b_n = \frac{2}{l} \int_0^l f(x) \sin \frac{n\pi}{l}xdx</script><script type="mat
       <tags>
         <tag>Math</tag>
         <tag>Series</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Ubuntu</title>
+    <url>/2023/03/21/Ubuntu/</url>
+    <content><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>由于软件安装教程具有时效性，故只放置官网链接。</p>
+<h3 id="更新系统时间"><a href="#更新系统时间" class="headerlink" title="更新系统时间"></a>更新系统时间</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cp</span> /usr/share/zoneinfo/Asia/Shanghai /etc/localtime</span><br></pre></td></tr></table></figure>
+<h3 id="修改主机名"><a href="#修改主机名" class="headerlink" title="修改主机名"></a>修改主机名</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">vim /etc/hostname</span><br><span class="line">vim /etc/hosts</span><br></pre></td></tr></table></figure>
+<h3 id="修改root密码"><a href="#修改root密码" class="headerlink" title="修改root密码"></a>修改root密码</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">passwd</span><br></pre></td></tr></table></figure>
+<h3 id="修改静态-IP"><a href="#修改静态-IP" class="headerlink" title="修改静态 IP"></a>修改静态 IP</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">nmtui <span class="comment">#注意设置DNS</span></span><br></pre></td></tr></table></figure>
+<h3 id="挂载-NTFS-硬盘"><a href="#挂载-NTFS-硬盘" class="headerlink" title="挂载 NTFS 硬盘"></a>挂载 NTFS 硬盘</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">mount -t ntfs-3g /dev/sda3 /mnt/pssd</span><br></pre></td></tr></table></figure>
+<h3 id="开机自动挂载NTFS硬盘"><a href="#开机自动挂载NTFS硬盘" class="headerlink" title="开机自动挂载NTFS硬盘"></a>开机自动挂载NTFS硬盘</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">vim /etc/fstab</span><br><span class="line">/dev/sda3 /mnt ntfs-3g defaults 0 0</span><br></pre></td></tr></table></figure>
+<h3 id="系统监控软件"><a href="#系统监控软件" class="headerlink" title="系统监控软件"></a>系统监控软件</h3><ul>
+<li><h4 id="s-tui"><a href="#s-tui" class="headerlink" title="s-tui"></a>s-tui</h4></li>
+</ul>
+<div class="note Code flat"><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">apt install python3-pip python3-dev -y</span><br><span class="line">pip3 install s-tui</span><br></pre></td></tr></table></figure></div>
+<h3 id="DDNS"><a href="#DDNS" class="headerlink" title="DDNS"></a>DDNS</h3><ul>
+<li><h4 id="ddns-go"><a href="#ddns-go" class="headerlink" title="ddns-go"></a><a href="https://github.com/jeessy2/ddns-go">ddns-go</a></h4></li>
+</ul>
+<h3 id="私有云"><a href="#私有云" class="headerlink" title="私有云"></a>私有云</h3><ul>
+<li><h4 id="Nextcloud"><a href="#Nextcloud" class="headerlink" title="Nextcloud"></a><a href="https://github.com/jeessy2/ddns-go">Nextcloud</a></h4></li>
+</ul>
+<h3 id="免费-SSL-证书"><a href="#免费-SSL-证书" class="headerlink" title="免费 SSL 证书"></a>免费 SSL 证书</h3><ul>
+<li><h4 id="acme-sh"><a href="#acme-sh" class="headerlink" title="acme.sh"></a><a href="https://github.com/acmesh-official/acme.sh">acme.sh</a></h4></li>
+</ul>
+<p>安装MC服务器<br><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">#先下载服务器版安装包 https://mcversions.net/</span><br><span class="line">apt install openjdk-17-jre -y</span><br><span class="line">mkdir /etc/minecraft</span><br><span class="line">cd /etc/minecraft</span><br><span class="line">java -Xms2G -Xmx4G -jar server.jar nogui</span><br><span class="line"></span><br><span class="line">vim eula.txt</span><br><span class="line">eula=true</span><br><span class="line"></span><br><span class="line">vim /lib/systemd/system/minecraft.service</span><br><span class="line">[Unit]</span><br><span class="line">Description=Minecraft Server</span><br><span class="line">Wants=network.target</span><br><span class="line">After=network.target</span><br><span class="line"></span><br><span class="line">[Service]</span><br><span class="line">Type=simple</span><br><span class="line">WorkingDirectory=/etc/minecraft/</span><br><span class="line">ExecStart=/usr/bin/java -Xms2G -Xmx4G -jar /etc/minecraft/server.jar nogui</span><br><span class="line">RestartSec=30</span><br><span class="line">Restart=on-failure</span><br><span class="line">KillMode=process</span><br><span class="line">KillSignal=SIGINT</span><br><span class="line">SuccessExitStatus=130</span><br><span class="line">StandardInput=null</span><br><span class="line"></span><br><span class="line">[Install]</span><br><span class="line">WantedBy=default.target</span><br><span class="line"></span><br><span class="line">systemctl enable minecraft</span><br><span class="line">systemctl start minecraft</span><br><span class="line">#记得在路由器上转发25565端口</span><br></pre></td></tr></table></figure></p>
+<h3 id="下载器"><a href="#下载器" class="headerlink" title="下载器"></a>下载器</h3><ul>
+<li><h4 id="Aria2"><a href="#Aria2" class="headerlink" title="Aria2"></a><a href="https://github.com/P3TERX/aria2.sh">Aria2</a></h4></li>
+<li><h4 id="AriaNg"><a href="#AriaNg" class="headerlink" title="AriaNg"></a><a href="http://ariang.mayswind.net/zh_Hans/">AriaNg</a></h4></li>
+</ul>
+<h3 id="媒体服务器"><a href="#媒体服务器" class="headerlink" title="媒体服务器"></a>媒体服务器</h3><ul>
+<li><h4 id="Plex"><a href="#Plex" class="headerlink" title="Plex"></a><a href="https://www.plex.tv/">Plex</a></h4></li>
+<li><h4 id="Jellyfin"><a href="#Jellyfin" class="headerlink" title="Jellyfin"></a><a href="https://jellyfin.org/">Jellyfin</a></h4></li>
+</ul>
+<h3 id="网页版-SSH"><a href="#网页版-SSH" class="headerlink" title="网页版 SSH"></a>网页版 SSH</h3><ul>
+<li><h4 id="Sshwifty"><a href="#Sshwifty" class="headerlink" title="Sshwifty"></a><a href="https://github.com/nirui/sshwifty">Sshwifty</a></h4></li>
+</ul>
+<h3 id="博客"><a href="#博客" class="headerlink" title="博客"></a>博客</h3><ul>
+<li><h4 id="Hexo"><a href="#Hexo" class="headerlink" title="Hexo"></a><a href="https://hexo.io/zh-cn/index.html">Hexo</a></h4></li>
+<li><h4 id="NexT"><a href="#NexT" class="headerlink" title="NexT"></a><a href="https://theme-next.js.org/">NexT</a></h4></li>
+</ul>
+<h3 id="科学上网"><a href="#科学上网" class="headerlink" title="科学上网"></a>科学上网</h3><ul>
+<li><h4 id="v2rayA"><a href="#v2rayA" class="headerlink" title="v2rayA"></a><a href="https://v2raya.org/">v2rayA</a></h4></li>
+</ul>
+]]></content>
+      <tags>
+        <tag>Linux</tag>
+        <tag>Ubuntu</tag>
+        <tag>Sever</tag>
       </tags>
   </entry>
   <entry>
