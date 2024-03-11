@@ -47,25 +47,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Hello World</title>
-    <url>/2023/09/28/Hello/</url>
-    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start">Quick Start</h2>
-<h3 id="Create-a-new-post">Create a new post</h3>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server">Run server</h3>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files">Generate static files</h3>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites">Deploy to remote sites</h3>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
-]]></content>
-  </entry>
-  <entry>
     <title>极限</title>
     <url>/2024/02/26/Limit/</url>
     <content><![CDATA[<h1>数列的极限</h1>
@@ -205,6 +186,25 @@
         <tag>Math</tag>
         <tag>Calculus</tag>
       </tags>
+  </entry>
+  <entry>
+    <title>Hello World</title>
+    <url>/2023/09/28/Hello/</url>
+    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
+<h2 id="Quick-Start">Quick Start</h2>
+<h3 id="Create-a-new-post">Create a new post</h3>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
+<h3 id="Run-server">Run server</h3>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
+<h3 id="Generate-static-files">Generate static files</h3>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p>
+<h3 id="Deploy-to-remote-sites">Deploy to remote sites</h3>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+]]></content>
   </entry>
   <entry>
     <title>积分表</title>
@@ -833,56 +833,6 @@ M1001 80h400000v40h-400000z'/></svg></span></span></span><span class="vlist-s">�
       </tags>
   </entry>
   <entry>
-    <title>服务器好玩的东西</title>
-    <url>/2023/03/21/Ubuntu/</url>
-    <content><![CDATA[<h1>前言</h1>
-<p>由于软件安装教程具有时效性，故只放置官网链接。</p>
-<h1>更新系统时间</h1>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cp</span> /usr/share/zoneinfo/Asia/Shanghai /etc/localtime</span><br></pre></td></tr></table></figure>
-<h1>修改主机名</h1>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">vim /etc/hostname</span><br><span class="line">vim /etc/hosts</span><br></pre></td></tr></table></figure>
-<h1>修改root密码</h1>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">passwd</span><br></pre></td></tr></table></figure>
-<h1>修改静态 IP</h1>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">nmtui <span class="comment">#注意设置DNS</span></span><br></pre></td></tr></table></figure>
-<h1>挂载 NTFS 硬盘</h1>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">mount -t ntfs-3g /dev/sda3 /mnt/pssd</span><br></pre></td></tr></table></figure>
-<h1>开机自动挂载 NTFS 硬盘</h1>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">vim /etc/fstab</span><br><span class="line">/dev/sda3 /mnt ntfs-3g defaults 0 0</span><br></pre></td></tr></table></figure>
-<h1>系统监控软件</h1>
-<h2 id="s-tui"><a href="https://github.com/amanusk/s-tui">s-tui</a></h2>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">apt install python3-pip python3-dev -y</span><br><span class="line">pip3 install s-tui</span><br></pre></td></tr></table></figure>
-<h1>DDNS</h1>
-<h2 id="ddns-go"><a href="https://github.com/jeessy2/ddns-go">ddns-go</a></h2>
-<h1>私有云</h1>
-<h2 id="Nextcloud"><a href="https://nextcloud.com">Nextcloud</a></h2>
-<h2 id="AList"><a href="https://github.com/alist-org/alist">AList</a></h2>
-<h1>免费 SSL 证书</h1>
-<h2 id="acme-sh"><a href="https://github.com/acmesh-official/acme.sh">acme.sh</a></h2>
-<h1>MC 服务器</h1>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">#先下载服务器版安装包 https://mcversions.net/</span><br><span class="line">apt install openjdk-17-jre -y</span><br><span class="line">mkdir /etc/minecraft</span><br><span class="line">cd /etc/minecraft</span><br><span class="line">java -Xms2G -Xmx4G -jar server.jar nogui</span><br><span class="line"></span><br><span class="line">vim eula.txt</span><br><span class="line">eula=true</span><br><span class="line"></span><br><span class="line">vim /lib/systemd/system/minecraft.service</span><br><span class="line">[Unit]</span><br><span class="line">Description=Minecraft Server</span><br><span class="line">Wants=network.target</span><br><span class="line">After=network.target</span><br><span class="line"></span><br><span class="line">[Service]</span><br><span class="line">Type=simple</span><br><span class="line">WorkingDirectory=/etc/minecraft/</span><br><span class="line">ExecStart=/usr/bin/java -Xms2G -Xmx4G -jar /etc/minecraft/server.jar nogui</span><br><span class="line">RestartSec=30</span><br><span class="line">Restart=on-failure</span><br><span class="line">KillMode=process</span><br><span class="line">KillSignal=SIGINT</span><br><span class="line">SuccessExitStatus=130</span><br><span class="line">StandardInput=null</span><br><span class="line"></span><br><span class="line">[Install]</span><br><span class="line">WantedBy=default.target</span><br><span class="line"></span><br><span class="line">systemctl enable minecraft</span><br><span class="line">systemctl start minecraft</span><br><span class="line">#记得在路由器上转发25565端口</span><br></pre></td></tr></table></figure>
-<h1>下载器</h1>
-<h2 id="Aria2"><a href="https://github.com/P3TERX/aria2.sh">Aria2</a></h2>
-<h3 id="AriaNg"><a href="http://ariang.mayswind.net/zh_Hans/">AriaNg</a></h3>
-<h1>媒体服务器</h1>
-<h2 id="Plex"><a href="https://www.plex.tv/">Plex</a></h2>
-<h2 id="Jellyfin"><a href="https://jellyfin.org/">Jellyfin</a></h2>
-<h1>网页版 SSH</h1>
-<h2 id="Sshwifty"><a href="https://github.com/nirui/sshwifty">Sshwifty</a></h2>
-<h1>博客</h1>
-<h2 id="Hexo"><a href="https://hexo.io/zh-cn/index.html">Hexo</a></h2>
-<h3 id="NexT"><a href="https://theme-next.js.org/">NexT</a></h3>
-<h3 id="Butterfly"><a href="https://butterfly.js.org/">Butterfly</a></h3>
-<h1>科学上网</h1>
-<h2 id="v2rayA"><a href="https://v2raya.org/">v2rayA</a></h2>
-]]></content>
-      <tags>
-        <tag>Linux</tag>
-        <tag>Ubuntu</tag>
-        <tag>Sever</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>二次型</title>
     <url>/2024/03/07/quadratic/</url>
     <content><![CDATA[<h1>合同矩阵</h1>
@@ -1100,6 +1050,56 @@ z = 0
       <tags>
         <tag>Math</tag>
         <tag>Linear Algebra</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>服务器好玩的东西</title>
+    <url>/2023/03/21/Ubuntu/</url>
+    <content><![CDATA[<h1>前言</h1>
+<p>由于软件安装教程具有时效性，故只放置官网链接。</p>
+<h1>更新系统时间</h1>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cp</span> /usr/share/zoneinfo/Asia/Shanghai /etc/localtime</span><br></pre></td></tr></table></figure>
+<h1>修改主机名</h1>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">vim /etc/hostname</span><br><span class="line">vim /etc/hosts</span><br></pre></td></tr></table></figure>
+<h1>修改root密码</h1>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">passwd</span><br></pre></td></tr></table></figure>
+<h1>修改静态 IP</h1>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">nmtui <span class="comment">#注意设置DNS</span></span><br></pre></td></tr></table></figure>
+<h1>挂载 NTFS 硬盘</h1>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">mount -t ntfs-3g /dev/sda3 /mnt/pssd</span><br></pre></td></tr></table></figure>
+<h1>开机自动挂载 NTFS 硬盘</h1>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">vim /etc/fstab</span><br><span class="line">/dev/sda3 /mnt ntfs-3g defaults 0 0</span><br></pre></td></tr></table></figure>
+<h1>系统监控软件</h1>
+<h2 id="s-tui"><a href="https://github.com/amanusk/s-tui">s-tui</a></h2>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">apt install python3-pip python3-dev -y</span><br><span class="line">pip3 install s-tui</span><br></pre></td></tr></table></figure>
+<h1>DDNS</h1>
+<h2 id="ddns-go"><a href="https://github.com/jeessy2/ddns-go">ddns-go</a></h2>
+<h1>私有云</h1>
+<h2 id="Nextcloud"><a href="https://nextcloud.com">Nextcloud</a></h2>
+<h2 id="AList"><a href="https://github.com/alist-org/alist">AList</a></h2>
+<h1>免费 SSL 证书</h1>
+<h2 id="acme-sh"><a href="https://github.com/acmesh-official/acme.sh">acme.sh</a></h2>
+<h1>MC 服务器</h1>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">#先下载服务器版安装包 https://mcversions.net/</span><br><span class="line">apt install openjdk-17-jre -y</span><br><span class="line">mkdir /etc/minecraft</span><br><span class="line">cd /etc/minecraft</span><br><span class="line">java -Xms2G -Xmx4G -jar server.jar nogui</span><br><span class="line"></span><br><span class="line">vim eula.txt</span><br><span class="line">eula=true</span><br><span class="line"></span><br><span class="line">vim /lib/systemd/system/minecraft.service</span><br><span class="line">[Unit]</span><br><span class="line">Description=Minecraft Server</span><br><span class="line">Wants=network.target</span><br><span class="line">After=network.target</span><br><span class="line"></span><br><span class="line">[Service]</span><br><span class="line">Type=simple</span><br><span class="line">WorkingDirectory=/etc/minecraft/</span><br><span class="line">ExecStart=/usr/bin/java -Xms2G -Xmx4G -jar /etc/minecraft/server.jar nogui</span><br><span class="line">RestartSec=30</span><br><span class="line">Restart=on-failure</span><br><span class="line">KillMode=process</span><br><span class="line">KillSignal=SIGINT</span><br><span class="line">SuccessExitStatus=130</span><br><span class="line">StandardInput=null</span><br><span class="line"></span><br><span class="line">[Install]</span><br><span class="line">WantedBy=default.target</span><br><span class="line"></span><br><span class="line">systemctl enable minecraft</span><br><span class="line">systemctl start minecraft</span><br><span class="line">#记得在路由器上转发25565端口</span><br></pre></td></tr></table></figure>
+<h1>下载器</h1>
+<h2 id="Aria2"><a href="https://github.com/P3TERX/aria2.sh">Aria2</a></h2>
+<h3 id="AriaNg"><a href="http://ariang.mayswind.net/zh_Hans/">AriaNg</a></h3>
+<h1>媒体服务器</h1>
+<h2 id="Plex"><a href="https://www.plex.tv/">Plex</a></h2>
+<h2 id="Jellyfin"><a href="https://jellyfin.org/">Jellyfin</a></h2>
+<h1>网页版 SSH</h1>
+<h2 id="Sshwifty"><a href="https://github.com/nirui/sshwifty">Sshwifty</a></h2>
+<h1>博客</h1>
+<h2 id="Hexo"><a href="https://hexo.io/zh-cn/index.html">Hexo</a></h2>
+<h3 id="NexT"><a href="https://theme-next.js.org/">NexT</a></h3>
+<h3 id="Butterfly"><a href="https://butterfly.js.org/">Butterfly</a></h3>
+<h1>科学上网</h1>
+<h2 id="v2rayA"><a href="https://v2raya.org/">v2rayA</a></h2>
+]]></content>
+      <tags>
+        <tag>Linux</tag>
+        <tag>Ubuntu</tag>
+        <tag>Sever</tag>
       </tags>
   </entry>
   <entry>
