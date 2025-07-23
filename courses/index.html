@@ -1,0 +1,731 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover">
+    <title>课程选择 | Abyss の 博客</title>
+    <meta name="author" content="Abyss Skb">
+    <meta name="copyright" content="Abyss Skb">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="theme-color" content="#0d0d0d">
+    <meta name="description" content="选择您感兴趣的课程，开始学习之旅。">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="课程选择">
+    <meta property="og:url" content="https://abyssskb.github.io/courses/index.html">
+    <meta property="og:site_name" content="Abyss の 博客">
+    <meta property="og:description" content="选择您感兴趣的课程，开始学习之旅。">
+    <meta property="og:locale" content="zh_CN">
+    <meta property="og:image" content="https://cloud.myabyss.top:8443/d/Pictures/Abyss.jpg">
+    <meta property="article:author" content="Abyss Skb">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:image" content="https://cloud.myabyss.top:8443/d/Pictures/Abyss.jpg">
+    <link rel="shortcut icon" href="/img/favicon.png">
+    <link rel="canonical" href="https://abyssskb.github.io/courses/index.html">
+    <link rel="preconnect" href="//cdn.jsdelivr.net"/>
+    <link rel="preconnect" href="//busuanzi.ibruce.info"/>
+    <link rel="stylesheet" href="/css/index.css?v=4.13.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'">
+    <script>
+        const GLOBAL_CONFIG = {
+            root: '/',
+            algolia: undefined,
+            localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"找不到您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+            translate: undefined,
+            noticeOutdate: undefined,
+            highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+            copy: {
+                success: '复制成功',
+                error: '复制错误',
+                noSupport: '浏览器不支持'
+            },
+            relativeDate: {
+                homepage: false,
+                post: false
+            },
+            runtime: '天',
+            dateSuffix: {
+                just: '刚刚',
+                min: '分钟前',
+                hour: '小时前',
+                day: '天前',
+                month: '个月前'
+            },
+            copyright: undefined,
+            lightbox: 'fancybox',
+            Snackbar: undefined,
+            infinitegrid: {
+                js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.11.1/dist/infinitegrid.min.js',
+                buttonText: '加载更多'
+            },
+            isPhotoFigcaption: false,
+            islazyload: false,
+            isAnchor: true,
+            percent: {
+                toc: true,
+                rightside: true,
+            },
+            autoDarkmode: false
+        }
+    </script>
+    <script id="config-diff">
+        var GLOBAL_CONFIG_SITE = {
+            title: '课程选择',
+            isPost: false,
+            isHome: false,
+            isHighlightShrink: false,
+            isToc: false,
+            postUpdate: '2025-04-16 16:16:47'
+        }
+    </script>
+    <style>
+        .course-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .course-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .course-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            color: var(--font-color);
+        }
+
+        .course-header p {
+            font-size: 1.1rem;
+            color: var(--minor-font-color);
+            margin-bottom: 30px;
+        }
+
+        .course-filters {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+            margin-bottom: 30px;
+        }
+
+        .filter-btn {
+            padding: 8px 16px;
+            border: 1px solid var(--minor-font-color);
+            background: transparent;
+            color: var(--font-color);
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+
+        .filter-btn:hover,
+        .filter-btn.active {
+            background: var(--main-color);
+            border-color: var(--main-color);
+            color: white;
+        }
+
+        .course-search {
+            max-width: 400px;
+            margin: 0 auto 30px;
+            position: relative;
+        }
+
+        .course-search input {
+            width: 100%;
+            padding: 12px 20px 12px 45px;
+            border: 1px solid var(--minor-font-color);
+            border-radius: 25px;
+            background: var(--card-bg);
+            color: var(--font-color);
+            font-size: 1rem;
+            outline: none;
+        }
+
+        .course-search input:focus {
+            border-color: var(--main-color);
+            box-shadow: 0 0 0 2px rgba(49, 155, 255, 0.2);
+        }
+
+        .course-search i {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--minor-font-color);
+        }
+
+        .courses-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 25px;
+            margin-top: 20px;
+        }
+
+        .course-card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: 1px solid transparent;
+        }
+
+        .course-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+            border-color: var(--main-color);
+        }
+
+        .course-category {
+            display: inline-block;
+            background: var(--main-color);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            margin-bottom: 15px;
+            font-weight: 500;
+        }
+
+        .course-title {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: var(--font-color);
+            margin-bottom: 10px;
+            line-height: 1.3;
+        }
+
+        .course-description {
+            color: var(--minor-font-color);
+            line-height: 1.6;
+            margin-bottom: 20px;
+            font-size: 0.95rem;
+        }
+
+        .course-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .course-difficulty {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .difficulty-star {
+            color: #ffd700;
+            font-size: 0.9rem;
+        }
+
+        .difficulty-star.empty {
+            color: var(--minor-font-color);
+        }
+
+        .course-count {
+            color: var(--minor-font-color);
+            font-size: 0.9rem;
+        }
+
+        .course-prerequisites {
+            margin-bottom: 15px;
+        }
+
+        .course-prerequisites span {
+            color: var(--minor-font-color);
+            font-size: 0.85rem;
+        }
+
+        .prerequisite-tag {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--font-color);
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-size: 0.75rem;
+            margin: 2px;
+        }
+
+        .course-action {
+            text-align: center;
+        }
+
+        .start-course-btn {
+            background: linear-gradient(45deg, var(--main-color), #4facfe);
+            color: white;
+            border: none;
+            padding: 10px 25px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .start-course-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(73, 172, 254, 0.4);
+        }
+
+        @media (max-width: 768px) {
+            .courses-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            
+            .course-header h1 {
+                font-size: 2rem;
+            }
+            
+            .course-filters {
+                justify-content: flex-start;
+                overflow-x: auto;
+                flex-wrap: nowrap;
+                padding-bottom: 10px;
+            }
+            
+            .filter-btn {
+                flex-shrink: 0;
+            }
+        }
+
+        .no-results {
+            text-align: center;
+            color: var(--minor-font-color);
+            font-size: 1.1rem;
+            margin: 50px 0;
+        }
+
+        .no-results i {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            display: block;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="sidebar">
+        <div id="menu-mask"></div>
+        <div id="sidebar-menus">
+            <div class="avatar-img is-center">
+                <img src="https://cloud.myabyss.top:8443/d/Pictures/Abyss.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/>
+            </div>
+            <div class="sidebar-site-data site-data is-center">
+                <a href="/archives/">
+                    <div class="headline">文章</div>
+                    <div class="length-num">33</div>
+                </a>
+                <a href="/tags/">
+                    <div class="headline">标签</div>
+                    <div class="length-num">13</div>
+                </a>
+                <a href="/categories/">
+                    <div class="headline">分类</div>
+                    <div class="length-num">0</div>
+                </a>
+            </div>
+            <hr class="custom-hr"/>
+            <div class="menus_items">
+                <div class="menus_item">
+                    <a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a>
+                </div>
+                <div class="menus_item">
+                    <a class="site-page" href="/courses/"><i class="fa-fw fas fa-graduation-cap"></i><span> 课程</span></a>
+                </div>
+                <div class="menus_item">
+                    <a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-book"></i><span> 文章</span><i class="fas fa-chevron-down"></i></a>
+                    <ul class="menus_item_child">
+                        <li><a class="site-page child" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></li>
+                        <li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="page" id="body-wrap">
+        <header class="full_page" id="page-header" style="background-image: url('https://cloud.myabyss.top:8443/d/Pictures/night.jpg')">
+            <nav id="nav">
+                <span id="blog-info">
+                    <a href="/" title="Abyss の 博客">
+                        <span class="site-name">Abyss の 博客</span>
+                    </a>
+                </span>
+                <div id="menus">
+                    <div id="search-button">
+                        <a class="site-page social-icon search" href="javascript:void(0);">
+                            <i class="fas fa-search fa-fw"></i><span> 搜索</span>
+                        </a>
+                    </div>
+                    <div class="menus_items">
+                        <div class="menus_item">
+                            <a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a>
+                        </div>
+                        <div class="menus_item">
+                            <a class="site-page" href="/courses/"><i class="fa-fw fas fa-graduation-cap"></i><span> 课程</span></a>
+                        </div>
+                        <div class="menus_item">
+                            <a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-book"></i><span> 文章</span><i class="fas fa-chevron-down"></i></a>
+                            <ul class="menus_item_child">
+                                <li><a class="site-page child" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></li>
+                                <li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div id="toggle-menu">
+                        <a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a>
+                    </div>
+                </div>
+            </nav>
+            <div id="site-info">
+                <h1 id="site-title">课程选择</h1>
+                <div id="site-subtitle">
+                    <span id="subtitle">选择您感兴趣的课程，开始学习之旅</span>
+                </div>
+            </div>
+            <div id="scroll-down">
+                <i class="fas fa-angle-down scroll-down-effects"></i>
+            </div>
+        </header>
+
+        <main class="layout" id="content-inner">
+            <div class="course-container">
+                <div class="course-header">
+                    <h1>课程选择</h1>
+                    <p>探索数学、物理、计算机科学等领域的精选课程</p>
+                </div>
+
+                <div class="course-search">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="courseSearch" placeholder="搜索课程...">
+                </div>
+
+                <div class="course-filters">
+                    <button class="filter-btn active" data-category="all">全部</button>
+                    <button class="filter-btn" data-category="mathematics">数学</button>
+                    <button class="filter-btn" data-category="physics">物理</button>
+                    <button class="filter-btn" data-category="computer-science">计算机科学</button>
+                    <button class="filter-btn" data-category="system">系统管理</button>
+                </div>
+
+                <div class="courses-grid" id="coursesGrid">
+                    <!-- Course cards will be generated by JavaScript -->
+                </div>
+
+                <div class="no-results" id="noResults" style="display: none;">
+                    <i class="fas fa-search"></i>
+                    <p>没有找到匹配的课程</p>
+                </div>
+            </div>
+        </main>
+
+        <footer id="footer" style="background-image: url('https://cloud.myabyss.top:8443/d/Pictures/night.jpg')">
+            <div id="footer-wrap">
+                <div class="copyright">&copy;2023 - 2025 By Abyss Skb</div>
+                <div class="framework-info">
+                    <span>框架 </span>
+                    <a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a>
+                    <span class="footer-separator">|</span>
+                    <span>主题 </span>
+                    <a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <div id="rightside">
+        <div id="rightside-config-hide"></div>
+        <div id="rightside-config-show">
+            <button id="darkmode" type="button" title="浅色和深色模式转换">
+                <i class="fas fa-adjust"></i>
+            </button>
+            <button id="hide-aside-btn" type="button" title="单栏和双栏切换">
+                <i class="fas fa-arrows-alt-h"></i>
+            </button>
+            <button id="go-up" type="button" title="回到顶部">
+                <span class="scroll-percent"></span>
+                <i class="fas fa-arrow-up"></i>
+            </button>
+        </div>
+    </div>
+
+    <script src="/js/utils.js?v=4.13.0"></script>
+    <script src="/js/main.js?v=4.13.0"></script>
+    <script>
+        // Course data
+        const courses = [
+            {
+                id: 'calculus',
+                title: '微积分',
+                category: 'mathematics',
+                description: '学习函数、极限、导数、积分等微积分基础概念，掌握连续性分析和函数性质研究方法。',
+                difficulty: 3,
+                articleCount: 6,
+                prerequisites: ['基础数学'],
+                articles: [
+                    { title: '函数', url: '/2024/03/12/Function/' },
+                    { title: '连续性', url: '/2024/03/12/Continuity/' },
+                    { title: '导数', url: '/2024/03/12/Derivative/' },
+                    { title: '二型积分', url: '/2024/03/02/Type-II-Integral/' },
+                    { title: '函数级数', url: '/2024/03/01/Functional-Series/' },
+                    { title: '多元函数', url: '/2024/03/05/Mulifunction/' }
+                ]
+            },
+            {
+                id: 'statistics',
+                title: '数理统计',
+                category: 'mathematics',
+                description: '掌握概率论和数理统计的基本理论，学习参数估计、数学期望等统计分析方法。',
+                difficulty: 4,
+                articleCount: 3,
+                prerequisites: ['概率论', '微积分'],
+                articles: [
+                    { title: '数理统计', url: '/2024/11/19/Mathematical-Statistics/' },
+                    { title: '数学期望', url: '/2024/11/19/Expectation/' },
+                    { title: '参数估计', url: '/2024/11/27/Parameter-Estimation/' }
+                ]
+            },
+            {
+                id: 'complex-analysis',
+                title: '复分析',
+                category: 'mathematics',
+                description: '深入研究复变函数理论，学习留数定理、傅里叶变换等高等数学内容。',
+                difficulty: 5,
+                articleCount: 2,
+                prerequisites: ['微积分', '实分析'],
+                articles: [
+                    { title: '留数', url: '/2024/10/30/Residue/' },
+                    { title: '傅里叶变换', url: '/2024/11/16/Fourier-Transform/' }
+                ]
+            },
+            {
+                id: 'linear-algebra',
+                title: '线性代数',
+                category: 'mathematics',
+                description: '学习矩阵运算、线性变换、二次型等线性代数核心概念和应用。',
+                difficulty: 3,
+                articleCount: 2,
+                prerequisites: ['基础数学'],
+                articles: [
+                    { title: '矩阵', url: '/2024/03/12/Matrix/' },
+                    { title: '二次型', url: '/2024/03/07/Quadratic-Form/' }
+                ]
+            },
+            {
+                id: 'geometry',
+                title: '空间几何',
+                category: 'mathematics',
+                description: '研究三维空间中的几何性质、空间关系和几何变换。',
+                difficulty: 3,
+                articleCount: 1,
+                prerequisites: ['平面几何', '解析几何'],
+                articles: [
+                    { title: '空间几何', url: '/2024/03/12/Space-Geometry/' }
+                ]
+            },
+            {
+                id: 'differential-equations',
+                title: '微分方程',
+                category: 'mathematics',
+                description: '学习常微分方程和偏微分方程的求解方法及其在实际问题中的应用。',
+                difficulty: 4,
+                articleCount: 1,
+                prerequisites: ['微积分', '线性代数'],
+                articles: [
+                    { title: '微分方程', url: '/2024/03/13/Differential-Equation/' }
+                ]
+            },
+            {
+                id: 'optics',
+                title: '光学',
+                category: 'physics',
+                description: '深入学习波动光学理论，包括光的干涉、衍射、偏振等现象。',
+                difficulty: 4,
+                articleCount: 1,
+                prerequisites: ['大学物理基础', '数学分析'],
+                articles: [
+                    { title: '波动光学', url: '/2024/11/24/Wave-Optics/' }
+                ]
+            },
+            {
+                id: 'electromagnetism',
+                title: '电磁学',
+                category: 'physics',
+                description: '学习电磁场理论基础，包括静电场、电路分析等核心内容。',
+                difficulty: 4,
+                articleCount: 2,
+                prerequisites: ['大学物理基础', '微积分'],
+                articles: [
+                    { title: '静电场', url: '/2024/06/15/Electrostatic-Field/' },
+                    { title: '电路', url: '/2024/03/30/Circuit/' }
+                ]
+            },
+            {
+                id: 'machine-learning',
+                title: '机器学习',
+                category: 'computer-science',
+                description: '掌握机器学习基础理论和算法，包括线性回归、分类算法等核心方法。',
+                difficulty: 4,
+                articleCount: 4,
+                prerequisites: ['线性代数', '概率统计', '编程基础'],
+                articles: [
+                    { title: '机器学习基础', url: '/2024/08/11/GD/' },
+                    { title: '线性回归', url: '/2024/08/12/LinearRegression/' },
+                    { title: '线性分类', url: '/2024/08/12/LinearClassification/' },
+                    { title: '指数族分布', url: '/2024/08/11/Exponentialfamily/' }
+                ]
+            },
+            {
+                id: 'deep-learning',
+                title: '深度学习',
+                category: 'computer-science',
+                description: '学习深度神经网络理论和应用，包括Transformer架构等前沿技术。',
+                difficulty: 5,
+                articleCount: 2,
+                prerequisites: ['机器学习', '线性代数', 'Python编程'],
+                articles: [
+                    { title: 'Transformer发展简史', url: '/2024/06/20/Transformer/' },
+                    { title: 'MobileNetV3', url: '/2024/06/03/MobileNetV3/' }
+                ]
+            },
+            {
+                id: 'linux-admin',
+                title: 'Linux系统管理',
+                category: 'system',
+                description: '学习Linux系统管理和服务器配置，掌握Ubuntu系统的使用和维护。',
+                difficulty: 3,
+                articleCount: 1,
+                prerequisites: ['计算机基础'],
+                articles: [
+                    { title: 'Ubuntu服务器搭建', url: '/2024/07/03/Field/' }
+                ]
+            }
+        ];
+
+        let filteredCourses = courses;
+
+        function createDifficultyStars(difficulty) {
+            let stars = '';
+            for (let i = 1; i <= 5; i++) {
+                stars += `<i class="fas fa-star difficulty-star ${i <= difficulty ? '' : 'empty'}"></i>`;
+            }
+            return stars;
+        }
+
+        function createCourseCard(course) {
+            const prerequisites = course.prerequisites.map(p => 
+                `<span class="prerequisite-tag">${p}</span>`
+            ).join('');
+
+            return `
+                <div class="course-card" data-category="${course.category}" data-title="${course.title.toLowerCase()}">
+                    <div class="course-category">${getCategoryName(course.category)}</div>
+                    <h3 class="course-title">${course.title}</h3>
+                    <p class="course-description">${course.description}</p>
+                    <div class="course-meta">
+                        <div class="course-difficulty">
+                            ${createDifficultyStars(course.difficulty)}
+                        </div>
+                        <div class="course-count">${course.articleCount} 篇文章</div>
+                    </div>
+                    <div class="course-prerequisites">
+                        <span>前置要求：</span>
+                        ${prerequisites}
+                    </div>
+                    <div class="course-action">
+                        <button class="start-course-btn" onclick="startCourse('${course.id}')">开始学习</button>
+                    </div>
+                </div>
+            `;
+        }
+
+        function getCategoryName(category) {
+            const names = {
+                'mathematics': '数学',
+                'physics': '物理学',
+                'computer-science': '计算机科学',
+                'system': '系统管理'
+            };
+            return names[category] || category;
+        }
+
+        function renderCourses(coursesToRender = filteredCourses) {
+            const grid = document.getElementById('coursesGrid');
+            const noResults = document.getElementById('noResults');
+            
+            if (coursesToRender.length === 0) {
+                grid.innerHTML = '';
+                noResults.style.display = 'block';
+            } else {
+                grid.innerHTML = coursesToRender.map(createCourseCard).join('');
+                noResults.style.display = 'none';
+            }
+        }
+
+        function filterCourses(category) {
+            if (category === 'all') {
+                filteredCourses = courses;
+            } else {
+                filteredCourses = courses.filter(course => course.category === category);
+            }
+            renderCourses();
+        }
+
+        function searchCourses(query) {
+            const searchTerm = query.toLowerCase().trim();
+            if (searchTerm === '') {
+                renderCourses(filteredCourses);
+            } else {
+                const searchResults = filteredCourses.filter(course => 
+                    course.title.toLowerCase().includes(searchTerm) ||
+                    course.description.toLowerCase().includes(searchTerm) ||
+                    course.prerequisites.some(p => p.toLowerCase().includes(searchTerm))
+                );
+                renderCourses(searchResults);
+            }
+        }
+
+        function startCourse(courseId) {
+            const course = courses.find(c => c.id === courseId);
+            if (course) {
+                // Create course detail page URL
+                window.location.href = `/courses/${courseId}/`;
+            }
+        }
+
+        // Event listeners
+        document.addEventListener('DOMContentLoaded', function() {
+            // Render initial courses
+            renderCourses();
+
+            // Filter buttons
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    filterCourses(this.dataset.category);
+                });
+            });
+
+            // Search functionality
+            const searchInput = document.getElementById('courseSearch');
+            let searchTimeout;
+            searchInput.addEventListener('input', function() {
+                clearTimeout(searchTimeout);
+                searchTimeout = setTimeout(() => {
+                    searchCourses(this.value);
+                }, 300);
+            });
+        });
+    </script>
+</body>
+</html>
